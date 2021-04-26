@@ -41,11 +41,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Noti noti = AppNoti();
-
   @override
   void initState() {
     super.initState();
-    Future(noti.init);
+    // Future(noti.init);
   }
 
   @override
@@ -57,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             FirebaseAnalyticsObserver(analytics: MyApp.analytics),
           ],
           debugShowCheckedModeBanner: false,
-          title: 'Packers And Movers',
+          title: 'Crisis GoFlexe',
           theme: ThemeData(
               appBarTheme: Theme.of(context)
                   .appBarTheme
