@@ -1,3 +1,4 @@
+import 'package:crisis/Widgets/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
@@ -34,8 +35,8 @@ class _AwarenessState extends State<Awareness> {
         height: MediaQuery.of(context).size.height,
         child: PdfView(
           scrollDirection: Axis.vertical,
-          documentLoader: Center(child: CircularProgressIndicator()),
-          pageLoader: Center(child: CircularProgressIndicator()),
+          documentLoader: Center(child: Loading()),
+          pageLoader: Center(child: Loading()),
           controller: _pdfController,
           onDocumentLoaded: (document) {
             setState(() {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crisis/Auth/register.dart';
+import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/model/app_state.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -208,21 +209,16 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                         "usecase": store.state.usecase
                       };
                       //print(store.state);
-                      print('hello');
                       getSP(city);
                     },
                     converter: (store) => store.state,
                     builder: (context, state) {
                       return loading == true
-                          ? kIsWeb == true
-                              ? Container(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                )
-                              : loadingShimmer
+                          ? Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: Center(child: Loading()),
+                            )
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -250,9 +246,13 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                         setState(() {
                                           filteredSp = (spList)
                                               .where((u) => (u['name']
-                                                  .toLowerCase()
-                                                  .contains(
-                                                      string.toLowerCase()) || u['address'].toLowerCase().contains(string.toLowerCase())))
+                                                      .toLowerCase()
+                                                      .contains(string
+                                                          .toLowerCase()) ||
+                                                  u['address']
+                                                      .toLowerCase()
+                                                      .contains(string
+                                                          .toLowerCase())))
                                               .toList();
                                         });
                                       },
@@ -1247,159 +1247,6 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
           );
         });
   }
-
-  Widget loadingShimmer = Container(
-      child: Shimmer.fromColors(
-    baseColor: Colors.grey[300],
-    highlightColor: Colors.grey[100],
-    enabled: true,
-    child: Column(children: [
-      SizedBox(
-        height: 10,
-      ),
-      Center(
-        child: Text(
-          "Select a Service Provider",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-        ),
-      ),
-      SizedBox(
-        height: 15,
-      ),
-      Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: new TextFormField(
-          textInputAction: TextInputAction.go,
-          keyboardType: TextInputType.text,
-          decoration: new InputDecoration(
-            isDense: true, // Added this
-            contentPadding: EdgeInsets.all(15),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(
-                width: 1,
-                color: Color(0xFF2821B5),
-              ),
-            ),
-            border: new OutlineInputBorder(
-                borderSide: new BorderSide(color: Colors.grey)),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 15,
-      ),
-      // Row(
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: [
-      //     Container(
-      //       padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
-      //       decoration: BoxDecoration(
-      //           color: Colors.grey[100],
-      //           border: Border.all(
-      //             color: C.primaryColor,
-      //           ),
-      //           borderRadius: BorderRadius.all(Radius.circular(20))),
-      //       child: Text(
-      //         "Filter",
-      //         style: TextStyle(fontSize: 13, color: Colors.grey),
-      //       ),
-      //     ),
-      //     SizedBox(
-      //       width: 15,
-      //     ),
-      //     Container(
-      //       padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
-      //       decoration: BoxDecoration(
-      //           color: Colors.grey[100],
-      //           border: Border.all(
-      //             color: C.primaryColor,
-      //           ),
-      //           borderRadius: BorderRadius.all(Radius.circular(20))),
-      //       child: Row(
-      //         children: [
-      //           Text(
-      //             "Sort By",
-      //             style: TextStyle(fontSize: 13, color: Colors.grey),
-      //           ),
-      //           SizedBox(
-      //             width: 5,
-      //           ),
-      //           Icon(
-      //             Icons.arrow_downward_rounded,
-      //             size: 10,
-      //             color: Colors.grey,
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //     SizedBox(
-      //       width: 5,
-      //     ),
-      //   ],
-      // ),
-      SizedBox(
-        height: 15,
-      ),
-      ListView.builder(
-        shrinkWrap: true,
-        itemBuilder: (_, __) => Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                color: Colors.white,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: 40.0,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-        itemCount: 10,
-      ),
-    ]),
-  ));
 }
 
 class CallsAndMessagesService {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crisis/Widgets/Loading.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:http/http.dart' as http;
@@ -121,6 +122,7 @@ class _HospitalState extends State<Hospital>
   getDistrict(stateName) async {
     print('I am called' + stateName);
     setState(() {
+      districtLoading = true;
       districts = [];
     });
 
@@ -142,6 +144,7 @@ class _HospitalState extends State<Hospital>
 
     setState(() {
       districts = temp;
+      districtLoading = false;
     });
   }
 
@@ -188,30 +191,23 @@ class _HospitalState extends State<Hospital>
               ),
             )
           : null,
-      body: SingleChildScrollView(
-        child: Form(
-          key: key,
-          child: Container(
-            padding: EdgeInsets.all(20),
-            child: StoreConnector<AppState, AppState>(
-              converter: (store) => store.state,
-              builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 60,
-                    ),
-                    stateLoading == true
-                        ? Center(
-                            child: LinearProgressIndicator(
-                              backgroundColor: Color(0xFF3f51b5),
-                              valueColor: AlwaysStoppedAnimation(
-                                Color(0xFFf9a825),
-                              ),
-                            ),
-                          )
-                        : DropdownSearch<String>(
+      body: stateLoading == true
+          ? Loading()
+          : SingleChildScrollView(
+              child: Form(
+                key: key,
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: StoreConnector<AppState, AppState>(
+                    converter: (store) => store.state,
+                    builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 60,
+                          ),
+                          DropdownSearch<String>(
                             mode: Mode.MENU,
                             showSelectedItem: true,
                             items: states,
@@ -233,96 +229,97 @@ class _HospitalState extends State<Hospital>
                                 return null;
                             },
                           ),
-                    SizedBox(
-                      height: 60,
-                    ),
-                    districtLoading == true
-                        ? Center(
-                            child: LinearProgressIndicator(
-                              backgroundColor: Color(0xFF3f51b5),
-                              valueColor: AlwaysStoppedAnimation(
-                                Color(0xFFf9a825),
-                              ),
-                            ),
-                          )
-                        : DropdownSearch<String>(
-                            mode: Mode.MENU,
-                            showSelectedItem: true,
-                            items: districts,
-                            label: "District",
-                            hint: "Your District Name",
-                            selectedItem: setUnset ? null : selectedDistrict,
-                            // selectedItem:
-                            //     (districts.length == 0) ? null : districts[0],
-
-                            // popupItemDisabled: (String s) => s.startsWith('I'),
-                            onChanged: (e) {
-                              FocusScope.of(context).unfocus();
-                              StoreProvider.of<AppState>(context)
-                                  .dispatch(DistrictName(e));
-                              setUnset = false;
-                              selectedDistrict = e;
-                              setState(() {
-                                shiftTypeSelected = true;
-                              });
-                            },
-                            validator: (String item) {
-                              if (item == null)
-                                return "Required";
-                              else
-                                return null;
-                            },
+                          SizedBox(
+                            height: 60,
                           ),
+                          districtLoading == true
+                              ? Center(
+                                  child: LinearProgressIndicator(
+                                    backgroundColor: Color(0xFF3f51b5),
+                                    valueColor: AlwaysStoppedAnimation(
+                                      Color(0xFFf9a825),
+                                    ),
+                                  ),
+                                )
+                              : DropdownSearch<String>(
+                                  mode: Mode.MENU,
+                                  showSelectedItem: true,
+                                  items: districts,
+                                  label: "District",
+                                  hint: "Your District Name",
+                                  selectedItem:
+                                      setUnset ? null : selectedDistrict,
+                                  // selectedItem:
+                                  //     (districts.length == 0) ? null : districts[0],
 
-                    // items.length != 0
-                    //     ? new GridView.builder(
-                    //         gridDelegate:
-                    //             SliverGridDelegateWithFixedCrossAxisCount(
-                    //           crossAxisCount: items.length,
-                    //           crossAxisSpacing: 5.0,
-                    //           mainAxisSpacing: 5.0,
-                    //         ),
-                    //         shrinkWrap: true,
-                    //         itemCount: items.length,
-                    //         itemBuilder: (BuildContext context, int index) {
-                    //           return new InkWell(
-                    //             splashColor: Colors.blueAccent,
-                    //             onTap: () {
-                    //               FocusScope.of(context).unfocus();
-                    // setState(() {
-                    //   items.forEach((element) {
-                    //     element['selected'] = false;
-                    //   });
-                    //   items[index]['selected'] = true;
-                    //   shiftTypeSelected = true;
-                    // });
-                    //               StoreProvider.of<AppState>(context).dispatch(
-                    //                   ShiftType(items[index]['label']));
-                    //               // print(items[index]['custom']);
-                    //               print(items[index]['label']);
-                    //             },
-                    //             child: new RadioItem(items[index]),
-                    //           );
-                    //         },
-                    //       )
-                    //     : Center(
-                    //         child: LinearProgressIndicator(
-                    //           backgroundColor: Color(0xFF3f51b5),
-                    //           valueColor: AlwaysStoppedAnimation(
-                    //             Color(0xFFf9a825),
-                    //           ),
-                    //         ),
-                    //       ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                );
-              },
+                                  // popupItemDisabled: (String s) => s.startsWith('I'),
+                                  onChanged: (e) {
+                                    FocusScope.of(context).unfocus();
+                                    StoreProvider.of<AppState>(context)
+                                        .dispatch(DistrictName(e));
+                                    setUnset = false;
+                                    selectedDistrict = e;
+                                    setState(() {
+                                      shiftTypeSelected = true;
+                                    });
+                                  },
+                                  validator: (String item) {
+                                    if (item == null)
+                                      return "Required";
+                                    else
+                                      return null;
+                                  },
+                                ),
+
+                          // items.length != 0
+                          //     ? new GridView.builder(
+                          //         gridDelegate:
+                          //             SliverGridDelegateWithFixedCrossAxisCount(
+                          //           crossAxisCount: items.length,
+                          //           crossAxisSpacing: 5.0,
+                          //           mainAxisSpacing: 5.0,
+                          //         ),
+                          //         shrinkWrap: true,
+                          //         itemCount: items.length,
+                          //         itemBuilder: (BuildContext context, int index) {
+                          //           return new InkWell(
+                          //             splashColor: Colors.blueAccent,
+                          //             onTap: () {
+                          //               FocusScope.of(context).unfocus();
+                          // setState(() {
+                          //   items.forEach((element) {
+                          //     element['selected'] = false;
+                          //   });
+                          //   items[index]['selected'] = true;
+                          //   shiftTypeSelected = true;
+                          // });
+                          //               StoreProvider.of<AppState>(context).dispatch(
+                          //                   ShiftType(items[index]['label']));
+                          //               // print(items[index]['custom']);
+                          //               print(items[index]['label']);
+                          //             },
+                          //             child: new RadioItem(items[index]),
+                          //           );
+                          //         },
+                          //       )
+                          //     : Center(
+                          //         child: LinearProgressIndicator(
+                          //           backgroundColor: Color(0xFF3f51b5),
+                          //           valueColor: AlwaysStoppedAnimation(
+                          //             Color(0xFFf9a825),
+                          //           ),
+                          //         ),
+                          //       ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

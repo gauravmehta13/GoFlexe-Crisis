@@ -57,8 +57,8 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                   top: 40,
                   child: Container(
                     height: 45,
-                    width: MediaQuery.of(context).size.width - 50,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    width: MediaQuery.of(context).size.width - 30,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
                     padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
@@ -79,17 +79,29 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                       tabs: [
                         // first tab [you can add an icon using the icon property]
                         Tab(
-                          text: 'Hospital',
+                          child: Text(
+                            "Testing",
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                         // second tab [you can add an icon using the icon property]
                         Tab(
-                          text: 'Awareness',
+                          child: Text(
+                            "Home Treatment",
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                         Tab(
-                          text: 'Home',
+                          child: Text(
+                            "Hospitalisation",
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                         Tab(
-                          text: 'Oxygen',
+                          child: Text(
+                            "Vaccination",
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                       ],
                     ),
