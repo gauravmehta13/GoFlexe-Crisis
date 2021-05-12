@@ -98,6 +98,10 @@ class _HospitalState extends State<Hospital>
       states = [];
     });
 
+    // var rep =
+    //     await dio.get("https://cdn-api.co-vin.in/api/v2/admin/location/states");
+    // print(rep.data);
+
     var url = Uri.https('t2v0d33au7.execute-api.ap-south-1.amazonaws.com',
         '/Staging01/capacity', {
       'type': 'allStates',
