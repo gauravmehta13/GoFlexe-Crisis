@@ -1,8 +1,8 @@
-import 'package:crisis/Order/TabBar.dart';
+import 'package:crisis/HomePage/TabBar.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Order/Hospital.dart';
+import 'HomePage/Hospital.dart';
 import 'model/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';

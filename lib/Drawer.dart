@@ -1,4 +1,4 @@
-import 'package:crisis/Order/Hospital.dart';
+import 'package:crisis/HomePage/Hospital.dart';
 import 'package:crisis/Order/Stats.dart';
 import 'package:crisis/Order/health.dart';
 import 'package:firebase_auth/firebase_auth.dart';

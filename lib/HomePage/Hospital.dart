@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../Fade Route.dart';
-import 'Service Provider List.dart';
+import '../Order/Service Provider List.dart';
 import '../model/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../redux/actions.dart';
@@ -155,42 +155,39 @@ class _HospitalState extends State<Hospital>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: (selectedPlace == null ||
-              selectedPlace.title == 'Hospital')
-          ? Container(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
-              child: SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFf9a825), // background
-                    onPrimary: Colors.white, // foreground
-                  ),
-                  onPressed: shiftTypeSelected == true
-                      ? () {
-                          FocusScope.of(context).unfocus();
-                          if (key.currentState.validate() == true) {
-                            FirebaseAnalytics().logEvent(
-                                name: 'Item Selection Screen',
-                                parameters: {
-                                  'Description': 'Went to Item Selection Screen'
-                                });
-                            Navigator.push(
-                              context,
-                              FadeRoute(page: ServiceProviderList()),
-                            );
-                          }
-                        }
-                      : null,
-                  child: Text(
-                    "Find a Bed",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-            )
-          : null,
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
+        child: SizedBox(
+          height: 50,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFFf9a825), // background
+              onPrimary: Colors.white, // foreground
+            ),
+            onPressed: shiftTypeSelected == true
+                ? () {
+                    FocusScope.of(context).unfocus();
+                    if (key.currentState.validate() == true) {
+                      FirebaseAnalytics().logEvent(
+                          name: 'Item Selection Screen',
+                          parameters: {
+                            'Description': 'Went to Item Selection Screen'
+                          });
+                      Navigator.push(
+                        context,
+                        FadeRoute(page: ServiceProviderList()),
+                      );
+                    }
+                  }
+                : null,
+            child: Text(
+              "Find a Bed",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+      ),
       body: stateLoading == true
           ? Loading()
           : SingleChildScrollView(
@@ -202,16 +199,22 @@ class _HospitalState extends State<Hospital>
                     converter: (store) => store.state,
                     builder: (context, state) {
                       return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 60,
+                            height: 20,
+                          ),
+                          SizedBox(
+                              height: 100,
+                              child: Image.asset("assets/hospital.png")),
+                          SizedBox(
+                            height: 40,
                           ),
                           DropdownSearch<String>(
                             mode: Mode.MENU,
                             showSelectedItem: true,
                             items: states,
-                            label: "State",
+                            label: "Select State",
                             hint: "Your State name",
                             // popupItemDisabled: (String s) => s.startsWith('I'),
                             onChanged: (e) {
@@ -230,7 +233,7 @@ class _HospitalState extends State<Hospital>
                             },
                           ),
                           SizedBox(
-                            height: 60,
+                            height: 40,
                           ),
                           districtLoading == true
                               ? Center(
@@ -245,13 +248,12 @@ class _HospitalState extends State<Hospital>
                                   mode: Mode.MENU,
                                   showSelectedItem: true,
                                   items: districts,
-                                  label: "District",
+                                  label: "Select District",
                                   hint: "Your District Name",
                                   selectedItem:
                                       setUnset ? null : selectedDistrict,
                                   // selectedItem:
                                   //     (districts.length == 0) ? null : districts[0],
-
                                   // popupItemDisabled: (String s) => s.startsWith('I'),
                                   onChanged: (e) {
                                     FocusScope.of(context).unfocus();

@@ -1,6 +1,7 @@
 import 'package:crisis/Drawer.dart';
-import 'package:crisis/Order/Awareness.dart';
-import 'package:crisis/Order/Hospital.dart';
+import 'package:crisis/HomePage/Awareness.dart';
+import 'package:crisis/HomePage/Hospital.dart';
+import 'package:crisis/HomePage/Vaccination.dart';
 import 'package:flutter/material.dart';
 
 class GoFlexeTabBar extends StatefulWidget {
@@ -40,7 +41,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
           controller: _controller,
           tabs: [
             Tab(
-              text: "Covid Resources",
+              text: "Covid",
             ),
           ],
         ),
@@ -124,11 +125,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                     child: Text("Coming Soon"),
                   ),
                 ),
-                Container(
-                  child: Center(
-                    child: Text("Coming Soon"),
-                  ),
-                )
+                Vaccination()
               ],
             ),
           ),
