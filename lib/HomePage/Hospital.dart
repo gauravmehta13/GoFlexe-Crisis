@@ -61,7 +61,7 @@ class _HospitalState extends State<Hospital>
     // place.add(new Place(false, 'Awareness'));
     // place.add(new Place(false, 'Home'));
     // place.add(new Place(false, 'Oxygen'));
-    getItems('Hospital');
+    //getItems('Hospital');
     getStates();
   }
 

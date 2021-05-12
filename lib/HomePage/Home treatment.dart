@@ -8,7 +8,7 @@ class HomeTreatment extends StatefulWidget {
 }
 
 class _HomeTreatmentState extends State<HomeTreatment> {
-  static final int _initialPage = 2;
+  static final int _initialPage = 0;
   int _actualPageNumber = _initialPage, _allPagesCount = 0;
   bool isSampleDoc = true;
   PdfController _pdfController;

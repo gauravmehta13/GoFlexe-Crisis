@@ -42,7 +42,7 @@ class _VaccinationState extends State<Vaccination> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 20,
+                      height: 40,
                     ),
                     Center(
                       child: SizedBox(
