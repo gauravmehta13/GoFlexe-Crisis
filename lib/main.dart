@@ -1,14 +1,15 @@
+import 'package:crisis/Order/TabBar.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Order/Residential Move.dart';
+import 'Order/Hospital.dart';
 import 'model/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'noti/notis/ab/abNoti.dart';
-import 'noti/importNoti.dart';
+// import 'noti/notis/ab/abNoti.dart';
+// import 'noti/importNoti.dart';
 import 'redux/reducers.dart';
 
 Future<void> main() async {
@@ -40,7 +41,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Noti noti = AppNoti();
+  // Noti noti = AppNoti();
   @override
   void initState() {
     super.initState();
@@ -77,7 +78,7 @@ class _MyAppState extends State<MyApp> {
               buttonTheme: ButtonThemeData(
                 buttonColor: Color(0xFF3f51b5),
               )),
-          home: ResidentialMove()),
+          home: GoFlexeTabBar()),
     );
   }
 }

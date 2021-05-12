@@ -3,7 +3,7 @@ import 'package:crisis/Auth/register.dart';
 import 'package:crisis/model/app_state.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -16,8 +16,9 @@ import '../redux/actions.dart';
 import 'Additional Services.dart';
 import 'Address Page.dart';
 import 'SP Details.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
+// final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class ServiceProviderList extends StatefulWidget {
   @override
@@ -57,10 +58,11 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
     var resp = await dio.post(
         'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
         data: {
-          'tenantSet_id': 'PAM01',
-          'tenantUsecase': 'pac',
-          'useCase': 'cost',
-          'orderDetail': items,
+          'tenantSet_id': 'CRISIS01',
+          'tenantUsecase': 'CRISIS01',
+          'useCase': items['usecase'] != null ? items['usecase'] : 'Hospital',
+          'state': items['stateName'],
+          'district': items['districtName']
         });
     print(resp);
     Map<String, dynamic> map = json.decode(resp.toString());
@@ -69,6 +71,8 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
     for (var i = 0; i < spList.length; i++) {
       spList[i]['selected'] = false;
       tempList[i]['selected'] = false;
+      spList[i]['rating'] = 4;
+      tempList[i]['rating'] = 4;
     }
     setState(() {
       spList = spList;
@@ -128,83 +132,67 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
   }
 
   Widget build(BuildContext context) {
+    print('started');
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size(double.infinity, 60),
             child: MyAppBar(curStep: 3)),
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
-          child: SizedBox(
-            height: 50,
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFFf9a825), // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: spSelected == false
-                  ? null
-                  : () {
-                      if (offeringsAvailable == true) {
-                        print(spId);
-                        FirebaseAnalytics().logEvent(
-                            name: 'Service_Offerings_Screen',
-                            parameters: {
-                              'Description': 'Went to Service Offerings Screen'
-                            });
-                        Navigator.push(
-                            context,
-                            FadeRoute(
-                                page: AdditionalServices(
-                              spId: spId,
-                            )));
-                      } else {
-                        if (_auth.currentUser != null) {
-                          FirebaseAnalytics().logEvent(
-                              name: 'Address_Screen',
-                              parameters: {
-                                'Description': 'Went to Fill Address'
-                              });
-                          Navigator.push(context, FadeRoute(page: Address()));
-                        } else {
-                          FirebaseAnalytics().logEvent(
-                              name: 'Login_Screen',
-                              parameters: {'Description': 'Went to Login'});
-                          Navigator.push(
-                              context, FadeRoute(page: RegisterScreen()));
-                        }
-                      }
-                    },
-              child: Text(
-                "Next",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
+        //   child: SizedBox(
+        //     height: 50,
+        //     width: double.infinity,
+        //     child: ElevatedButton(
+        //       style: ElevatedButton.styleFrom(
+        //         primary: Color(0xFFf9a825), // background
+        //         onPrimary: Colors.white, // foreground
+        //       ),
+        //       onPressed: spSelected == false
+        //           ? null
+        //           : () {
+        //               if (offeringsAvailable == true) {
+        //                 print(spId);
+        //                 FirebaseAnalytics().logEvent(
+        //                     name: 'Service_Offerings_Screen',
+        //                     parameters: {
+        //                       'Description': 'Went to Service Offerings Screen'
+        //                     });
+        //                 Navigator.push(
+        //                     context,
+        //                     FadeRoute(
+        //                         page: AdditionalServices(
+        //                       spId: spId,
+        //                     )));
+        //               } else {
+        //                 if (_auth.currentUser != null) {
+        //                   FirebaseAnalytics().logEvent(
+        //                       name: 'Address_Screen',
+        //                       parameters: {
+        //                         'Description': 'Went to Fill Address'
+        //                       });
+        //                   Navigator.push(context, FadeRoute(page: Address()));
+        //                 } else {
+        //                   FirebaseAnalytics().logEvent(
+        //                       name: 'Login_Screen',
+        //                       parameters: {'Description': 'Went to Login'});
+        //                   Navigator.push(
+        //                       context, FadeRoute(page: RegisterScreen()));
+        //                 }
+        //               }
+        //             },
+        // child: Text(
+        //   "Next",
+        //   style: TextStyle(color: Colors.black),
+        // ),
+        //     ),
+        //   ),
+        // ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(
                 padding: EdgeInsets.all(10),
                 child: StoreConnector<AppState, AppState>(
                     onInit: (store) {
-                      // List<dynamic> tempItems = store.state.additionalItems;
-
-                      // for (var i = 0;
-                      //     i <  tempItems.length;
-                      //     i++) {
-                      //   tempItems[i].remove('selected');
-                      //   tempItems[i].remove('categoryName');
-                      //   tempItems[i]['additionalDetails'].remove('description');
-                      //   tempItems[i]['additionalDetails'].remove('image');
-                      //   tempItems[i]['custom'].forEach((task) {
-                      //     task.remove('selected');
-                      //      task['additionalDetails'].remove('description');
-                      //       task['additionalDetails'].remove('image');
-
-                      //   });
-                      // }
-
                       Map city = {
                         "toCity": "Hyderabad",
                         "fromCity": "Banglore",
@@ -215,8 +203,12 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                         "dropLift": store.state.dropLift,
                         "pickupLift": store.state.pickupLift,
                         'vehicles': store.state.vehicles,
+                        "stateName": store.state.stateName,
+                        "districtName": store.state.districtName,
+                        "usecase": store.state.usecase
                       };
-                      print(store.state.shiftType);
+                      //print(store.state);
+                      print('hello');
                       getSP(city);
                     },
                     converter: (store) => store.state,
@@ -239,7 +231,7 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                   ),
                                   Center(
                                     child: Text(
-                                      "Select a Service Provider",
+                                      "List of Hospitals",
                                       style: TextStyle(
                                           fontSize: 25,
                                           fontWeight: FontWeight.w600),
@@ -260,7 +252,7 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                               .where((u) => (u['name']
                                                   .toLowerCase()
                                                   .contains(
-                                                      string.toLowerCase())))
+                                                      string.toLowerCase()) || u['address'].toLowerCase().contains(string.toLowerCase())))
                                               .toList();
                                         });
                                       },
@@ -297,402 +289,402 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            sortby = false;
-                                          });
-                                          showModalBottomSheet(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return StatefulBuilder(builder:
-                                                    (context, setState) {
-                                                  return Container(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Card(
-                                                          child: Container(
-                                                            child: Row(
-                                                              children: [
-                                                                IconButton(
-                                                                    icon: Icon(Icons
-                                                                        .close),
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    }),
-                                                                Text(
-                                                                  "Filter",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        13,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                                ),
-                                                                Spacer(),
-                                                                TextButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      clearAllFilters();
-                                                                    },
-                                                                    child: Text(
-                                                                      "Clear All",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              primaryColor),
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                            horizontal: 40,
-                                                          ),
-                                                          child: Column(
-                                                            children: [
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                //font change
-                                                                title: new Text(
-                                                                  "Warehouse",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await filter(
-                                                                      "warehouse");
-                                                                  setState(() {
-                                                                    warehouseFilter =
-                                                                        val;
-                                                                    filteredSp =
-                                                                        filteredSp;
-                                                                  });
-                                                                },
-                                                                value:
-                                                                    warehouseFilter,
-                                                              ),
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                //font change
-                                                                title: new Text(
-                                                                  "Installation",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await filter(
-                                                                      "installation");
-                                                                  setState(() {
-                                                                    installationFilter =
-                                                                        val;
-                                                                    filteredSp =
-                                                                        filteredSp;
-                                                                  });
-                                                                },
-                                                                value:
-                                                                    installationFilter,
-                                                              ),
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                //font change
-                                                                title: new Text(
-                                                                  "Unpacking",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await filter(
-                                                                      "unpacking");
-                                                                  setState(() {
-                                                                    unpackingFilter =
-                                                                        val;
-                                                                    filteredSp =
-                                                                        filteredSp;
-                                                                  });
-                                                                },
-                                                                value:
-                                                                    unpackingFilter,
-                                                              ),
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                //font change
-                                                                title: new Text(
-                                                                  "Insurance",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await filter(
-                                                                      "insurance");
-                                                                  setState(() {
-                                                                    insuranceFilter =
-                                                                        val;
-                                                                    filteredSp =
-                                                                        filteredSp;
-                                                                  });
-                                                                },
-                                                                value:
-                                                                    insuranceFilter,
-                                                              ),
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                //font change
-                                                                title: new Text(
-                                                                  "Premium Packaging",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await filter(
-                                                                      "premium");
-                                                                  setState(() {
-                                                                    premiumFilter =
-                                                                        val;
-                                                                    filteredSp =
-                                                                        filteredSp;
-                                                                  });
-                                                                },
-                                                                value:
-                                                                    premiumFilter,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Spacer()
-                                                      ],
-                                                    ),
-                                                  );
-                                                });
-                                              });
-                                        },
-                                        child: Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 6, 10, 6),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey[100],
-                                              border: Border.all(
-                                                color: C.primaryColor,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          child: Text(
-                                            "Filter",
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                      ),
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     setState(() {
+                                      //       sortby = false;
+                                      //     });
+                                      //     showModalBottomSheet(
+                                      //         context: context,
+                                      //         builder: (BuildContext context) {
+                                      //           return StatefulBuilder(builder:
+                                      //               (context, setState) {
+                                      //             return Container(
+                                      //               child: Column(
+                                      //                 crossAxisAlignment:
+                                      //                     CrossAxisAlignment
+                                      //                         .start,
+                                      //                 children: [
+                                      //                   Card(
+                                      //                     child: Container(
+                                      //                       child: Row(
+                                      //                         children: [
+                                      //                           IconButton(
+                                      //                               icon: Icon(Icons
+                                      //                                   .close),
+                                      //                               onPressed:
+                                      //                                   () {
+                                      //                                 Navigator.pop(
+                                      //                                     context);
+                                      //                               }),
+                                      //                           Text(
+                                      //                             "Filter",
+                                      //                             style:
+                                      //                                 TextStyle(
+                                      //                               fontSize:
+                                      //                                   13,
+                                      //                               fontWeight:
+                                      //                                   FontWeight
+                                      //                                       .w600,
+                                      //                             ),
+                                      //                           ),
+                                      //                           Spacer(),
+                                      //                           TextButton(
+                                      //                               onPressed:
+                                      //                                   () {
+                                      //                                 clearAllFilters();
+                                      //                               },
+                                      //                               child: Text(
+                                      //                                 "Clear All",
+                                      //                                 style: TextStyle(
+                                      //                                     color:
+                                      //                                         primaryColor),
+                                      //                               ))
+                                      //                         ],
+                                      //                       ),
+                                      //                     ),
+                                      //                   ),
+                                      //                   SizedBox(
+                                      //                     height: 20,
+                                      //                   ),
+                                      //                   Container(
+                                      //                     padding: EdgeInsets
+                                      //                         .symmetric(
+                                      //                       horizontal: 40,
+                                      //                     ),
+                                      //                     child: Column(
+                                      //                       children: [
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           //font change
+                                      //                           title: new Text(
+                                      //                             "Warehouse",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await filter(
+                                      //                                 "warehouse");
+                                      //                             setState(() {
+                                      //                               warehouseFilter =
+                                      //                                   val;
+                                      //                               filteredSp =
+                                      //                                   filteredSp;
+                                      //                             });
+                                      //                           },
+                                      //                           value:
+                                      //                               warehouseFilter,
+                                      //                         ),
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           //font change
+                                      //                           title: new Text(
+                                      //                             "Installation",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await filter(
+                                      //                                 "installation");
+                                      //                             setState(() {
+                                      //                               installationFilter =
+                                      //                                   val;
+                                      //                               filteredSp =
+                                      //                                   filteredSp;
+                                      //                             });
+                                      //                           },
+                                      //                           value:
+                                      //                               installationFilter,
+                                      //                         ),
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           //font change
+                                      //                           title: new Text(
+                                      //                             "Unpacking",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await filter(
+                                      //                                 "unpacking");
+                                      //                             setState(() {
+                                      //                               unpackingFilter =
+                                      //                                   val;
+                                      //                               filteredSp =
+                                      //                                   filteredSp;
+                                      //                             });
+                                      //                           },
+                                      //                           value:
+                                      //                               unpackingFilter,
+                                      //                         ),
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           //font change
+                                      //                           title: new Text(
+                                      //                             "Insurance",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await filter(
+                                      //                                 "insurance");
+                                      //                             setState(() {
+                                      //                               insuranceFilter =
+                                      //                                   val;
+                                      //                               filteredSp =
+                                      //                                   filteredSp;
+                                      //                             });
+                                      //                           },
+                                      //                           value:
+                                      //                               insuranceFilter,
+                                      //                         ),
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           //font change
+                                      //                           title: new Text(
+                                      //                             "Premium Packaging",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await filter(
+                                      //                                 "premium");
+                                      //                             setState(() {
+                                      //                               premiumFilter =
+                                      //                                   val;
+                                      //                               filteredSp =
+                                      //                                   filteredSp;
+                                      //                             });
+                                      //                           },
+                                      //                           value:
+                                      //                               premiumFilter,
+                                      //                         ),
+                                      //                       ],
+                                      //                     ),
+                                      //                   ),
+                                      //                   Spacer()
+                                      //                 ],
+                                      //               ),
+                                      //             );
+                                      //           });
+                                      //         });
+                                      //   },
+                                      //   child: Container(
+                                      //     padding:
+                                      //         EdgeInsets.fromLTRB(10, 6, 10, 6),
+                                      //     decoration: BoxDecoration(
+                                      //         color: Colors.grey[100],
+                                      //         border: Border.all(
+                                      //           color: C.primaryColor,
+                                      //         ),
+                                      //         borderRadius: BorderRadius.all(
+                                      //             Radius.circular(20))),
+                                      //     child: Text(
+                                      //       "Filter",
+                                      //       style: TextStyle(
+                                      //           fontSize: 13,
+                                      //           color: Colors.grey),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       SizedBox(
                                         width: 15,
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          showModalBottomSheet(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return StatefulBuilder(builder:
-                                                    (context, setState) {
-                                                  return Container(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Card(
-                                                          child: Container(
-                                                            child: Row(
-                                                              children: [
-                                                                IconButton(
-                                                                    icon: Icon(Icons
-                                                                        .close),
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    }),
-                                                                Text(
-                                                                  "Sort By",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        13,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                                ),
-                                                                Spacer(),
-                                                                TextButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      clearAllSort();
-                                                                    },
-                                                                    child: Text(
-                                                                      "Clear All",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              primaryColor),
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      40),
-                                                          child: Column(
-                                                            children: [
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                title: new Text(
-                                                                  "Price",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await sort(
-                                                                      priceSort,
-                                                                      filteredSp,
-                                                                      'price');
-                                                                  setState(() {
-                                                                    priceSort =
-                                                                        val;
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                value:
-                                                                    priceSort,
-                                                              ),
-                                                              CheckboxListTile(
-                                                                dense: true,
-                                                                title: new Text(
-                                                                  "Ratings",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      letterSpacing:
-                                                                          0.5),
-                                                                ),
-                                                                onChanged:
-                                                                    (val) async {
-                                                                  await sort(
-                                                                      ratingSort,
-                                                                      filteredSp,
-                                                                      'rating');
-                                                                  setState(() {
-                                                                    ratingSort =
-                                                                        val;
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                value:
-                                                                    ratingSort,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Spacer()
-                                                      ],
-                                                    ),
-                                                  );
-                                                });
-                                              });
-                                        },
-                                        child: Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 6, 10, 6),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey[100],
-                                              border: Border.all(
-                                                color: C.primaryColor,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Sort By",
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.grey),
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Icon(
-                                                Icons.arrow_downward_rounded,
-                                                size: 10,
-                                                color: Colors.grey,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     showModalBottomSheet(
+                                      //         context: context,
+                                      //         builder: (BuildContext context) {
+                                      //           return StatefulBuilder(builder:
+                                      //               (context, setState) {
+                                      //             return Container(
+                                      //               child: Column(
+                                      //                 crossAxisAlignment:
+                                      //                     CrossAxisAlignment
+                                      //                         .start,
+                                      //                 children: [
+                                      //                   Card(
+                                      //                     child: Container(
+                                      //                       child: Row(
+                                      //                         children: [
+                                      //                           IconButton(
+                                      //                               icon: Icon(Icons
+                                      //                                   .close),
+                                      //                               onPressed:
+                                      //                                   () {
+                                      //                                 Navigator.pop(
+                                      //                                     context);
+                                      //                               }),
+                                      //                           Text(
+                                      //                             "Sort By",
+                                      //                             style:
+                                      //                                 TextStyle(
+                                      //                               fontSize:
+                                      //                                   13,
+                                      //                               fontWeight:
+                                      //                                   FontWeight
+                                      //                                       .w600,
+                                      //                             ),
+                                      //                           ),
+                                      //                           Spacer(),
+                                      //                           TextButton(
+                                      //                               onPressed:
+                                      //                                   () {
+                                      //                                 clearAllSort();
+                                      //                               },
+                                      //                               child: Text(
+                                      //                                 "Clear All",
+                                      //                                 style: TextStyle(
+                                      //                                     color:
+                                      //                                         primaryColor),
+                                      //                               ))
+                                      //                         ],
+                                      //                       ),
+                                      //                     ),
+                                      //                   ),
+                                      //                   SizedBox(
+                                      //                     height: 20,
+                                      //                   ),
+                                      //                   Container(
+                                      //                     padding: EdgeInsets
+                                      //                         .symmetric(
+                                      //                             horizontal:
+                                      //                                 40),
+                                      //                     child: Column(
+                                      //                       children: [
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           title: new Text(
+                                      //                             "Price",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await sort(
+                                      //                                 priceSort,
+                                      //                                 filteredSp,
+                                      //                                 'price');
+                                      //                             setState(() {
+                                      //                               priceSort =
+                                      //                                   val;
+                                      //                             });
+                                      //                             Navigator.pop(
+                                      //                                 context);
+                                      //                           },
+                                      //                           value:
+                                      //                               priceSort,
+                                      //                         ),
+                                      //                         CheckboxListTile(
+                                      //                           dense: true,
+                                      //                           title: new Text(
+                                      //                             "Ratings",
+                                      //                             style: TextStyle(
+                                      //                                 fontSize:
+                                      //                                     14,
+                                      //                                 fontWeight:
+                                      //                                     FontWeight
+                                      //                                         .w600,
+                                      //                                 letterSpacing:
+                                      //                                     0.5),
+                                      //                           ),
+                                      //                           onChanged:
+                                      //                               (val) async {
+                                      //                             await sort(
+                                      //                                 ratingSort,
+                                      //                                 filteredSp,
+                                      //                                 'rating');
+                                      //                             setState(() {
+                                      //                               ratingSort =
+                                      //                                   val;
+                                      //                             });
+                                      //                             Navigator.pop(
+                                      //                                 context);
+                                      //                           },
+                                      //                           value:
+                                      //                               ratingSort,
+                                      //                         ),
+                                      //                       ],
+                                      //                     ),
+                                      //                   ),
+                                      //                   Spacer()
+                                      //                 ],
+                                      //               ),
+                                      //             );
+                                      //           });
+                                      //         });
+                                      //   },
+                                      //   child: Container(
+                                      //     padding:
+                                      //         EdgeInsets.fromLTRB(10, 6, 10, 6),
+                                      //     decoration: BoxDecoration(
+                                      //         color: Colors.grey[100],
+                                      //         border: Border.all(
+                                      //           color: C.primaryColor,
+                                      //         ),
+                                      //         borderRadius: BorderRadius.all(
+                                      //             Radius.circular(20))),
+                                      //     child: Row(
+                                      //       children: [
+                                      //         Text(
+                                      //           "Sort By",
+                                      //           style: TextStyle(
+                                      //               fontSize: 13,
+                                      //               color: Colors.grey),
+                                      //         ),
+                                      //         SizedBox(
+                                      //           width: 5,
+                                      //         ),
+                                      //         Icon(
+                                      //           Icons.arrow_downward_rounded,
+                                      //           size: 10,
+                                      //           color: Colors.grey,
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       SizedBox(
                                         width: 5,
                                       ),
@@ -780,15 +772,11 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                   Container(
                                                     child: Row(
                                                       children: [
-                                                        Image.network(
-                                                          filteredSp[index][
-                                                                      'displayImage'] !=
-                                                                  null
-                                                              ? "https://goflexe-kyc.s3.ap-south-1.amazonaws.com/${filteredSp[index]['displayImage']}"
-                                                              : "https://images-na.ssl-images-amazon.com/images/I/61u%2BNKkFnmL._SL1000_.jpg",
-                                                          height: 60,
-                                                          width: 60,
-                                                        ),
+                                                        // Image.network(
+                                                        //   "https://images-na.ssl-images-amazon.com/images/I/61u%2BNKkFnmL._SL1000_.jpg",
+                                                        //   height: 60,
+                                                        //   width: 60,
+                                                        // ),
                                                         SizedBox(
                                                           width: 10,
                                                         ),
@@ -815,87 +803,160 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                                               .grey[
                                                                           800]),
                                                                 ),
-                                                                Container(
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
-                                                                          vertical:
-                                                                              7),
-                                                                  child: RatingBar
-                                                                      .builder(
-                                                                    ignoreGestures:
-                                                                        true,
-                                                                    initialRating:
-                                                                        double.parse(
-                                                                            filteredSp[index]['rating'].toString()),
-                                                                    minRating:
-                                                                        1,
-                                                                    direction: Axis
-                                                                        .horizontal,
-                                                                    itemSize:
-                                                                        15,
-                                                                    allowHalfRating:
-                                                                        true,
-                                                                    itemCount:
-                                                                        5,
-                                                                    itemPadding:
-                                                                        EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                1.0),
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                                _) =>
-                                                                            Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      color: Colors
-                                                                          .amber,
-                                                                    ),
-                                                                    onRatingUpdate:
-                                                                        (double
-                                                                            value) {},
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Row(children: [
+                                                                  Text(
+                                                                    'Ph: ' +
+                                                                        (filteredSp[index]['mobile'] !=
+                                                                                null
+                                                                            ? filteredSp[index]['mobile']
+                                                                            : 'NA'),
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .grey[600]),
                                                                   ),
+                                                                  // SizedBox(
+                                                                  //   width: 10,
+                                                                  // ),
+                                                                  if (filteredSp[index]
+                                                                              [
+                                                                              'mobile'] !=
+                                                                          null &&
+                                                                      filteredSp[index]
+                                                                              [
+                                                                              'mobile'] !=
+                                                                          'NA')
+                                                                    IconButton(
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .phone_enabled_rounded,
+                                                                        color: Colors
+                                                                            .blue
+                                                                            .shade400,
+                                                                      ),
+                                                                      onPressed: () =>
+                                                                          launch('tel:' +
+                                                                              filteredSp[index]['mobile']),
+                                                                    ),
+                                                                  // RaisedButton(
+                                                                  // onPressed: () =>
+                                                                  //     launch(
+                                                                  //         'tel:7585867170'),
+                                                                  //   child: Text(
+                                                                  //       'Call'),
+                                                                  //   textColor:
+                                                                  //       Colors
+                                                                  //           .black,
+                                                                  //   padding:
+                                                                  //       const EdgeInsets.all(
+                                                                  //           2.0),
+                                                                  // ),
+                                                                ]),
+                                                                // Container(
+                                                                //   padding: EdgeInsets
+                                                                //       .symmetric(
+                                                                //           vertical:
+                                                                //               7),
+                                                                //   child: RatingBar
+                                                                //       .builder(
+                                                                //     ignoreGestures:
+                                                                //         true,
+                                                                //     initialRating:
+                                                                //         double.parse(
+                                                                //             filteredSp[index]['rating'].toString()),
+                                                                //     minRating:
+                                                                //         1,
+                                                                //     direction: Axis
+                                                                //         .horizontal,
+                                                                //     itemSize:
+                                                                //         15,
+                                                                //     allowHalfRating:
+                                                                //         true,
+                                                                //     itemCount:
+                                                                //         5,
+                                                                //     itemPadding:
+                                                                //         EdgeInsets.symmetric(
+                                                                //             horizontal:
+                                                                //                 1.0),
+                                                                //     itemBuilder:
+                                                                //         (context,
+                                                                //                 _) =>
+                                                                //             Icon(
+                                                                //       Icons
+                                                                //           .star,
+                                                                //       color: Colors
+                                                                //           .amber,
+                                                                //     ),
+                                                                //     onRatingUpdate:
+                                                                //         (double
+                                                                //             value) {},
+                                                                //   ),
+                                                                // ),
+                                                                SizedBox(
+                                                                  height: 10,
                                                                 ),
                                                                 Container(
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                          border: Border
-                                                                              .all(
-                                                                            color:
-                                                                                Colors.amber,
-                                                                          ),
-                                                                          borderRadius:
-                                                                              BorderRadius.all(Radius.circular(20))),
+                                                                  // decoration:
+                                                                  //     BoxDecoration(
+                                                                  //         border: Border
+                                                                  //             .all(
+                                                                  //           color:
+                                                                  //               Colors.amber,
+                                                                  //         ),
+                                                                  //         borderRadius:
+                                                                  //             BorderRadius.all(Radius.circular(20))),
                                                                   child: Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
                                                                     children: [
                                                                       Container(
-                                                                        padding:
-                                                                            EdgeInsets.all(3),
-                                                                        decoration: BoxDecoration(
-                                                                            color:
-                                                                                Colors.amber,
-                                                                            borderRadius: BorderRadius.all(Radius.circular(20))),
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .check,
-                                                                          size:
-                                                                              13,
-                                                                        ),
-                                                                      ),
+                                                                          // padding:
+                                                                          //     EdgeInsets.all(2),
+                                                                          // decoration: BoxDecoration(
+                                                                          //     color:
+                                                                          //         Colors.amber,
+                                                                          //     borderRadius: BorderRadius.all(Radius.circular(20))),
+                                                                          // child:
+                                                                          // //     Icon(
+                                                                          // //   Icons
+                                                                          // //       .check,
+                                                                          // //   size:
+                                                                          // //       13,
+                                                                          // // ),
+                                                                          ),
+
                                                                       Padding(
                                                                         padding:
                                                                             EdgeInsets.symmetric(horizontal: 5),
-                                                                        child: Text(
-                                                                            "VERIFIED",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 10,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            )),
-                                                                      )
+                                                                        // child: Text(
+                                                                        //     'Address: ' +
+                                                                        //         'asfdddddddddddddddddddddddddddddddddddddddddddddddddd',
+                                                                        //     textAlign:
+                                                                        //         TextAlign.justify,
+                                                                        //     overflow: TextOverflow.ellipsis,
+                                                                        //     // maxLines: 4,
+                                                                        //     // overflow: TextOverflow.ellipsis,
+                                                                        //     // textDirection: TextDirection.rtl,
+                                                                        //     // textAlign: TextAlign.justify,
+                                                                        //     style: TextStyle(
+                                                                        //       fontSize: 12,
+                                                                        //       fontWeight: FontWeight.w600,
+                                                                        //     )),
+                                                                      ),
+                                                                      // Expanded(
+                                                                      //   child:
+                                                                      //       Text(
+                                                                      //     'a long text',
+                                                                      //     overflow:
+                                                                      //         TextOverflow.clip,
+                                                                      //   ),
+                                                                      // ),
                                                                     ],
                                                                   ),
                                                                 )
@@ -905,7 +966,7 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                         Column(
                                                           children: [
                                                             Text(
-                                                              "₹ ${filteredSp[index]['price']}",
+                                                              " ${filteredSp[index]['price']} ",
                                                               style: TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
@@ -914,8 +975,18 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                                   color: Colors
                                                                       .black),
                                                             ),
+                                                            Text(
+                                                              "Beds Available",
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
                                                             SizedBox(
-                                                              height: 25,
+                                                              height: 20,
                                                             ),
                                                             GestureDetector(
                                                               onTap: () {
@@ -933,10 +1004,19 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                                     builder:
                                                                         (BuildContext
                                                                             context) {
-                                                                      return SpDetails(
-                                                                          spId: filteredSp[index]
-                                                                              [
-                                                                              "serviceProviderId"]);
+                                                                      return Text(
+                                                                        "Coming soon",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            color: Colors.black),
+                                                                      );
+                                                                      // return SpDetails(
+                                                                      //     spId: filteredSp[index]
+                                                                      //         [
+                                                                      //         "serviceProviderId"]);
                                                                     });
                                                               },
                                                               child: Container(
@@ -944,17 +1024,17 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                                     .symmetric(
                                                                         horizontal:
                                                                             10),
-                                                                child: Text(
-                                                                  "More Info",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      color: Color(
-                                                                          0xFF3f51b5)),
-                                                                ),
+                                                                // child: Text(
+                                                                //   "More Info",
+                                                                //   style: TextStyle(
+                                                                //       fontSize:
+                                                                //           12,
+                                                                //       fontWeight:
+                                                                //           FontWeight
+                                                                //               .w600,
+                                                                //       color: Color(
+                                                                //           0xFF3f51b5)),
+                                                                // ),
                                                               ),
                                                             )
                                                           ],
@@ -965,25 +1045,101 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                   SizedBox(
                                                     height: 5,
                                                   ),
+                                                  if (filteredSp[index]
+                                                          ['address'] !=
+                                                      null)
+                                                    Container(
+                                                      child: Text(
+                                                        "Address: " +
+                                                            filteredSp[index]
+                                                                ['address'],
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 5,
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                      ),
+                                                    ),
                                                   Divider(),
+
+                                                  // if (filteredSp[index]
+                                                  //         ["offerings"].length !=
+                                                  //     0)
+                                                  // Row(
+                                                  //   mainAxisAlignment:
+                                                  //       MainAxisAlignment
+                                                  //           .center,
+                                                  //   children: [
+                                                  //     Text(
+                                                  //       'Regular Beds: ' +
+                                                  //           filteredSp[index][
+                                                  //                           "offerings"]
+                                                  //                       [
+                                                  //                       'regularBed']
+                                                  //                   [
+                                                  //                   'available']
+                                                  //               .toString(),
+                                                  //       style: TextStyle(
+                                                  //           fontSize: 10),
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       width: 40,
+                                                  //     ),
+                                                  //     Text(
+                                                  //       'Oxygen Beds: ' +
+                                                  //           filteredSp[index][
+                                                  //                           "offerings"]
+                                                  //                       [
+                                                  //                       'oxygenBed']
+                                                  //                   [
+                                                  //                   'available']
+                                                  //               .toString(),
+                                                  //       style: TextStyle(
+                                                  //           fontSize: 10),
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       width: 40,
+                                                  //     ),
+                                                  //     Text(
+                                                  //       'ICU Beds: ' +
+                                                  //           filteredSp[index][
+                                                  //                           "offerings"]
+                                                  //                       [
+                                                  //                       'icuBed']
+                                                  //                   [
+                                                  //                   'available']
+                                                  //               .toString(),
+                                                  //       style: TextStyle(
+                                                  //           fontSize: 10),
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       width: 5,
+                                                  //     ),
+                                                  //     // ImageIcon(
+                                                  //     //   AssetImage(
+                                                  //     //       "assets/premium.png"),
+                                                  //     //   size: 10,
+                                                  //     // ),
+                                                  //   ],
+                                                  // )
                                                   if (filteredSp[index]
                                                               ["offerings"]
                                                           .length !=
                                                       0)
                                                     Directionality(
                                                       textDirection:
-                                                          TextDirection.rtl,
+                                                          TextDirection.ltr,
                                                       child: GridView.builder(
                                                           padding:
                                                               EdgeInsets.only(
-                                                                  left: 10),
+                                                                  left: 5),
                                                           shrinkWrap: true,
                                                           gridDelegate:
                                                               new SliverGridDelegateWithFixedCrossAxisCount(
                                                                   crossAxisCount:
-                                                                      3,
+                                                                      2,
                                                                   childAspectRatio:
-                                                                      7 / 1,
+                                                                      6 / 1,
                                                                   crossAxisSpacing:
                                                                       0,
                                                                   mainAxisSpacing:
@@ -998,25 +1154,32 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                             return Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
-                                                                      .center,
+                                                                      .start,
                                                               children: [
                                                                 Text(
-                                                                  filteredSp[
-                                                                          index]
-                                                                      [
-                                                                      "offerings"][i],
+                                                                  filteredSp[index]["offerings"]
+                                                                              [
+                                                                              i]
+                                                                          [
+                                                                          "label"] +
+                                                                      ": " +
+                                                                      filteredSp[index]["offerings"][i]["value"]
+                                                                              [
+                                                                              "vacant"]
+                                                                          .toString(),
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           10),
                                                                 ),
+
                                                                 SizedBox(
                                                                   width: 5,
                                                                 ),
-                                                                ImageIcon(
-                                                                  AssetImage(
-                                                                      "assets/premium.png"),
-                                                                  size: 10,
-                                                                ),
+                                                                // ImageIcon(
+                                                                //   AssetImage(
+                                                                //       "assets/premium.png"),
+                                                                //   size: 10,
+                                                                // ),
                                                               ],
                                                             );
                                                           }),
@@ -1135,55 +1298,55 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
       SizedBox(
         height: 15,
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
-            decoration: BoxDecoration(
-                color: Colors.grey[100],
-                border: Border.all(
-                  color: C.primaryColor,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Text(
-              "Filter",
-              style: TextStyle(fontSize: 13, color: Colors.grey),
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
-            decoration: BoxDecoration(
-                color: Colors.grey[100],
-                border: Border.all(
-                  color: C.primaryColor,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Row(
-              children: [
-                Text(
-                  "Sort By",
-                  style: TextStyle(fontSize: 13, color: Colors.grey),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Icon(
-                  Icons.arrow_downward_rounded,
-                  size: 10,
-                  color: Colors.grey,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-        ],
-      ),
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     Container(
+      //       padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
+      //       decoration: BoxDecoration(
+      //           color: Colors.grey[100],
+      //           border: Border.all(
+      //             color: C.primaryColor,
+      //           ),
+      //           borderRadius: BorderRadius.all(Radius.circular(20))),
+      //       child: Text(
+      //         "Filter",
+      //         style: TextStyle(fontSize: 13, color: Colors.grey),
+      //       ),
+      //     ),
+      //     SizedBox(
+      //       width: 15,
+      //     ),
+      //     Container(
+      //       padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
+      //       decoration: BoxDecoration(
+      //           color: Colors.grey[100],
+      //           border: Border.all(
+      //             color: C.primaryColor,
+      //           ),
+      //           borderRadius: BorderRadius.all(Radius.circular(20))),
+      //       child: Row(
+      //         children: [
+      //           Text(
+      //             "Sort By",
+      //             style: TextStyle(fontSize: 13, color: Colors.grey),
+      //           ),
+      //           SizedBox(
+      //             width: 5,
+      //           ),
+      //           Icon(
+      //             Icons.arrow_downward_rounded,
+      //             size: 10,
+      //             color: Colors.grey,
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //     SizedBox(
+      //       width: 5,
+      //     ),
+      //   ],
+      // ),
       SizedBox(
         height: 15,
       ),
@@ -1237,4 +1400,10 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
       ),
     ]),
   ));
+}
+
+class CallsAndMessagesService {
+  void call(String number) => launch("tel:$number");
+  void sendSms(String number) => launch("sms:$number");
+  void sendEmail(String email) => launch("mailto:$email");
 }

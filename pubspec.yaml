@@ -48,7 +48,7 @@ dependencies:
   firebase_core: ^1.0.2
   firebase_analytics: ^7.1.1
   firebase_auth: ^1.0.1
-  cloud_firestore: ^1.0.3
+  # cloud_firestore: ^1.0.3
   pin_code_fields: ^7.0.0
   youtube_player_iframe: ^2.0.0
   flutter_rating_bar: ^4.0.0
@@ -61,10 +61,10 @@ dependencies:
   google_maps_flutter: ^2.0.3
   google_maps_flutter_web: ^0.3.0
   location: ^4.1.1
-  firebase_messaging: ^9.1.1
-  flutter_local_notifications: ^5.0.0+1
+  # flutter_local_notifications: ^5.0.0+1
   permission_handler:
   dynamic_widget: ^4.0.0
+  native_pdf_view: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -113,3 +113,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+# export PATH="$PATH":"$HOME/Development/flutter/bin"
+# export PATH="$PATH":"$HOME/Development/flutter/.pub-cache/bin"
+# export PATH="$PATH":"$HOME/Development/flutter/bin/cache/dart-sdk/bin"

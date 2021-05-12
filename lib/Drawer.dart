@@ -1,15 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crisis/Order/Hospital.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Fade Route.dart';
-import 'Order/Residential Move.dart';
 import 'Screens/Order/My Orders.dart';
 import 'Videos.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class MyDrawer extends StatefulWidget {
   @override
@@ -18,7 +16,7 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   void initState() {
-    getUser();
+    // getUser();
     super.initState();
   }
 
@@ -113,10 +111,10 @@ class _MyDrawerState extends State<MyDrawer> {
                   dense: true,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      FadeRoute(page: MyOrders()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   FadeRoute(page: MyOrders()),
+                    // );
                   },
                   title: Text("My Orders"),
                   leading: FaIcon(
@@ -126,41 +124,41 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                 ),
               Spacer(),
-              ListTile(
-                dense: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    FadeRoute(page: Videos()),
-                  );
-                },
-                title: Text("About Us"),
-                // minLeadingWidth: 25,
-                leading: FaIcon(
-                  FontAwesomeIcons.youtube,
-                  color: Colors.black87,
-                  size: 18,
-                ),
-              ),
-              ListTile(
-                dense: true,
-                onTap: () async {
-                  const url = 'https://partnergoflexe.netlify.app/#/';
+              // ListTile(
+              //   dense: true,
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       FadeRoute(page: Videos()),
+              //     );
+              //   },
+              //   title: Text("About Us"),
+              //   // minLeadingWidth: 25,
+              //   leading: FaIcon(
+              //     FontAwesomeIcons.youtube,
+              //     color: Colors.black87,
+              //     size: 18,
+              //   ),
+              // ),
+              // ListTile(
+              //   dense: true,
+              //   onTap: () async {
+              //     const url = 'https://partnergoflexe.netlify.app/#/';
 
-                  if (await canLaunch(url)) {
-                    await launch(url, forceSafariVC: false);
-                  } else {
-                    throw 'Could not launch $url';
-                  }
-                },
-                title: Text("Join as Partner"),
-                // minLeadingWidth: 25,
-                leading: FaIcon(
-                  FontAwesomeIcons.peopleCarry,
-                  color: Colors.black87,
-                  size: 18,
-                ),
-              ),
+              //     if (await canLaunch(url)) {
+              //       await launch(url, forceSafariVC: false);
+              //     } else {
+              //       throw 'Could not launch $url';
+              //     }
+              //   },
+              //   title: Text("Join as Partner"),
+              //   // minLeadingWidth: 25,
+              //   leading: FaIcon(
+              //     FontAwesomeIcons.peopleCarry,
+              //     color: Colors.black87,
+              //     size: 18,
+              //   ),
+              // ),
               ListTile(
                 dense: true,
                 onTap: () {},
@@ -264,32 +262,8 @@ class _MyDrawerState extends State<MyDrawer> {
   }
 
   signOut() {
-    _auth.signOut().then((value) => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => ResidentialMove())));
-  }
-
-  Future getUser() async {
-    print("object");
-    if (_auth.currentUser != null) {
-      print("object1");
-      var cellNumber = _auth.currentUser.phoneNumber;
-      cellNumber =
-          _auth.currentUser.phoneNumber.substring(3, cellNumber.length);
-      debugPrint(cellNumber);
-      await _firestore
-          .collection('users')
-          .where('cellnumber', isEqualTo: cellNumber)
-          .get()
-          .then((result) {
-        if (result.docs.length > 0) {
-          setState(() {
-            userName = result.docs[0].data()['name'];
-          });
-        }
-      });
-    }
+    _auth.signOut().then((value) => Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => Hospital())));
   }
 }
 

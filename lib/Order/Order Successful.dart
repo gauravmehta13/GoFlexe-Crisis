@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Residential Move.dart';
+import 'Hospital.dart';
 
 class OrderSuccessful extends StatefulWidget {
   @override
@@ -42,7 +42,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ResidentialMove(),
+                    builder: (context) => Hospital(),
                   ));
             },
             child: Text(

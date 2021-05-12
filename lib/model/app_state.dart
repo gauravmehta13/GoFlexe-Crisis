@@ -24,34 +24,39 @@ class AppState {
   bool pickupLift;
   String dropFloor;
   bool dropLift;
+  String stateName;
+  String districtName;
+  String usecase;
 
-  AppState({
-    this.spId,
-    this.movementType,
-    this.pickupCity,
-    this.dropCity,
-    this.shiftType,
-    this.price,
-    this.vehicles,
-    this.pickupStreetAddress,
-    this.dropStreetAddress,
-    this.bike,
-    this.additionalItems,
-    this.car,
-    this.dropAddress,
-    this.dropDate,
-    this.dropFloor,
-    this.dropLift,
-    this.packingRequirement,
-    this.pickupAddress,
-    this.pickupDate,
-    this.pickupFloor,
-    this.pickupLift,
-    this.singleServices,
-    this.multiServices,
-    this.selectedServiceProvider,
-    this.warehousing,
-  });
+  AppState(
+      {this.spId,
+      this.movementType,
+      this.pickupCity,
+      this.dropCity,
+      this.shiftType,
+      this.price,
+      this.vehicles,
+      this.pickupStreetAddress,
+      this.dropStreetAddress,
+      this.bike,
+      this.additionalItems,
+      this.car,
+      this.dropAddress,
+      this.dropDate,
+      this.dropFloor,
+      this.dropLift,
+      this.packingRequirement,
+      this.pickupAddress,
+      this.pickupDate,
+      this.pickupFloor,
+      this.pickupLift,
+      this.singleServices,
+      this.multiServices,
+      this.selectedServiceProvider,
+      this.warehousing,
+      this.districtName,
+      this.stateName,
+      this.usecase});
 
   AppState.fromAppState(AppState another) {
     spId = another.spId;
@@ -79,5 +84,8 @@ class AppState {
     pickupLift = another.pickupLift;
     selectedServiceProvider = another.selectedServiceProvider;
     warehousing = another.warehousing;
+    stateName = another.stateName;
+    districtName = another.districtName;
+    usecase = another.usecase;
   }
 }

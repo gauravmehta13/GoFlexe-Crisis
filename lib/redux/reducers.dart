@@ -54,6 +54,12 @@ AppState reducer(AppState prevState, dynamic action) {
     newState.pickupLift = action.payload;
   } else if (action is DropLift) {
     newState.dropLift = action.payload;
+  } else if (action is StateName) {
+    newState.stateName = action.payload;
+  } else if (action is DistrictName) {
+    newState.districtName = action.payload;
+  } else if (action is Usecase) {
+    newState.usecase = action.payload;
   }
 
   return newState;

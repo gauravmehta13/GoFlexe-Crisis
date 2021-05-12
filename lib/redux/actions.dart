@@ -139,3 +139,18 @@ class SpId {
   final String payload;
   SpId(this.payload);
 }
+
+class StateName {
+  final String payload;
+  StateName(this.payload);
+}
+
+class DistrictName {
+  final String payload;
+  DistrictName(this.payload);
+}
+
+class Usecase {
+  final String payload;
+  Usecase(this.payload);
+}
