@@ -1,6 +1,7 @@
 import 'package:crisis/Drawer.dart';
-import 'package:crisis/HomePage/Awareness.dart';
+import 'package:crisis/HomePage/Home%20treatment.dart';
 import 'package:crisis/HomePage/Hospital.dart';
+import 'package:crisis/HomePage/Testing.dart';
 import 'package:crisis/HomePage/Vaccination.dart';
 import 'package:flutter/material.dart';
 
@@ -82,11 +83,10 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                         // first tab [you can add an icon using the icon property]
                         Tab(
                           child: Text(
-                            "Hospitalisation",
+                            "Testing",
                             style: TextStyle(fontSize: 11),
                           ),
                         ),
-                        // second tab [you can add an icon using the icon property]
                         Tab(
                           child: Text(
                             "Home Treatment",
@@ -95,10 +95,12 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                         ),
                         Tab(
                           child: Text(
-                            "Testing",
+                            "Hospitalisation",
                             style: TextStyle(fontSize: 11),
                           ),
                         ),
+                        // second tab [you can add an icon using the icon property]
+
                         Tab(
                           child: Text(
                             "Vaccination",
@@ -117,16 +119,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [
-                Hospital(),
-                Awareness(),
-                Container(
-                  child: Center(
-                    child: Text("Coming Soon"),
-                  ),
-                ),
-                Vaccination()
-              ],
+              children: [Testing(), HomeTreatment(), Hospital(), Vaccination()],
             ),
           ),
         ],

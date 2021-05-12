@@ -111,22 +111,22 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
 
-              ListTile(
-                dense: true,
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    FadeRoute(page: StatsTabBar()),
-                  );
-                },
-                title: Text("Live Data"),
-                leading: FaIcon(
-                  FontAwesomeIcons.solidNewspaper,
-                  color: Colors.black87,
-                  size: 18,
-                ),
-              ),
+              // ListTile(
+              //   dense: true,
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(
+              //       context,
+              //       FadeRoute(page: StatsTabBar()),
+              //     );
+              //   },
+              //   title: Text("Live Data"),
+              //   leading: FaIcon(
+              //     FontAwesomeIcons.solidNewspaper,
+              //     color: Colors.black87,
+              //     size: 18,
+              //   ),
+              // ),
 
               Spacer(),
               // ListTile(

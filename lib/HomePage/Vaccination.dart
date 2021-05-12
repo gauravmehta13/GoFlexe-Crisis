@@ -23,7 +23,7 @@ class _VaccinationState extends State<Vaccination> {
                 onPrimary: Colors.white, // foreground
               ),
               onPressed: () async {
-                await launch("https://www.cowin.gov.in/home");
+                await launch("https://selfregistration.cowin.gov.in/");
               },
               child: Text(
                 "Get Vaccinated",

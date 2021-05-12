@@ -137,7 +137,7 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size(double.infinity, 60),
-            child: MyAppBar(curStep: 3)),
+            child: MyAppBar(curStep: 0)),
         // bottomNavigationBar: Container(
         //   padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
         //   child: SizedBox(
@@ -219,580 +219,784 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                               width: MediaQuery.of(context).size.width,
                               child: Center(child: Loading()),
                             )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      "List of Hospitals",
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: new TextFormField(
-                                      textInputAction: TextInputAction.go,
-                                      onChanged: (string) {
-                                        setState(() {
-                                          filteredSp = (spList)
-                                              .where((u) => (u['name']
-                                                      .toLowerCase()
-                                                      .contains(string
-                                                          .toLowerCase()) ||
-                                                  u['address']
-                                                      .toLowerCase()
-                                                      .contains(string
-                                                          .toLowerCase())))
-                                              .toList();
-                                        });
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      decoration: new InputDecoration(
-                                        isDense: true, // Added this
-                                        contentPadding: EdgeInsets.all(15),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          borderSide: BorderSide(
-                                            width: 1,
-                                            color: Color(0xFF2821B5),
-                                          ),
-                                        ),
-                                        border: new OutlineInputBorder(
-                                            borderSide: new BorderSide(
-                                                color: Colors.grey)),
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8),
-                                          child: Icon(
-                                            Icons.search,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        hintText: "Search..",
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                          : filteredSp.length == 0
+                              ? Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Center(
+                                      child: Column(
                                     children: [
-                                      // GestureDetector(
-                                      //   onTap: () {
-                                      //     setState(() {
-                                      //       sortby = false;
-                                      //     });
-                                      //     showModalBottomSheet(
-                                      //         context: context,
-                                      //         builder: (BuildContext context) {
-                                      //           return StatefulBuilder(builder:
-                                      //               (context, setState) {
-                                      //             return Container(
-                                      //               child: Column(
-                                      //                 crossAxisAlignment:
-                                      //                     CrossAxisAlignment
-                                      //                         .start,
-                                      //                 children: [
-                                      //                   Card(
-                                      //                     child: Container(
-                                      //                       child: Row(
-                                      //                         children: [
-                                      //                           IconButton(
-                                      //                               icon: Icon(Icons
-                                      //                                   .close),
-                                      //                               onPressed:
-                                      //                                   () {
-                                      //                                 Navigator.pop(
-                                      //                                     context);
-                                      //                               }),
-                                      //                           Text(
-                                      //                             "Filter",
-                                      //                             style:
-                                      //                                 TextStyle(
-                                      //                               fontSize:
-                                      //                                   13,
-                                      //                               fontWeight:
-                                      //                                   FontWeight
-                                      //                                       .w600,
-                                      //                             ),
-                                      //                           ),
-                                      //                           Spacer(),
-                                      //                           TextButton(
-                                      //                               onPressed:
-                                      //                                   () {
-                                      //                                 clearAllFilters();
-                                      //                               },
-                                      //                               child: Text(
-                                      //                                 "Clear All",
-                                      //                                 style: TextStyle(
-                                      //                                     color:
-                                      //                                         primaryColor),
-                                      //                               ))
-                                      //                         ],
-                                      //                       ),
-                                      //                     ),
-                                      //                   ),
-                                      //                   SizedBox(
-                                      //                     height: 20,
-                                      //                   ),
-                                      //                   Container(
-                                      //                     padding: EdgeInsets
-                                      //                         .symmetric(
-                                      //                       horizontal: 40,
-                                      //                     ),
-                                      //                     child: Column(
-                                      //                       children: [
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           //font change
-                                      //                           title: new Text(
-                                      //                             "Warehouse",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await filter(
-                                      //                                 "warehouse");
-                                      //                             setState(() {
-                                      //                               warehouseFilter =
-                                      //                                   val;
-                                      //                               filteredSp =
-                                      //                                   filteredSp;
-                                      //                             });
-                                      //                           },
-                                      //                           value:
-                                      //                               warehouseFilter,
-                                      //                         ),
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           //font change
-                                      //                           title: new Text(
-                                      //                             "Installation",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await filter(
-                                      //                                 "installation");
-                                      //                             setState(() {
-                                      //                               installationFilter =
-                                      //                                   val;
-                                      //                               filteredSp =
-                                      //                                   filteredSp;
-                                      //                             });
-                                      //                           },
-                                      //                           value:
-                                      //                               installationFilter,
-                                      //                         ),
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           //font change
-                                      //                           title: new Text(
-                                      //                             "Unpacking",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await filter(
-                                      //                                 "unpacking");
-                                      //                             setState(() {
-                                      //                               unpackingFilter =
-                                      //                                   val;
-                                      //                               filteredSp =
-                                      //                                   filteredSp;
-                                      //                             });
-                                      //                           },
-                                      //                           value:
-                                      //                               unpackingFilter,
-                                      //                         ),
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           //font change
-                                      //                           title: new Text(
-                                      //                             "Insurance",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await filter(
-                                      //                                 "insurance");
-                                      //                             setState(() {
-                                      //                               insuranceFilter =
-                                      //                                   val;
-                                      //                               filteredSp =
-                                      //                                   filteredSp;
-                                      //                             });
-                                      //                           },
-                                      //                           value:
-                                      //                               insuranceFilter,
-                                      //                         ),
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           //font change
-                                      //                           title: new Text(
-                                      //                             "Premium Packaging",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await filter(
-                                      //                                 "premium");
-                                      //                             setState(() {
-                                      //                               premiumFilter =
-                                      //                                   val;
-                                      //                               filteredSp =
-                                      //                                   filteredSp;
-                                      //                             });
-                                      //                           },
-                                      //                           value:
-                                      //                               premiumFilter,
-                                      //                         ),
-                                      //                       ],
-                                      //                     ),
-                                      //                   ),
-                                      //                   Spacer()
-                                      //                 ],
-                                      //               ),
-                                      //             );
-                                      //           });
-                                      //         });
-                                      //   },
-                                      //   child: Container(
-                                      //     padding:
-                                      //         EdgeInsets.fromLTRB(10, 6, 10, 6),
-                                      //     decoration: BoxDecoration(
-                                      //         color: Colors.grey[100],
-                                      //         border: Border.all(
-                                      //           color: C.primaryColor,
-                                      //         ),
-                                      //         borderRadius: BorderRadius.all(
-                                      //             Radius.circular(20))),
-                                      //     child: Text(
-                                      //       "Filter",
-                                      //       style: TextStyle(
-                                      //           fontSize: 13,
-                                      //           color: Colors.grey),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                       SizedBox(
-                                        width: 15,
+                                        height: 60,
                                       ),
-                                      // GestureDetector(
-                                      //   onTap: () {
-                                      //     showModalBottomSheet(
-                                      //         context: context,
-                                      //         builder: (BuildContext context) {
-                                      //           return StatefulBuilder(builder:
-                                      //               (context, setState) {
-                                      //             return Container(
-                                      //               child: Column(
-                                      //                 crossAxisAlignment:
-                                      //                     CrossAxisAlignment
-                                      //                         .start,
-                                      //                 children: [
-                                      //                   Card(
-                                      //                     child: Container(
-                                      //                       child: Row(
-                                      //                         children: [
-                                      //                           IconButton(
-                                      //                               icon: Icon(Icons
-                                      //                                   .close),
-                                      //                               onPressed:
-                                      //                                   () {
-                                      //                                 Navigator.pop(
-                                      //                                     context);
-                                      //                               }),
-                                      //                           Text(
-                                      //                             "Sort By",
-                                      //                             style:
-                                      //                                 TextStyle(
-                                      //                               fontSize:
-                                      //                                   13,
-                                      //                               fontWeight:
-                                      //                                   FontWeight
-                                      //                                       .w600,
-                                      //                             ),
-                                      //                           ),
-                                      //                           Spacer(),
-                                      //                           TextButton(
-                                      //                               onPressed:
-                                      //                                   () {
-                                      //                                 clearAllSort();
-                                      //                               },
-                                      //                               child: Text(
-                                      //                                 "Clear All",
-                                      //                                 style: TextStyle(
-                                      //                                     color:
-                                      //                                         primaryColor),
-                                      //                               ))
-                                      //                         ],
-                                      //                       ),
-                                      //                     ),
-                                      //                   ),
-                                      //                   SizedBox(
-                                      //                     height: 20,
-                                      //                   ),
-                                      //                   Container(
-                                      //                     padding: EdgeInsets
-                                      //                         .symmetric(
-                                      //                             horizontal:
-                                      //                                 40),
-                                      //                     child: Column(
-                                      //                       children: [
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           title: new Text(
-                                      //                             "Price",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await sort(
-                                      //                                 priceSort,
-                                      //                                 filteredSp,
-                                      //                                 'price');
-                                      //                             setState(() {
-                                      //                               priceSort =
-                                      //                                   val;
-                                      //                             });
-                                      //                             Navigator.pop(
-                                      //                                 context);
-                                      //                           },
-                                      //                           value:
-                                      //                               priceSort,
-                                      //                         ),
-                                      //                         CheckboxListTile(
-                                      //                           dense: true,
-                                      //                           title: new Text(
-                                      //                             "Ratings",
-                                      //                             style: TextStyle(
-                                      //                                 fontSize:
-                                      //                                     14,
-                                      //                                 fontWeight:
-                                      //                                     FontWeight
-                                      //                                         .w600,
-                                      //                                 letterSpacing:
-                                      //                                     0.5),
-                                      //                           ),
-                                      //                           onChanged:
-                                      //                               (val) async {
-                                      //                             await sort(
-                                      //                                 ratingSort,
-                                      //                                 filteredSp,
-                                      //                                 'rating');
-                                      //                             setState(() {
-                                      //                               ratingSort =
-                                      //                                   val;
-                                      //                             });
-                                      //                             Navigator.pop(
-                                      //                                 context);
-                                      //                           },
-                                      //                           value:
-                                      //                               ratingSort,
-                                      //                         ),
-                                      //                       ],
-                                      //                     ),
-                                      //                   ),
-                                      //                   Spacer()
-                                      //                 ],
-                                      //               ),
-                                      //             );
-                                      //           });
-                                      //         });
-                                      //   },
-                                      //   child: Container(
-                                      //     padding:
-                                      //         EdgeInsets.fromLTRB(10, 6, 10, 6),
-                                      //     decoration: BoxDecoration(
-                                      //         color: Colors.grey[100],
-                                      //         border: Border.all(
-                                      //           color: C.primaryColor,
-                                      //         ),
-                                      //         borderRadius: BorderRadius.all(
-                                      //             Radius.circular(20))),
-                                      //     child: Row(
-                                      //       children: [
-                                      //         Text(
-                                      //           "Sort By",
-                                      //           style: TextStyle(
-                                      //               fontSize: 13,
-                                      //               color: Colors.grey),
-                                      //         ),
-                                      //         SizedBox(
-                                      //           width: 5,
-                                      //         ),
-                                      //         Icon(
-                                      //           Icons.arrow_downward_rounded,
-                                      //           size: 10,
-                                      //           color: Colors.grey,
-                                      //         ),
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      // ),
                                       SizedBox(
-                                        width: 5,
+                                          height: 100,
+                                          child: Image.asset(
+                                              "assets/anxiety.png")),
+                                      SizedBox(
+                                        height: 40,
+                                      ),
+                                      Text(
+                                        "Sorry!",
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        "No Hospitals Available at the moment",
+                                        style: TextStyle(
+                                            color: Colors.grey[700],
+                                            fontSize: 18),
                                       ),
                                     ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: filteredSp.length,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            for (var i = 0;
-                                                i < filteredSp.length;
-                                                i++) {
-                                              setState(() {
-                                                filteredSp[i]['selected'] =
-                                                    false;
-                                              });
-                                            }
+                                  )),
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          "List of Hospitals",
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: new TextFormField(
+                                          textInputAction: TextInputAction.go,
+                                          onChanged: (string) {
                                             setState(() {
-                                              filteredSp[index]['selected'] =
-                                                  true;
-                                              spSelected = true;
-                                              spId = filteredSp[index]
-                                                  ["serviceProviderId"];
+                                              filteredSp = (spList)
+                                                  .where((u) => (u['name']
+                                                          .toLowerCase()
+                                                          .contains(string
+                                                              .toLowerCase()) ||
+                                                      u['address']
+                                                          .toLowerCase()
+                                                          .contains(string
+                                                              .toLowerCase())))
+                                                  .toList();
                                             });
-                                            StoreProvider.of<AppState>(context)
-                                                .dispatch(Price(
-                                                    filteredSp[index]["price"]
-                                                        .toString()));
-                                            StoreProvider.of<AppState>(context)
-                                                .dispatch(SpId(filteredSp[index]
-                                                        ["serviceProviderId"]
-                                                    .toString()));
-                                            StoreProvider.of<AppState>(context)
-                                                .dispatch(
-                                                    SelectedServiceProvider(
-                                                        filteredSp[index]
-                                                                ['name']
-                                                            .trim()));
-
-                                            print(filteredSp[index]['name']);
-                                            print(filteredSp[index]['price']);
-                                            if (filteredSp[index]["offerings"]
-                                                    .length ==
-                                                0) {
-                                              setState(() {
-                                                offeringsAvailable = false;
-                                              });
-                                            } else {
-                                              setState(() {
-                                                offeringsAvailable = true;
-                                              });
-                                            }
                                           },
-                                          child: Card(
-                                              shape: filteredSp[index]
-                                                          ['selected'] ==
-                                                      true
-                                                  ? RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                        Radius.circular(10),
-                                                      ),
-                                                      side: BorderSide(
-                                                          width: 3,
-                                                          color: Color(
-                                                              0xFF3f51b5)))
-                                                  : RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                        Radius.circular(10),
-                                                      ),
-                                                      side: BorderSide(
-                                                          width: 0.5,
-                                                          color: Colors.grey)),
-                                              elevation: 2,
-                                              child: Container(
-                                                padding: EdgeInsets.all(10),
-                                                child: Column(children: [
-                                                  Container(
-                                                    child: Row(
-                                                      children: [
-                                                        // Image.network(
-                                                        //   "https://images-na.ssl-images-amazon.com/images/I/61u%2BNKkFnmL._SL1000_.jpg",
-                                                        //   height: 60,
-                                                        //   width: 60,
-                                                        // ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Expanded(
-                                                          flex: 10,
-                                                          child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
+                                          keyboardType: TextInputType.text,
+                                          decoration: new InputDecoration(
+                                            isDense: true, // Added this
+                                            contentPadding: EdgeInsets.all(15),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Color(0xFF2821B5),
+                                              ),
+                                            ),
+                                            border: new OutlineInputBorder(
+                                                borderSide: new BorderSide(
+                                                    color: Colors.grey)),
+                                            suffixIcon: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8),
+                                              child: Icon(
+                                                Icons.search,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            hintText: "Search..",
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     setState(() {
+                                          //       sortby = false;
+                                          //     });
+                                          //     showModalBottomSheet(
+                                          //         context: context,
+                                          //         builder: (BuildContext context) {
+                                          //           return StatefulBuilder(builder:
+                                          //               (context, setState) {
+                                          //             return Container(
+                                          //               child: Column(
+                                          //                 crossAxisAlignment:
+                                          //                     CrossAxisAlignment
+                                          //                         .start,
+                                          //                 children: [
+                                          //                   Card(
+                                          //                     child: Container(
+                                          //                       child: Row(
+                                          //                         children: [
+                                          //                           IconButton(
+                                          //                               icon: Icon(Icons
+                                          //                                   .close),
+                                          //                               onPressed:
+                                          //                                   () {
+                                          //                                 Navigator.pop(
+                                          //                                     context);
+                                          //                               }),
+                                          //                           Text(
+                                          //                             "Filter",
+                                          //                             style:
+                                          //                                 TextStyle(
+                                          //                               fontSize:
+                                          //                                   13,
+                                          //                               fontWeight:
+                                          //                                   FontWeight
+                                          //                                       .w600,
+                                          //                             ),
+                                          //                           ),
+                                          //                           Spacer(),
+                                          //                           TextButton(
+                                          //                               onPressed:
+                                          //                                   () {
+                                          //                                 clearAllFilters();
+                                          //                               },
+                                          //                               child: Text(
+                                          //                                 "Clear All",
+                                          //                                 style: TextStyle(
+                                          //                                     color:
+                                          //                                         primaryColor),
+                                          //                               ))
+                                          //                         ],
+                                          //                       ),
+                                          //                     ),
+                                          //                   ),
+                                          //                   SizedBox(
+                                          //                     height: 20,
+                                          //                   ),
+                                          //                   Container(
+                                          //                     padding: EdgeInsets
+                                          //                         .symmetric(
+                                          //                       horizontal: 40,
+                                          //                     ),
+                                          //                     child: Column(
+                                          //                       children: [
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           //font change
+                                          //                           title: new Text(
+                                          //                             "Warehouse",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await filter(
+                                          //                                 "warehouse");
+                                          //                             setState(() {
+                                          //                               warehouseFilter =
+                                          //                                   val;
+                                          //                               filteredSp =
+                                          //                                   filteredSp;
+                                          //                             });
+                                          //                           },
+                                          //                           value:
+                                          //                               warehouseFilter,
+                                          //                         ),
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           //font change
+                                          //                           title: new Text(
+                                          //                             "Installation",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await filter(
+                                          //                                 "installation");
+                                          //                             setState(() {
+                                          //                               installationFilter =
+                                          //                                   val;
+                                          //                               filteredSp =
+                                          //                                   filteredSp;
+                                          //                             });
+                                          //                           },
+                                          //                           value:
+                                          //                               installationFilter,
+                                          //                         ),
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           //font change
+                                          //                           title: new Text(
+                                          //                             "Unpacking",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await filter(
+                                          //                                 "unpacking");
+                                          //                             setState(() {
+                                          //                               unpackingFilter =
+                                          //                                   val;
+                                          //                               filteredSp =
+                                          //                                   filteredSp;
+                                          //                             });
+                                          //                           },
+                                          //                           value:
+                                          //                               unpackingFilter,
+                                          //                         ),
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           //font change
+                                          //                           title: new Text(
+                                          //                             "Insurance",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await filter(
+                                          //                                 "insurance");
+                                          //                             setState(() {
+                                          //                               insuranceFilter =
+                                          //                                   val;
+                                          //                               filteredSp =
+                                          //                                   filteredSp;
+                                          //                             });
+                                          //                           },
+                                          //                           value:
+                                          //                               insuranceFilter,
+                                          //                         ),
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           //font change
+                                          //                           title: new Text(
+                                          //                             "Premium Packaging",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await filter(
+                                          //                                 "premium");
+                                          //                             setState(() {
+                                          //                               premiumFilter =
+                                          //                                   val;
+                                          //                               filteredSp =
+                                          //                                   filteredSp;
+                                          //                             });
+                                          //                           },
+                                          //                           value:
+                                          //                               premiumFilter,
+                                          //                         ),
+                                          //                       ],
+                                          //                     ),
+                                          //                   ),
+                                          //                   Spacer()
+                                          //                 ],
+                                          //               ),
+                                          //             );
+                                          //           });
+                                          //         });
+                                          //   },
+                                          //   child: Container(
+                                          //     padding:
+                                          //         EdgeInsets.fromLTRB(10, 6, 10, 6),
+                                          //     decoration: BoxDecoration(
+                                          //         color: Colors.grey[100],
+                                          //         border: Border.all(
+                                          //           color: C.primaryColor,
+                                          //         ),
+                                          //         borderRadius: BorderRadius.all(
+                                          //             Radius.circular(20))),
+                                          //     child: Text(
+                                          //       "Filter",
+                                          //       style: TextStyle(
+                                          //           fontSize: 13,
+                                          //           color: Colors.grey),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     showModalBottomSheet(
+                                          //         context: context,
+                                          //         builder: (BuildContext context) {
+                                          //           return StatefulBuilder(builder:
+                                          //               (context, setState) {
+                                          //             return Container(
+                                          //               child: Column(
+                                          //                 crossAxisAlignment:
+                                          //                     CrossAxisAlignment
+                                          //                         .start,
+                                          //                 children: [
+                                          //                   Card(
+                                          //                     child: Container(
+                                          //                       child: Row(
+                                          //                         children: [
+                                          //                           IconButton(
+                                          //                               icon: Icon(Icons
+                                          //                                   .close),
+                                          //                               onPressed:
+                                          //                                   () {
+                                          //                                 Navigator.pop(
+                                          //                                     context);
+                                          //                               }),
+                                          //                           Text(
+                                          //                             "Sort By",
+                                          //                             style:
+                                          //                                 TextStyle(
+                                          //                               fontSize:
+                                          //                                   13,
+                                          //                               fontWeight:
+                                          //                                   FontWeight
+                                          //                                       .w600,
+                                          //                             ),
+                                          //                           ),
+                                          //                           Spacer(),
+                                          //                           TextButton(
+                                          //                               onPressed:
+                                          //                                   () {
+                                          //                                 clearAllSort();
+                                          //                               },
+                                          //                               child: Text(
+                                          //                                 "Clear All",
+                                          //                                 style: TextStyle(
+                                          //                                     color:
+                                          //                                         primaryColor),
+                                          //                               ))
+                                          //                         ],
+                                          //                       ),
+                                          //                     ),
+                                          //                   ),
+                                          //                   SizedBox(
+                                          //                     height: 20,
+                                          //                   ),
+                                          //                   Container(
+                                          //                     padding: EdgeInsets
+                                          //                         .symmetric(
+                                          //                             horizontal:
+                                          //                                 40),
+                                          //                     child: Column(
+                                          //                       children: [
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           title: new Text(
+                                          //                             "Price",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await sort(
+                                          //                                 priceSort,
+                                          //                                 filteredSp,
+                                          //                                 'price');
+                                          //                             setState(() {
+                                          //                               priceSort =
+                                          //                                   val;
+                                          //                             });
+                                          //                             Navigator.pop(
+                                          //                                 context);
+                                          //                           },
+                                          //                           value:
+                                          //                               priceSort,
+                                          //                         ),
+                                          //                         CheckboxListTile(
+                                          //                           dense: true,
+                                          //                           title: new Text(
+                                          //                             "Ratings",
+                                          //                             style: TextStyle(
+                                          //                                 fontSize:
+                                          //                                     14,
+                                          //                                 fontWeight:
+                                          //                                     FontWeight
+                                          //                                         .w600,
+                                          //                                 letterSpacing:
+                                          //                                     0.5),
+                                          //                           ),
+                                          //                           onChanged:
+                                          //                               (val) async {
+                                          //                             await sort(
+                                          //                                 ratingSort,
+                                          //                                 filteredSp,
+                                          //                                 'rating');
+                                          //                             setState(() {
+                                          //                               ratingSort =
+                                          //                                   val;
+                                          //                             });
+                                          //                             Navigator.pop(
+                                          //                                 context);
+                                          //                           },
+                                          //                           value:
+                                          //                               ratingSort,
+                                          //                         ),
+                                          //                       ],
+                                          //                     ),
+                                          //                   ),
+                                          //                   Spacer()
+                                          //                 ],
+                                          //               ),
+                                          //             );
+                                          //           });
+                                          //         });
+                                          //   },
+                                          //   child: Container(
+                                          //     padding:
+                                          //         EdgeInsets.fromLTRB(10, 6, 10, 6),
+                                          //     decoration: BoxDecoration(
+                                          //         color: Colors.grey[100],
+                                          //         border: Border.all(
+                                          //           color: C.primaryColor,
+                                          //         ),
+                                          //         borderRadius: BorderRadius.all(
+                                          //             Radius.circular(20))),
+                                          //     child: Row(
+                                          //       children: [
+                                          //         Text(
+                                          //           "Sort By",
+                                          //           style: TextStyle(
+                                          //               fontSize: 13,
+                                          //               color: Colors.grey),
+                                          //         ),
+                                          //         SizedBox(
+                                          //           width: 5,
+                                          //         ),
+                                          //         Icon(
+                                          //           Icons.arrow_downward_rounded,
+                                          //           size: 10,
+                                          //           color: Colors.grey,
+                                          //         ),
+                                          //       ],
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      ListView.builder(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: filteredSp.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                for (var i = 0;
+                                                    i < filteredSp.length;
+                                                    i++) {
+                                                  setState(() {
+                                                    filteredSp[i]['selected'] =
+                                                        false;
+                                                  });
+                                                }
+                                                setState(() {
+                                                  filteredSp[index]
+                                                      ['selected'] = true;
+                                                  spSelected = true;
+                                                  spId = filteredSp[index]
+                                                      ["serviceProviderId"];
+                                                });
+                                                StoreProvider.of<AppState>(
+                                                        context)
+                                                    .dispatch(Price(
+                                                        filteredSp[index]
+                                                                ["price"]
+                                                            .toString()));
+                                                StoreProvider.of<AppState>(
+                                                        context)
+                                                    .dispatch(SpId(filteredSp[
+                                                                index][
+                                                            "serviceProviderId"]
+                                                        .toString()));
+                                                StoreProvider.of<AppState>(
+                                                        context)
+                                                    .dispatch(
+                                                        SelectedServiceProvider(
+                                                            filteredSp[index]
+                                                                    ['name']
+                                                                .trim()));
+
+                                                print(
+                                                    filteredSp[index]['name']);
+                                                print(
+                                                    filteredSp[index]['price']);
+                                                if (filteredSp[index]
+                                                            ["offerings"]
+                                                        .length ==
+                                                    0) {
+                                                  setState(() {
+                                                    offeringsAvailable = false;
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    offeringsAvailable = true;
+                                                  });
+                                                }
+                                              },
+                                              child: Card(
+                                                  shape: filteredSp[index]
+                                                              ['selected'] ==
+                                                          true
+                                                      ? RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(10),
+                                                          ),
+                                                          side: BorderSide(
+                                                              width: 3,
+                                                              color: Color(
+                                                                  0xFF3f51b5)))
+                                                      : RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(10),
+                                                          ),
+                                                          side: BorderSide(
+                                                              width: 0.5,
+                                                              color:
+                                                                  Colors.grey)),
+                                                  elevation: 2,
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(10),
+                                                    child: Column(children: [
+                                                      Container(
+                                                        child: Row(
+                                                          children: [
+                                                            // Image.network(
+                                                            //   "https://images-na.ssl-images-amazon.com/images/I/61u%2BNKkFnmL._SL1000_.jpg",
+                                                            //   height: 60,
+                                                            //   width: 60,
+                                                            // ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Expanded(
+                                                              flex: 10,
+                                                              child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    box10,
+                                                                    Text(
+                                                                      filteredSp[index]
+                                                                              [
+                                                                              'name']
+                                                                          .trim(),
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          color:
+                                                                              Colors.grey[800]),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            'Ph: ' +
+                                                                                (filteredSp[index]['mobile'] != null ? filteredSp[index]['mobile'] : 'NA'),
+                                                                            style: TextStyle(
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Colors.grey[600]),
+                                                                          ),
+                                                                          // SizedBox(
+                                                                          //   width: 10,
+                                                                          // ),
+                                                                          if (filteredSp[index]['mobile'] != null &&
+                                                                              filteredSp[index]['mobile'] != 'NA')
+                                                                            IconButton(
+                                                                              icon: Icon(
+                                                                                Icons.phone_enabled_rounded,
+                                                                                color: Colors.blue.shade400,
+                                                                              ),
+                                                                              onPressed: () => launch('tel:' + filteredSp[index]['mobile']),
+                                                                            ),
+                                                                          // RaisedButton(
+                                                                          // onPressed: () =>
+                                                                          //     launch(
+                                                                          //         'tel:7585867170'),
+                                                                          //   child: Text(
+                                                                          //       'Call'),
+                                                                          //   textColor:
+                                                                          //       Colors
+                                                                          //           .black,
+                                                                          //   padding:
+                                                                          //       const EdgeInsets.all(
+                                                                          //           2.0),
+                                                                          // ),
+                                                                        ]),
+                                                                    // Container(
+                                                                    //   padding: EdgeInsets
+                                                                    //       .symmetric(
+                                                                    //           vertical:
+                                                                    //               7),
+                                                                    //   child: RatingBar
+                                                                    //       .builder(
+                                                                    //     ignoreGestures:
+                                                                    //         true,
+                                                                    //     initialRating:
+                                                                    //         double.parse(
+                                                                    //             filteredSp[index]['rating'].toString()),
+                                                                    //     minRating:
+                                                                    //         1,
+                                                                    //     direction: Axis
+                                                                    //         .horizontal,
+                                                                    //     itemSize:
+                                                                    //         15,
+                                                                    //     allowHalfRating:
+                                                                    //         true,
+                                                                    //     itemCount:
+                                                                    //         5,
+                                                                    //     itemPadding:
+                                                                    //         EdgeInsets.symmetric(
+                                                                    //             horizontal:
+                                                                    //                 1.0),
+                                                                    //     itemBuilder:
+                                                                    //         (context,
+                                                                    //                 _) =>
+                                                                    //             Icon(
+                                                                    //       Icons
+                                                                    //           .star,
+                                                                    //       color: Colors
+                                                                    //           .amber,
+                                                                    //     ),
+                                                                    //     onRatingUpdate:
+                                                                    //         (double
+                                                                    //             value) {},
+                                                                    //   ),
+                                                                    // ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Container(
+                                                                      // decoration:
+                                                                      //     BoxDecoration(
+                                                                      //         border: Border
+                                                                      //             .all(
+                                                                      //           color:
+                                                                      //               Colors.amber,
+                                                                      //         ),
+                                                                      //         borderRadius:
+                                                                      //             BorderRadius.all(Radius.circular(20))),
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          Container(
+                                                                              // padding:
+                                                                              //     EdgeInsets.all(2),
+                                                                              // decoration: BoxDecoration(
+                                                                              //     color:
+                                                                              //         Colors.amber,
+                                                                              //     borderRadius: BorderRadius.all(Radius.circular(20))),
+                                                                              // child:
+                                                                              // //     Icon(
+                                                                              // //   Icons
+                                                                              // //       .check,
+                                                                              // //   size:
+                                                                              // //       13,
+                                                                              // // ),
+                                                                              ),
+
+                                                                          Padding(
+                                                                            padding:
+                                                                                EdgeInsets.symmetric(horizontal: 5),
+                                                                            // child: Text(
+                                                                            //     'Address: ' +
+                                                                            //         'asfdddddddddddddddddddddddddddddddddddddddddddddddddd',
+                                                                            //     textAlign:
+                                                                            //         TextAlign.justify,
+                                                                            //     overflow: TextOverflow.ellipsis,
+                                                                            //     // maxLines: 4,
+                                                                            //     // overflow: TextOverflow.ellipsis,
+                                                                            //     // textDirection: TextDirection.rtl,
+                                                                            //     // textAlign: TextAlign.justify,
+                                                                            //     style: TextStyle(
+                                                                            //       fontSize: 12,
+                                                                            //       fontWeight: FontWeight.w600,
+                                                                            //     )),
+                                                                          ),
+                                                                          // Expanded(
+                                                                          //   child:
+                                                                          //       Text(
+                                                                          //     'a long text',
+                                                                          //     overflow:
+                                                                          //         TextOverflow.clip,
+                                                                          //   ),
+                                                                          // ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ]),
+                                                            ),
+                                                            Spacer(),
+                                                            Column(
                                                               children: [
-                                                                box10,
                                                                 Text(
-                                                                  filteredSp[index]
-                                                                          [
-                                                                          'name']
-                                                                      .trim(),
+                                                                  " ${filteredSp[index]['price']} ",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           16,
@@ -800,395 +1004,219 @@ class _ServiceProviderListState extends State<ServiceProviderList> {
                                                                           FontWeight
                                                                               .w600,
                                                                       color: Colors
-                                                                              .grey[
-                                                                          800]),
+                                                                          .black),
                                                                 ),
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                ),
-                                                                Row(children: [
-                                                                  Text(
-                                                                    'Ph: ' +
-                                                                        (filteredSp[index]['mobile'] !=
-                                                                                null
-                                                                            ? filteredSp[index]['mobile']
-                                                                            : 'NA'),
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color: Colors
-                                                                            .grey[600]),
-                                                                  ),
-                                                                  // SizedBox(
-                                                                  //   width: 10,
-                                                                  // ),
-                                                                  if (filteredSp[index]
-                                                                              [
-                                                                              'mobile'] !=
-                                                                          null &&
-                                                                      filteredSp[index]
-                                                                              [
-                                                                              'mobile'] !=
-                                                                          'NA')
-                                                                    IconButton(
-                                                                      icon:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .phone_enabled_rounded,
-                                                                        color: Colors
-                                                                            .blue
-                                                                            .shade400,
-                                                                      ),
-                                                                      onPressed: () =>
-                                                                          launch('tel:' +
-                                                                              filteredSp[index]['mobile']),
-                                                                    ),
-                                                                  // RaisedButton(
-                                                                  // onPressed: () =>
-                                                                  //     launch(
-                                                                  //         'tel:7585867170'),
-                                                                  //   child: Text(
-                                                                  //       'Call'),
-                                                                  //   textColor:
-                                                                  //       Colors
-                                                                  //           .black,
-                                                                  //   padding:
-                                                                  //       const EdgeInsets.all(
-                                                                  //           2.0),
-                                                                  // ),
-                                                                ]),
-                                                                // Container(
-                                                                //   padding: EdgeInsets
-                                                                //       .symmetric(
-                                                                //           vertical:
-                                                                //               7),
-                                                                //   child: RatingBar
-                                                                //       .builder(
-                                                                //     ignoreGestures:
-                                                                //         true,
-                                                                //     initialRating:
-                                                                //         double.parse(
-                                                                //             filteredSp[index]['rating'].toString()),
-                                                                //     minRating:
-                                                                //         1,
-                                                                //     direction: Axis
-                                                                //         .horizontal,
-                                                                //     itemSize:
-                                                                //         15,
-                                                                //     allowHalfRating:
-                                                                //         true,
-                                                                //     itemCount:
-                                                                //         5,
-                                                                //     itemPadding:
-                                                                //         EdgeInsets.symmetric(
-                                                                //             horizontal:
-                                                                //                 1.0),
-                                                                //     itemBuilder:
-                                                                //         (context,
-                                                                //                 _) =>
-                                                                //             Icon(
-                                                                //       Icons
-                                                                //           .star,
-                                                                //       color: Colors
-                                                                //           .amber,
-                                                                //     ),
-                                                                //     onRatingUpdate:
-                                                                //         (double
-                                                                //             value) {},
-                                                                //   ),
-                                                                // ),
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                ),
-                                                                Container(
-                                                                  // decoration:
-                                                                  //     BoxDecoration(
-                                                                  //         border: Border
-                                                                  //             .all(
-                                                                  //           color:
-                                                                  //               Colors.amber,
-                                                                  //         ),
-                                                                  //         borderRadius:
-                                                                  //             BorderRadius.all(Radius.circular(20))),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          // padding:
-                                                                          //     EdgeInsets.all(2),
-                                                                          // decoration: BoxDecoration(
-                                                                          //     color:
-                                                                          //         Colors.amber,
-                                                                          //     borderRadius: BorderRadius.all(Radius.circular(20))),
-                                                                          // child:
-                                                                          // //     Icon(
-                                                                          // //   Icons
-                                                                          // //       .check,
-                                                                          // //   size:
-                                                                          // //       13,
-                                                                          // // ),
-                                                                          ),
-
-                                                                      Padding(
-                                                                        padding:
-                                                                            EdgeInsets.symmetric(horizontal: 5),
-                                                                        // child: Text(
-                                                                        //     'Address: ' +
-                                                                        //         'asfdddddddddddddddddddddddddddddddddddddddddddddddddd',
-                                                                        //     textAlign:
-                                                                        //         TextAlign.justify,
-                                                                        //     overflow: TextOverflow.ellipsis,
-                                                                        //     // maxLines: 4,
-                                                                        //     // overflow: TextOverflow.ellipsis,
-                                                                        //     // textDirection: TextDirection.rtl,
-                                                                        //     // textAlign: TextAlign.justify,
-                                                                        //     style: TextStyle(
-                                                                        //       fontSize: 12,
-                                                                        //       fontWeight: FontWeight.w600,
-                                                                        //     )),
-                                                                      ),
-                                                                      // Expanded(
-                                                                      //   child:
-                                                                      //       Text(
-                                                                      //     'a long text',
-                                                                      //     overflow:
-                                                                      //         TextOverflow.clip,
-                                                                      //   ),
-                                                                      // ),
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                              ]),
-                                                        ),
-                                                        Spacer(),
-                                                        Column(
-                                                          children: [
-                                                            Text(
-                                                              " ${filteredSp[index]['price']} ",
-                                                              style: TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .black),
-                                                            ),
-                                                            Text(
-                                                              "Beds Available",
-                                                              style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Colors
-                                                                      .black),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                showModalBottomSheet(
-                                                                    isScrollControlled:
-                                                                        true,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              10.0),
-                                                                    ),
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (BuildContext
-                                                                            context) {
-                                                                      return Text(
-                                                                        "Coming soon",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            color: Colors.black),
-                                                                      );
-                                                                      // return SpDetails(
-                                                                      //     spId: filteredSp[index]
-                                                                      //         [
-                                                                      //         "serviceProviderId"]);
-                                                                    });
-                                                              },
-                                                              child: Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            10),
-                                                                // child: Text(
-                                                                //   "More Info",
-                                                                //   style: TextStyle(
-                                                                //       fontSize:
-                                                                //           12,
-                                                                //       fontWeight:
-                                                                //           FontWeight
-                                                                //               .w600,
-                                                                //       color: Color(
-                                                                //           0xFF3f51b5)),
-                                                                // ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  if (filteredSp[index]
-                                                          ['address'] !=
-                                                      null)
-                                                    Container(
-                                                      child: Text(
-                                                        "Address: " +
-                                                            filteredSp[index]
-                                                                ['address'],
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        maxLines: 5,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                      ),
-                                                    ),
-                                                  Divider(),
-
-                                                  // if (filteredSp[index]
-                                                  //         ["offerings"].length !=
-                                                  //     0)
-                                                  // Row(
-                                                  //   mainAxisAlignment:
-                                                  //       MainAxisAlignment
-                                                  //           .center,
-                                                  //   children: [
-                                                  //     Text(
-                                                  //       'Regular Beds: ' +
-                                                  //           filteredSp[index][
-                                                  //                           "offerings"]
-                                                  //                       [
-                                                  //                       'regularBed']
-                                                  //                   [
-                                                  //                   'available']
-                                                  //               .toString(),
-                                                  //       style: TextStyle(
-                                                  //           fontSize: 10),
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 40,
-                                                  //     ),
-                                                  //     Text(
-                                                  //       'Oxygen Beds: ' +
-                                                  //           filteredSp[index][
-                                                  //                           "offerings"]
-                                                  //                       [
-                                                  //                       'oxygenBed']
-                                                  //                   [
-                                                  //                   'available']
-                                                  //               .toString(),
-                                                  //       style: TextStyle(
-                                                  //           fontSize: 10),
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 40,
-                                                  //     ),
-                                                  //     Text(
-                                                  //       'ICU Beds: ' +
-                                                  //           filteredSp[index][
-                                                  //                           "offerings"]
-                                                  //                       [
-                                                  //                       'icuBed']
-                                                  //                   [
-                                                  //                   'available']
-                                                  //               .toString(),
-                                                  //       style: TextStyle(
-                                                  //           fontSize: 10),
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 5,
-                                                  //     ),
-                                                  //     // ImageIcon(
-                                                  //     //   AssetImage(
-                                                  //     //       "assets/premium.png"),
-                                                  //     //   size: 10,
-                                                  //     // ),
-                                                  //   ],
-                                                  // )
-                                                  if (filteredSp[index]
-                                                              ["offerings"]
-                                                          .length !=
-                                                      0)
-                                                    Directionality(
-                                                      textDirection:
-                                                          TextDirection.ltr,
-                                                      child: GridView.builder(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 5),
-                                                          shrinkWrap: true,
-                                                          gridDelegate:
-                                                              new SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount:
-                                                                      2,
-                                                                  childAspectRatio:
-                                                                      6 / 1,
-                                                                  crossAxisSpacing:
-                                                                      0,
-                                                                  mainAxisSpacing:
-                                                                      0),
-                                                          itemCount: filteredSp[
-                                                                      index]
-                                                                  ["offerings"]
-                                                              .length,
-                                                          itemBuilder:
-                                                              (BuildContext ctx,
-                                                                  i) {
-                                                            return Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
                                                                 Text(
-                                                                  filteredSp[index]["offerings"]
-                                                                              [
-                                                                              i]
-                                                                          [
-                                                                          "label"] +
-                                                                      ": " +
-                                                                      filteredSp[index]["offerings"][i]["value"]
-                                                                              [
-                                                                              "vacant"]
-                                                                          .toString(),
+                                                                  "Beds Available",
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          10),
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black),
                                                                 ),
-
                                                                 SizedBox(
-                                                                  width: 5,
+                                                                  height: 20,
                                                                 ),
-                                                                // ImageIcon(
-                                                                //   AssetImage(
-                                                                //       "assets/premium.png"),
-                                                                //   size: 10,
-                                                                // ),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10.0),
+                                                                        ),
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (BuildContext
+                                                                                context) {
+                                                                          return Text(
+                                                                            "Coming soon",
+                                                                            style: TextStyle(
+                                                                                fontSize: 20,
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: Colors.black),
+                                                                          );
+                                                                          // return SpDetails(
+                                                                          //     spId: filteredSp[index]
+                                                                          //         [
+                                                                          //         "serviceProviderId"]);
+                                                                        });
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10),
+                                                                    // child: Text(
+                                                                    //   "More Info",
+                                                                    //   style: TextStyle(
+                                                                    //       fontSize:
+                                                                    //           12,
+                                                                    //       fontWeight:
+                                                                    //           FontWeight
+                                                                    //               .w600,
+                                                                    //       color: Color(
+                                                                    //           0xFF3f51b5)),
+                                                                    // ),
+                                                                  ),
+                                                                )
                                                               ],
-                                                            );
-                                                          }),
-                                                    ),
-                                                ]),
-                                              )),
-                                        );
-                                      }),
-                                ]);
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      if (filteredSp[index]
+                                                              ['address'] !=
+                                                          null)
+                                                        Container(
+                                                          child: Text(
+                                                            "Address: " +
+                                                                filteredSp[
+                                                                        index]
+                                                                    ['address'],
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            maxLines: 5,
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                          ),
+                                                        ),
+                                                      Divider(),
+
+                                                      // if (filteredSp[index]
+                                                      //         ["offerings"].length !=
+                                                      //     0)
+                                                      // Row(
+                                                      //   mainAxisAlignment:
+                                                      //       MainAxisAlignment
+                                                      //           .center,
+                                                      //   children: [
+                                                      //     Text(
+                                                      //       'Regular Beds: ' +
+                                                      //           filteredSp[index][
+                                                      //                           "offerings"]
+                                                      //                       [
+                                                      //                       'regularBed']
+                                                      //                   [
+                                                      //                   'available']
+                                                      //               .toString(),
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 10),
+                                                      //     ),
+                                                      //     SizedBox(
+                                                      //       width: 40,
+                                                      //     ),
+                                                      //     Text(
+                                                      //       'Oxygen Beds: ' +
+                                                      //           filteredSp[index][
+                                                      //                           "offerings"]
+                                                      //                       [
+                                                      //                       'oxygenBed']
+                                                      //                   [
+                                                      //                   'available']
+                                                      //               .toString(),
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 10),
+                                                      //     ),
+                                                      //     SizedBox(
+                                                      //       width: 40,
+                                                      //     ),
+                                                      //     Text(
+                                                      //       'ICU Beds: ' +
+                                                      //           filteredSp[index][
+                                                      //                           "offerings"]
+                                                      //                       [
+                                                      //                       'icuBed']
+                                                      //                   [
+                                                      //                   'available']
+                                                      //               .toString(),
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 10),
+                                                      //     ),
+                                                      //     SizedBox(
+                                                      //       width: 5,
+                                                      //     ),
+                                                      //     // ImageIcon(
+                                                      //     //   AssetImage(
+                                                      //     //       "assets/premium.png"),
+                                                      //     //   size: 10,
+                                                      //     // ),
+                                                      //   ],
+                                                      // )
+                                                      if (filteredSp[index]
+                                                                  ["offerings"]
+                                                              .length !=
+                                                          0)
+                                                        Directionality(
+                                                          textDirection:
+                                                              TextDirection.ltr,
+                                                          child:
+                                                              GridView.builder(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              5),
+                                                                  shrinkWrap:
+                                                                      true,
+                                                                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                                                                      crossAxisCount:
+                                                                          2,
+                                                                      childAspectRatio:
+                                                                          6 / 1,
+                                                                      crossAxisSpacing:
+                                                                          0,
+                                                                      mainAxisSpacing:
+                                                                          0),
+                                                                  itemCount: filteredSp[
+                                                                              index]
+                                                                          [
+                                                                          "offerings"]
+                                                                      .length,
+                                                                  itemBuilder:
+                                                                      (BuildContext
+                                                                              ctx,
+                                                                          i) {
+                                                                    return Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Text(
+                                                                          filteredSp[index]["offerings"][i]["label"] +
+                                                                              ": " +
+                                                                              filteredSp[index]["offerings"][i]["value"]["vacant"].toString(),
+                                                                          style:
+                                                                              TextStyle(fontSize: 10),
+                                                                        ),
+
+                                                                        SizedBox(
+                                                                          width:
+                                                                              5,
+                                                                        ),
+                                                                        // ImageIcon(
+                                                                        //   AssetImage(
+                                                                        //       "assets/premium.png"),
+                                                                        //   size: 10,
+                                                                        // ),
+                                                                      ],
+                                                                    );
+                                                                  }),
+                                                        ),
+                                                    ]),
+                                                  )),
+                                            );
+                                          }),
+                                    ]);
                     })),
           ),
         ));

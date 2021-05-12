@@ -117,9 +117,9 @@ class _IndianStatesState extends State<IndianStates>
                             totalData1['statewise'][index + 1]['recovered']),
                         deltaRecovered: addSeperator(totalData1['statewise']
                             [index + 1]['deltarecovered']),
-                        decreased: addSeperator(
+                        deceased: addSeperator(
                             totalData1['statewise'][index + 1]['deaths']),
-                        deltaDecreased: addSeperator(
+                        deltaDeceased: addSeperator(
                             totalData1['statewise'][index + 1]['deltadeaths']),
                         data: _generateConfirmedData(index + 1),
                       ),

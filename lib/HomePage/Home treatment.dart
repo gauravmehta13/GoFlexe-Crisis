@@ -2,12 +2,12 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
-class Awareness extends StatefulWidget {
+class HomeTreatment extends StatefulWidget {
   @override
-  _AwarenessState createState() => _AwarenessState();
+  _HomeTreatmentState createState() => _HomeTreatmentState();
 }
 
-class _AwarenessState extends State<Awareness> {
+class _HomeTreatmentState extends State<HomeTreatment> {
   static final int _initialPage = 2;
   int _actualPageNumber = _initialPage, _allPagesCount = 0;
   bool isSampleDoc = true;

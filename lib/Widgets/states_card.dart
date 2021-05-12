@@ -11,8 +11,8 @@ class StatesCard extends StatelessWidget {
   final String active;
   final String recovered;
   final String deltaRecovered;
-  final String decreased;
-  final String deltaDecreased;
+  final String deceased;
+  final String deltaDeceased;
   var data;
 
   StatesCard(
@@ -23,8 +23,8 @@ class StatesCard extends StatelessWidget {
       this.active,
       this.recovered,
       this.deltaRecovered,
-      this.decreased,
-      this.deltaDecreased,
+      this.deceased,
+      this.deltaDeceased,
       this.data})
       : super(key: key);
 
@@ -125,7 +125,7 @@ class StatesCard extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      "Decreased: ",
+                      "Deceased: ",
                       style: GoogleFonts.montserrat(
                         color: Color(0xFF6B747C),
                         fontSize: 13,
@@ -133,7 +133,7 @@ class StatesCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "$decreased",
+                      "$deceased",
                       style: GoogleFonts.montserrat(
                         color: Color(0xFF6B747C),
                         fontSize: 15,
