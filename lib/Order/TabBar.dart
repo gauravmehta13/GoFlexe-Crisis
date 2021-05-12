@@ -36,14 +36,14 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
           "GoFlexe",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
         ),
-        // bottom: TabBar(
-        //   controller: _controller,
-        //   tabs: [
-        //     Tab(
-        //       text: "Covid Resources",
-        //     ),
-        //   ],
-        // ),
+        bottom: TabBar(
+          controller: _controller,
+          tabs: [
+            Tab(
+              text: "Covid Resources",
+            ),
+          ],
+        ),
       ),
       drawer: MyDrawer(),
       body: Column(
@@ -52,12 +52,13 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
             height: 100,
             child: Stack(
               children: [
-                Container(height: 60, color: Color(0xFF3f51b5)),
+                Container(
+                  height: 50,
+                ),
                 Positioned(
-                  top: 40,
+                  top: 30,
                   child: Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width - 30,
+                    height: 50,
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -80,7 +81,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                         // first tab [you can add an icon using the icon property]
                         Tab(
                           child: Text(
-                            "Testing",
+                            "Hospitalisation",
                             style: TextStyle(fontSize: 11),
                           ),
                         ),
@@ -93,7 +94,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                         ),
                         Tab(
                           child: Text(
-                            "Hospitalisation",
+                            "Testing",
                             style: TextStyle(fontSize: 11),
                           ),
                         ),
