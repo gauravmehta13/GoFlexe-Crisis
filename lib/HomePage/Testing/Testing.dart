@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Testing/symptoms.dart';
-import 'package:crisis/Widgets/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 
 import 'Diagnostic.dart';
 
@@ -19,7 +17,7 @@ class Testing extends StatefulWidget {
 class _TestingState extends State<Testing> with TickerProviderStateMixin {
   final symptomKey = new GlobalKey();
   final testKey = new GlobalKey();
-  final resultConusionKey = new GlobalKey();
+  final resultConfusionKey = new GlobalKey();
   final diagnoseKey = new GlobalKey();
   final sliverListtKey = new GlobalKey();
   ScrollController scrollController;
@@ -27,28 +25,14 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
   TabController _topTabController;
   double symptomHeight;
   double testHeight;
-  double resultConusionHeight;
+  double resultConfusionHeight;
   double diagnoseHeight;
   /////////////////
-  int _activeMeterIndex = 0;
-  Timer _timer;
   List<Symptoms> symptoms;
   bool expanded = false;
 
-  static final int _initialPage = 8;
-  int _actualPageNumber = _initialPage, _allPagesCount = 0;
-  bool isSampleDoc = true;
-  PdfController _pdfController;
-
   void initState() {
     super.initState();
-    _pdfController = PdfController(
-      document: PdfDocument.openAsset('assets/guide.pdf'),
-      initialPage: _initialPage,
-    );
-    if (_activeMeterIndex == 0) {
-      load();
-    }
     scrollController = ScrollController();
     _tabController = new TabController(length: 4, vsync: this);
     _topTabController = new TabController(length: 4, vsync: this);
@@ -65,8 +49,8 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
       if (testKey.currentContext != null) {
         testHeight = testKey.currentContext.size.height;
       }
-      if (resultConusionKey.currentContext != null) {
-        resultConusionHeight = resultConusionKey.currentContext.size.height;
+      if (resultConfusionKey.currentContext != null) {
+        resultConfusionHeight = resultConfusionKey.currentContext.size.height;
       }
       if (diagnoseKey.currentContext != null) {
         diagnoseHeight = diagnoseKey.currentContext.size.height;
@@ -83,16 +67,16 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             scrollController.offset < testHeight + symptomHeight) {
           _tabController.animateTo(1);
         } else if (scrollController.offset >
-                testHeight + symptomHeight + resultConusionHeight - 200 &&
+                testHeight + symptomHeight + resultConfusionHeight - 200 &&
             scrollController.offset <=
                 testHeight +
                     symptomHeight +
-                    resultConusionHeight +
+                    resultConfusionHeight +
                     diagnoseHeight) {
           _tabController.animateTo(3);
         } else if (scrollController.offset > testHeight + symptomHeight &&
             scrollController.offset <
-                testHeight + symptomHeight + resultConusionHeight) {
+                testHeight + symptomHeight + resultConfusionHeight) {
           _tabController.animateTo(2);
         } else {}
       } else if (scrollController.position.userScrollDirection ==
@@ -104,14 +88,14 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           _tabController.animateTo(1);
         } else if (scrollController.offset > testHeight + symptomHeight &&
             scrollController.offset <
-                testHeight + symptomHeight + resultConusionHeight) {
+                testHeight + symptomHeight + resultConfusionHeight) {
           _tabController.animateTo(2);
         } else if (scrollController.offset >
-                testHeight + symptomHeight + resultConusionHeight &&
+                testHeight + symptomHeight + resultConfusionHeight &&
             scrollController.offset <
                 testHeight +
                     symptomHeight +
-                    resultConusionHeight +
+                    resultConfusionHeight +
                     diagnoseHeight) {
           _tabController.animateTo(3);
         } else {}
@@ -126,7 +110,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           if (symptomKey.currentContext == null) {
             scrollController.position
                 .ensureVisible(
-              resultConusionKey.currentContext.findRenderObject(),
+              resultConfusionKey.currentContext.findRenderObject(),
               alignment:
                   0.0, // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 200),
@@ -134,7 +118,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 .then((value) {
               scrollController.position
                   .ensureVisible(
-                resultConusionKey.currentContext.findRenderObject(),
+                resultConfusionKey.currentContext.findRenderObject(),
                 alignment:
                     0.0, // How far into view the item should be scrolled (between 0 and 1).
                 duration: const Duration(milliseconds: 200),
@@ -198,7 +182,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             } else {
               scrollController.position
                   .ensureVisible(
-                resultConusionKey.currentContext.findRenderObject(),
+                resultConfusionKey.currentContext.findRenderObject(),
                 alignment: 0.5,
                 // How far into view the item should be scrolled (between 0 and 1).
                 duration: const Duration(milliseconds: 200),
@@ -206,7 +190,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                   .then((value) {
                 scrollController.position
                     .ensureVisible(
-                  resultConusionKey.currentContext.findRenderObject(),
+                  resultConfusionKey.currentContext.findRenderObject(),
                   alignment: 0.0,
                   // How far into view the item should be scrolled (between 0 and 1).
                   duration: const Duration(milliseconds: 200),
@@ -242,7 +226,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         break;
       case 2:
         {
-          if (resultConusionKey.currentContext == null) {
+          if (resultConfusionKey.currentContext == null) {
             if (_tabController.previousIndex == 0) {
               scrollController.position
                   .ensureVisible(
@@ -277,7 +261,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                     )
                         .then((value) {
                       scrollController.position.ensureVisible(
-                        resultConusionKey.currentContext.findRenderObject(),
+                        resultConfusionKey.currentContext.findRenderObject(),
                         alignment: 0.2,
                         // How far into view the item should be scrolled (between 0 and 1).
                         duration: const Duration(milliseconds: 200),
@@ -296,7 +280,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
               )
                   .then((value) {
                 scrollController.position.ensureVisible(
-                  resultConusionKey.currentContext.findRenderObject(),
+                  resultConfusionKey.currentContext.findRenderObject(),
                   alignment: 0.2,
                   // How far into view the item should be scrolled (between 0 and 1).
                   duration: const Duration(milliseconds: 200),
@@ -305,7 +289,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             }
           } else {
             scrollController.position.ensureVisible(
-              resultConusionKey.currentContext.findRenderObject(),
+              resultConfusionKey.currentContext.findRenderObject(),
               alignment: 0.0,
               // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 600),
@@ -351,7 +335,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                         .then((value) {
                       scrollController.position
                           .ensureVisible(
-                        resultConusionKey.currentContext.findRenderObject(),
+                        resultConfusionKey.currentContext.findRenderObject(),
                         alignment:
                             0.0, // How far into view the item should be scrolled (between 0 and 1).
                         duration: const Duration(milliseconds: 200),
@@ -359,7 +343,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                           .then((value) {
                         scrollController.position
                             .ensureVisible(
-                          resultConusionKey.currentContext.findRenderObject(),
+                          resultConfusionKey.currentContext.findRenderObject(),
                           alignment:
                               0.5, // How far into view the item should be scrolled (between 0 and 1).
                           duration: const Duration(milliseconds: 200),
@@ -388,7 +372,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                   .then((value) {
                 scrollController.position
                     .ensureVisible(
-                  resultConusionKey.currentContext.findRenderObject(),
+                  resultConfusionKey.currentContext.findRenderObject(),
                   alignment:
                       0.0, // How far into view the item should be scrolled (between 0 and 1).
                   duration: const Duration(milliseconds: 200),
@@ -449,14 +433,14 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
               ),
               new Tab(
                 child: Text(
-                  "Interpretation",
+                  "Diagnose",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
                 ),
               ),
               new Tab(
                 child: Text(
-                  "Diagnose",
+                  "Interpretation",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
                 ),
@@ -472,17 +456,8 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    _pdfController.dispose();
     _topTabController.dispose();
     scrollController.dispose();
-  }
-
-  load() {
-    _timer = Timer(Duration(seconds: 2), () {
-      setState(() {
-        _activeMeterIndex = 2;
-      });
-    });
   }
 
   @override
@@ -502,30 +477,27 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                         child: Container(
                           key: symptomKey,
                           width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.all(10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // SizedBox(
-                              //   height: 20,
-                              // ),
-                              // Center(
-                              //   child: SizedBox(
-                              //       height: 50,
-                              //       child:
-                              //           Image.asset("assets/symptoms (1).png")),
-                              // ),
-                              // SizedBox(
-                              //   height: 20,
-                              // ),
-                              // Text(
-                              //   "Symptoms",
-                              //   style: TextStyle(
-                              //       fontSize: 15, fontWeight: FontWeight.w600),
-                              // ),
-                              // SizedBox(
-                              //   height: 20,
-                              // ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: SizedBox(
+                                    height: 50,
+                                    child:
+                                        Image.asset("assets/symptoms (1).png")),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Symptoms",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w600),
+                              ),
+                              box10,
                               Image.asset("assets/covidsymptom.png")
                               // Container(
                               //     child: IgnorePointer(
@@ -604,8 +576,37 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                         ),
                       ),
                       Card(
+                        child: Column(
+                          key: resultConfusionKey,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: SizedBox(
+                                  height: 50,
+                                  child: Image.asset("assets/diagnose.png")),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Diagnose",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 20),
+                              child: Diagnostic(),
+                            ),
+                            box30,
+                          ],
+                        ),
+                      ),
+                      Card(
                         child: Container(
-                          key: resultConusionKey,
+                          key: diagnoseKey,
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.all(10),
                           child: Column(
@@ -632,35 +633,6 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      Card(
-                        child: Column(
-                          key: diagnoseKey,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: SizedBox(
-                                  height: 50,
-                                  child: Image.asset("assets/diagnose.png")),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              "Diagnose",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 20),
-                              child: Diagnostic(),
-                            ),
-                            box30,
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),

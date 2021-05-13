@@ -37,19 +37,49 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
       var resp = await dio.get(
           "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${widget.pin}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
       print(resp.data);
-      var tempData = resp.data;
+      var tempData = resp.data["centers"];
+      for (var i = 0; i < tempData.length; i++) {
+        int x = 0;
+
+        for (var j = 0; j < tempData[i]["sessions"].length; j++) {
+          setState(() {
+            x = x + tempData[i]["sessions"][j]["available_capacity"];
+          });
+        }
+        setState(() {
+          tempData[i]["slots"] = x;
+        });
+
+        tempData.sort(
+            (a, b) => a["slots"].toString().compareTo(b["slots"].toString()));
+      }
       setState(() {
-        data = tempData["centers"];
-        filteredData = tempData["centers"];
+        data = tempData;
+        filteredData = tempData;
       });
     } else {
       var resp = await dio.get(
           "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${widget.districtId}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
       print(resp.data);
-      var tempData = resp.data;
+      var tempData = resp.data["centers"];
+      for (var i = 0; i < tempData.length; i++) {
+        int x = 0;
+
+        for (var j = 0; j < tempData[i]["sessions"].length; j++) {
+          setState(() {
+            x = x + tempData[i]["sessions"][j]["available_capacity"];
+          });
+        }
+        setState(() {
+          tempData[i]["slots"] = x;
+        });
+
+        tempData.sort(
+            (a, b) => a["slots"].toString().compareTo(b["slots"].toString()));
+      }
       setState(() {
-        data = tempData["centers"];
-        filteredData = tempData["centers"];
+        data = tempData;
+        filteredData = tempData;
       });
     }
 
@@ -201,6 +231,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                               ),
                             ),
                             ListView.builder(
+                                reverse: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: filteredData.length,
@@ -272,7 +303,16 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                             Expanded(
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                    color: Color(0xFFecebf8),
+                                                    color: filteredData[index]
+                                                                ["slots"] !=
+                                                            0
+                                                        ? filteredData[index]
+                                                                    ["slots"] >
+                                                                5
+                                                            ? Colors.green[200]
+                                                            : Colors.orangeAccent[
+                                                                200]
+                                                        : Colors.grey[200],
                                                     border: Border.all(
                                                         color:
                                                             Colors.grey[300]),
@@ -290,9 +330,22 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "${filteredData[index]["fee_type"]}",
+                                                      // "${filteredData[index]["fee_type"]}",
+                                                      "${filteredData[index]["slots"]} Slots",
                                                       style: TextStyle(
                                                           fontSize: 14,
+                                                          color:
+                                                              Colors.grey[900],
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                      "${filteredData[index]["fee_type"]}",
+                                                      style: TextStyle(
+                                                          fontSize: 10,
                                                           color:
                                                               Colors.grey[900],
                                                           fontWeight:
@@ -377,64 +430,68 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                                           color:
                                                               Colors.grey[300]),
                                                       children: [
-                                                        TableRow(children: [
-                                                          Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5),
-                                                              child: Text(
-                                                                  filteredData[index]["sessions"]
+                                                        TableRow(
+                                                            decoration: new BoxDecoration(
+                                                                color: filteredData[index]["sessions"][j]
+                                                                            [
+                                                                            "available_capacity"] ==
+                                                                        0
+                                                                    ? Colors.grey[
+                                                                        200]
+                                                                    : Colors.green[
+                                                                        200]),
+                                                            children: [
+                                                              Center(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(5),
+                                                                  child: Text(
+                                                                      filteredData[index]["sessions"][j]
                                                                               [
-                                                                              j]
-                                                                          [
-                                                                          "date"] ??
-                                                                      "",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                  )),
-                                                            ),
-                                                          ),
-                                                          Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5),
-                                                              child: Text(
-                                                                  filteredData[index]["sessions"]
+                                                                              "date"] ??
+                                                                          "",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                      )),
+                                                                ),
+                                                              ),
+                                                              Center(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(5),
+                                                                  child: Text(
+                                                                      filteredData[index]["sessions"][j]
                                                                               [
-                                                                              j]
-                                                                          [
-                                                                          "vaccine"] ??
-                                                                      "",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                  )),
-                                                            ),
-                                                          ),
-                                                          Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5),
-                                                              child: Text(
-                                                                  filteredData[index]["sessions"][j]
-                                                                              [
-                                                                              "available_capacity"]
-                                                                          .toString() ??
-                                                                      "",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                  )),
-                                                            ),
-                                                          ),
-                                                        ])
+                                                                              "vaccine"] ??
+                                                                          "",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                      )),
+                                                                ),
+                                                              ),
+                                                              Center(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(5),
+                                                                  child: Text(
+                                                                      filteredData[index]["sessions"][j]["available_capacity"]
+                                                                              .toString() ??
+                                                                          "",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                      )),
+                                                                ),
+                                                              ),
+                                                            ])
                                                       ],
                                                     ),
                                                   );

@@ -55,7 +55,7 @@ class _DiagnosticState extends State<Diagnostic> {
   }
 
   Future<List> fetchStates() async {
-    return states.states;
+    return states?.states ?? [];
   }
 
   Future<List> fetchDistricts() async {
