@@ -9,6 +9,8 @@ import 'package:native_pdf_view/native_pdf_view.dart';
 
 import 'Diagnostic.dart';
 
+//https://mahmoudabdellatief-88944.medium.com/flutter-pinned-tabbar-with-triggered-scrolling-and-page-anchors-slivers-c81a19f221a6
+
 class Testing extends StatefulWidget {
   @override
   _TestingState createState() => _TestingState();
@@ -18,7 +20,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
   final symptomKey = new GlobalKey();
   final testKey = new GlobalKey();
   final resultConusionKey = new GlobalKey();
-  final yellowKey = new GlobalKey();
+  final diagnoseKey = new GlobalKey();
   final sliverListtKey = new GlobalKey();
   ScrollController scrollController;
   TabController _tabController;
@@ -26,7 +28,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
   double symptomHeight;
   double testHeight;
   double resultConusionHeight;
-  double yellowHeight;
+  double diagnoseHeight;
   /////////////////
   int _activeMeterIndex = 0;
   Timer _timer;
@@ -48,8 +50,8 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
       load();
     }
     scrollController = ScrollController();
-    _tabController = new TabController(length: 3, vsync: this);
-    _topTabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 4, vsync: this);
+    _topTabController = new TabController(length: 4, vsync: this);
     addScrollControllerListener();
 
     symptoms = Symptoms.getSymptoms();
@@ -66,37 +68,36 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
       if (resultConusionKey.currentContext != null) {
         resultConusionHeight = resultConusionKey.currentContext.size.height;
       }
-      if (yellowKey.currentContext != null) {
-        yellowHeight = yellowKey.currentContext.size.height;
+      if (diagnoseKey.currentContext != null) {
+        diagnoseHeight = diagnoseKey.currentContext.size.height;
       }
-      if (scrollController.offset > symptomHeight + 200 &&
-          scrollController.offset < testHeight + symptomHeight + 200) {
+      if (scrollController.offset > symptomHeight &&
+          scrollController.offset < testHeight + symptomHeight) {
       } else {}
       if (scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
         if (scrollController.offset > 0 &&
-            scrollController.offset < symptomHeight + 200) {
+            scrollController.offset < symptomHeight) {
           _tabController.animateTo(0);
-        } else if (scrollController.offset > symptomHeight + 200 &&
-            scrollController.offset < testHeight + symptomHeight + 200) {
+        } else if (scrollController.offset > symptomHeight &&
+            scrollController.offset < testHeight + symptomHeight) {
           _tabController.animateTo(1);
-        } else if (scrollController.offset > testHeight + symptomHeight + 200 &&
-            scrollController.offset <
-                testHeight + symptomHeight + resultConusionHeight + 200) {
-          _tabController.animateTo(2);
         } else if (scrollController.offset >
-                testHeight + symptomHeight + resultConusionHeight + 200 &&
+                testHeight + symptomHeight + resultConusionHeight - 200 &&
             scrollController.offset <=
                 testHeight +
                     symptomHeight +
                     resultConusionHeight +
-                    yellowHeight +
-                    200) {
+                    diagnoseHeight) {
           _tabController.animateTo(3);
+        } else if (scrollController.offset > testHeight + symptomHeight &&
+            scrollController.offset <
+                testHeight + symptomHeight + resultConusionHeight) {
+          _tabController.animateTo(2);
         } else {}
       } else if (scrollController.position.userScrollDirection ==
           ScrollDirection.forward) {
-        if (scrollController.offset < symptomHeight) {
+        if (scrollController.offset < 1) {
           _tabController.animateTo(0);
         } else if (scrollController.offset > symptomHeight &&
             scrollController.offset < testHeight + symptomHeight) {
@@ -111,7 +112,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 testHeight +
                     symptomHeight +
                     resultConusionHeight +
-                    yellowHeight) {
+                    diagnoseHeight) {
           _tabController.animateTo(3);
         } else {}
       }
@@ -314,7 +315,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         break;
       case 3:
         {
-          if (yellowKey.currentContext == null) {
+          if (diagnoseKey.currentContext == null) {
             if (_tabController.previousIndex == 0) {
               scrollController.position
                   .ensureVisible(
@@ -365,7 +366,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                         )
                             .then((value) {
                           scrollController.position.ensureVisible(
-                            yellowKey.currentContext.findRenderObject(),
+                            diagnoseKey.currentContext.findRenderObject(),
                             alignment:
                                 0.0, // How far into view the item should be scrolled (between 0 and 1).
                             duration: const Duration(milliseconds: 200),
@@ -394,7 +395,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 )
                     .then((value) {
                   scrollController.position.ensureVisible(
-                    yellowKey.currentContext.findRenderObject(),
+                    diagnoseKey.currentContext.findRenderObject(),
                     alignment:
                         0.0, // How far into view the item should be scrolled (between 0 and 1).
                     duration: const Duration(milliseconds: 200),
@@ -404,7 +405,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             }
           } else {
             scrollController.position.ensureVisible(
-              yellowKey.currentContext.findRenderObject(),
+              diagnoseKey.currentContext.findRenderObject(),
               alignment: 0.0,
               // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 800),
@@ -429,6 +430,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             },
             unselectedLabelColor: Colors.grey.shade700,
             indicatorColor: Color(0xFF3f51b5),
+            isScrollable: true,
             indicatorWeight: 2.0,
             labelColor: Color(0xFF3f51b5),
             controller: _tabController,
@@ -447,7 +449,14 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
               ),
               new Tab(
                 child: Text(
-                  "Result Confusion",
+                  "Interpretation",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                ),
+              ),
+              new Tab(
+                child: Text(
+                  "Diagnose",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
                 ),
@@ -497,65 +506,66 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Center(
-                                child: SizedBox(
-                                    height: 50,
-                                    child:
-                                        Image.asset("assets/symptoms (1).png")),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Symptoms",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w600),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                  child: IgnorePointer(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: symptoms.length,
-                                  itemBuilder: (context, i) {
-                                    return Container(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(symptoms[i].heading,
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                )),
-                                          ),
-                                          Container(
-                                              child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                symptoms[i].symptoms.length,
-                                            itemBuilder: (context, j) {
-                                              return Text(
-                                                "     • ${symptoms[i].symptoms[j]}",
-                                                style: TextStyle(
-                                                    color: Colors.grey[700]),
-                                              );
-                                            },
-                                          )),
-                                          Divider(),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ))
+                              // SizedBox(
+                              //   height: 20,
+                              // ),
+                              // Center(
+                              //   child: SizedBox(
+                              //       height: 50,
+                              //       child:
+                              //           Image.asset("assets/symptoms (1).png")),
+                              // ),
+                              // SizedBox(
+                              //   height: 20,
+                              // ),
+                              // Text(
+                              //   "Symptoms",
+                              //   style: TextStyle(
+                              //       fontSize: 15, fontWeight: FontWeight.w600),
+                              // ),
+                              // SizedBox(
+                              //   height: 20,
+                              // ),
+                              Image.asset("assets/covidsymptom.png")
+                              // Container(
+                              //     child: IgnorePointer(
+                              //   child: ListView.builder(
+                              //     shrinkWrap: true,
+                              //     itemCount: symptoms.length,
+                              //     itemBuilder: (context, i) {
+                              //       return Container(
+                              //         child: Column(
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.start,
+                              //           children: [
+                              //             Padding(
+                              //               padding: const EdgeInsets.all(8.0),
+                              //               child: Text(symptoms[i].heading,
+                              //                   style: TextStyle(
+                              //                     fontSize: 12,
+                              //                     fontWeight: FontWeight.w600,
+                              //                   )),
+                              //             ),
+                              //             Container(
+                              //                 child: ListView.builder(
+                              //               shrinkWrap: true,
+                              //               itemCount:
+                              //                   symptoms[i].symptoms.length,
+                              //               itemBuilder: (context, j) {
+                              //                 return Text(
+                              //                   "     • ${symptoms[i].symptoms[j]}",
+                              //                   style: TextStyle(
+                              //                       color: Colors.grey[700]),
+                              //                 );
+                              //               },
+                              //             )),
+                              //             Divider(),
+                              //           ],
+                              //         ),
+                              //       );
+                              //     },
+                              //   ),
+                              // ))
                             ],
                           ),
                         ),
@@ -588,7 +598,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                                 height: 20,
                               ),
                               Image.network(
-                                  "https://www.creativefabrica.com/wp-content/uploads/2021/01/27/Covid-testing-vector-infographic-Graphics-8121388-1.jpg")
+                                  "https://cdn.thewire.in/wp-content/uploads/2020/04/05204920/Screenshot-2020-04-05-at-7.40.03-PM.png")
                             ],
                           ),
                         ),
@@ -613,7 +623,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                                 height: 20,
                               ),
                               Text(
-                                "Result Confusion",
+                                "Interpretation",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w600),
                               ),
@@ -624,21 +634,34 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            child: Diagnostic(),
-                          ),
-                          box30
-                        ],
+                      Card(
+                        child: Column(
+                          key: diagnoseKey,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: SizedBox(
+                                  height: 50,
+                                  child: Image.asset("assets/diagnose.png")),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Diagnose",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 20),
+                              child: Diagnostic(),
+                            ),
+                            box30,
+                          ],
+                        ),
                       )
                     ],
                   ),

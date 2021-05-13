@@ -77,12 +77,12 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
     // mark that the overlay widget needs to be rebuilt
     // so loader can show
     this._overlayEntry.markNeedsBuild();
-    if (widget.controller.text.length > widget.minStringLength) {
+    if (widget.controller.text.length >= widget.minStringLength) {
       this.setLoading();
       widget.future().then((value) {
         this.filteredList = value;
         // create an empty temp list
-        List tempList = new List();
+        List tempList = [];
         // loop through each item in filtered items
         for (int i = 0; i < filteredList.length; i++) {
           // lowercase the item and see if the item contains the string of text from the lowercase search
@@ -119,7 +119,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
     // set the filtered list using the initial list
     this.filteredList = widget.initialList;
     // create an empty temp list
-    List tempList = new List();
+    List tempList = [];
     // loop through each item in filtered items
     for (int i = 0; i < filteredList.length; i++) {
       // lowercase the item and see if the item contains the string of text from the lowercase search
@@ -259,7 +259,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
   Widget _listViewContainer(context) {
     if (itemsFound == true && filteredList.length > 0 ||
         itemsFound == false && widget.controller.text.length > 0) {
-      double _height = itemsFound == true && filteredList.length > 1 ? 110 : 55;
+      double _height = itemsFound == true && filteredList.length > 1 ? 300 : 55;
       return Container(
         height: _height,
         child: _listViewBuilder(context),
@@ -288,7 +288,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
                         maxWidth: screenWidth,
                         minHeight: 0,
                         // max height set to 150
-                        maxHeight: itemsFound == true ? 110 : 55,
+                        maxHeight: itemsFound == true ? 300 : 55,
                       ),
                       child: loading
                           ? _loadingIndicator()
@@ -310,6 +310,17 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
             ? widget.decoration
             : InputDecoration(labelText: widget.label),
         style: widget.textStyle,
+        onTap: () {
+          _debouncer.run(() {
+            setState(() {
+              if (hasFuture) {
+                updateGetItems();
+              } else {
+                updateList();
+              }
+            });
+          });
+        },
         onChanged: (String value) {
           // every time we make a change to the input, update the list
           _debouncer.run(() {

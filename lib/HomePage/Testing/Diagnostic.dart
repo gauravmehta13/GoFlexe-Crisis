@@ -23,6 +23,7 @@ class _DiagnosticState extends State<Diagnostic> {
 
   bool loading = true;
   bool districtLoading = false;
+  String districtName = "";
 
   States states;
   District districts;
@@ -58,7 +59,7 @@ class _DiagnosticState extends State<Diagnostic> {
   }
 
   Future<List> fetchDistricts() async {
-    return districts.districts;
+    return districts?.districts ?? [];
   }
 
   @override
@@ -70,6 +71,7 @@ class _DiagnosticState extends State<Diagnostic> {
               Container(
                   padding: EdgeInsets.all(10),
                   child: TextFieldSearch(
+                    minStringLength: 0,
                     decoration: new InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.all(15),
@@ -106,6 +108,7 @@ class _DiagnosticState extends State<Diagnostic> {
                   : Container(
                       padding: EdgeInsets.all(10),
                       child: TextFieldSearch(
+                          minStringLength: 0,
                           decoration: new InputDecoration(
                             isDense: true,
                             contentPadding: EdgeInsets.all(15),
@@ -128,10 +131,37 @@ class _DiagnosticState extends State<Diagnostic> {
                             return fetchDistricts();
                           },
                           getSelectedValue: (state) {
+                            setState(() {
+                              districtName = state.label;
+                            });
                             print(state.label);
                             print(state
                                 .value); // this prints the selected option which could be an object
                           })),
+              box30,
+              box30,
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
+                child: SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFf9a825), // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                    onPressed: districtName.isEmpty
+                        ? null
+                        : () {
+                            displaySnackBar("Coming Soon", context);
+                          },
+                    child: Text(
+                      "Find Diagnostic Center",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
   }
