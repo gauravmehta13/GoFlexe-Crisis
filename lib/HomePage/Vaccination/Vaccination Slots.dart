@@ -79,7 +79,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                         await launch("https://selfregistration.cowin.gov.in/");
                       },
                       child: Text(
-                        "Get Vaccinated",
+                        "Book on CoWin",
                         style: TextStyle(color: Colors.black),
                       ),
                     )),
@@ -192,7 +192,14 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                 ),
                               ),
                             ),
-                            box20,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Disclaimer : While we have real-time data, slot availability on CoWin changes rapidly. If you see availability, please book on CoWin instantly before the slots are lost.",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.grey[700]),
+                              ),
+                            ),
                             ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
@@ -302,7 +309,8 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                             child: Container(
                                                 child: Table(
                                                     border: TableBorder.all(
-                                                        color: Colors.grey),
+                                                        color:
+                                                            Colors.grey[300]),
                                                     children: [
                                                   TableRow(children: [
                                                     Center(
@@ -366,7 +374,8 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                                             horizontal: 0),
                                                     child: Table(
                                                       border: TableBorder.all(
-                                                          color: Colors.grey),
+                                                          color:
+                                                              Colors.grey[300]),
                                                       children: [
                                                         TableRow(children: [
                                                           Center(

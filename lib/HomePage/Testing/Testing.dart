@@ -619,9 +619,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                                     height: 50,
                                     child: Image.asset("assets/confusion.png")),
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
+                              box10,
                               Text(
                                 "Interpretation",
                                 style: TextStyle(
