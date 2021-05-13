@@ -8,7 +8,7 @@ class Symptoms {
       Symptoms(
           heading: "Most common symptoms",
           symptoms: ["fever", "dry cough", "tiredness"]),
-      Symptoms(heading: "Less common symptoms:", symptoms: [
+      Symptoms(heading: "Less common symptoms", symptoms: [
         "aches and pains",
         "sore throat",
         "diarrhoea",

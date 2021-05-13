@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../HomePage/Hospital.dart';
+import '../HomePage/Hospital/Hospital.dart';
 
 class OrderSuccessful extends StatefulWidget {
   @override

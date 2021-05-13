@@ -40,3 +40,12 @@ class C {
     width: 30,
   );
 }
+
+displaySnackBar(text, ctx) {
+  ScaffoldMessenger.of(ctx).showSnackBar(
+    SnackBar(
+      content: Text(text),
+      duration: Duration(seconds: 1),
+    ),
+  );
+}

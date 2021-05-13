@@ -12,7 +12,7 @@ import '../Appbar.dart';
 import '../Constants.dart';
 import '../Fade Route.dart';
 import '../Widgets/Counter.dart';
-import 'Service Provider List.dart';
+import '../HomePage/Hospital/Hospital Beds.dart';
 import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
 
@@ -479,7 +479,7 @@ class _ItemsSelectionState extends State<ItemsSelection> {
                           .dispatch(Vehicles(vehicles));
                       Navigator.push(
                         context,
-                        FadeRoute(page: ServiceProviderList()),
+                        FadeRoute(page: HospitalBedList()),
                       );
                     },
               child: Text(

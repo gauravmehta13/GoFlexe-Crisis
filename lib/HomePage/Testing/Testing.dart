@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'package:crisis/HomePage/symptoms.dart';
+import 'package:crisis/Constants.dart';
+import 'package:crisis/HomePage/Testing/symptoms.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
+
+import 'Diagnostic.dart';
 
 class Testing extends StatefulWidget {
   @override
@@ -482,16 +485,6 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             child: CustomScrollView(
               controller: scrollController,
               slivers: <Widget>[
-                // SliverList(
-                //   delegate: SliverChildListDelegate(
-                //     [
-                //       Container(
-                //         height: data.size.height / 5,
-                //         color: Colors.black,
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 makeTabBarHeader(),
                 SliverList(
                   delegate: SliverChildListDelegate(
@@ -509,8 +502,9 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               ),
                               Center(
                                 child: SizedBox(
-                                    height: 100,
-                                    child: Image.asset("assets/symptoms.png")),
+                                    height: 50,
+                                    child:
+                                        Image.asset("assets/symptoms (1).png")),
                               ),
                               SizedBox(
                                 height: 20,
@@ -523,107 +517,45 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               SizedBox(
                                 height: 20,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                child: ExpansionPanelList(
-                                    dividerColor: Colors.amber,
-                                    expansionCallback:
-                                        (int index, bool status) {
-                                      setState(() {
-                                        _activeMeterIndex =
-                                            _activeMeterIndex == 0 ? null : 0;
-                                      });
-                                    },
-                                    children: [
-                                      ExpansionPanel(
-                                        backgroundColor: Color(0xFFeceef8),
-                                        isExpanded: _activeMeterIndex == 0,
-                                        headerBuilder: (BuildContext context,
-                                                bool isExpanded) =>
-                                            Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            ImageIcon(
-                                              AssetImage("assets/fever.png"),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text("List of symptoms"),
-                                          ],
-                                        ),
-                                        canTapOnHeader: true,
-                                        body: IgnorePointer(
-                                          child: Container(
-                                              color: Colors.white,
-                                              child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                        child: ListView.builder(
-                                                      shrinkWrap: true,
-                                                      itemCount:
-                                                          symptoms.length,
-                                                      itemBuilder:
-                                                          (context, i) {
-                                                        return Container(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child: Text(
-                                                                    symptoms[i]
-                                                                        .heading,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    )),
-                                                              ),
-                                                              Container(
-                                                                  child: ListView
-                                                                      .builder(
-                                                                shrinkWrap:
-                                                                    true,
-                                                                itemCount:
-                                                                    symptoms[i]
-                                                                        .symptoms
-                                                                        .length,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        j) {
-                                                                  return Text(
-                                                                    "     • ${symptoms[i].symptoms[j]}",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .grey[700]),
-                                                                  );
-                                                                },
-                                                              )),
-                                                              Divider(),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ))
-                                                  ])),
-                                        ),
-                                      )
-                                    ]),
-                              )
+                              Container(
+                                  child: IgnorePointer(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: symptoms.length,
+                                  itemBuilder: (context, i) {
+                                    return Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(symptoms[i].heading,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                )),
+                                          ),
+                                          Container(
+                                              child: ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                symptoms[i].symptoms.length,
+                                            itemBuilder: (context, j) {
+                                              return Text(
+                                                "     • ${symptoms[i].symptoms[j]}",
+                                                style: TextStyle(
+                                                    color: Colors.grey[700]),
+                                              );
+                                            },
+                                          )),
+                                          Divider(),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ))
                             ],
                           ),
                         ),
@@ -641,7 +573,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               ),
                               Center(
                                 child: SizedBox(
-                                    height: 100,
+                                    height: 50,
                                     child: Image.asset("assets/testing.png")),
                               ),
                               SizedBox(
@@ -674,7 +606,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               ),
                               Center(
                                 child: SizedBox(
-                                    height: 100,
+                                    height: 50,
                                     child: Image.asset("assets/confusion.png")),
                               ),
                               SizedBox(
@@ -685,30 +617,29 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w600),
                               ),
-                              Container(
-                                height: 600,
-                                child: PdfView(
-                                  scrollDirection: Axis.vertical,
-                                  documentLoader: Center(child: Loading()),
-                                  pageLoader: Center(child: Loading()),
-                                  controller: _pdfController,
-                                  onDocumentLoaded: (document) {
-                                    setState(() {
-                                      _allPagesCount = document.pagesCount;
-                                    });
-                                  },
-                                  // AIG COVID19 Guide
-                                  onPageChanged: (page) {
-                                    setState(() {
-                                      _actualPageNumber = page;
-                                    });
-                                  },
-                                ),
+                              Center(
+                                child: Image.asset("assets/result.jpg"),
                               ),
                             ],
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 20),
+                            child: Diagnostic(),
+                          ),
+                          box30
+                        ],
+                      )
                     ],
                   ),
                 ),

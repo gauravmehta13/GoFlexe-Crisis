@@ -1,32 +1,26 @@
 import 'dart:convert';
-import 'package:crisis/Auth/register.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/model/app_state.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:shimmer/shimmer.dart';
-import '../Appbar.dart';
-import '../Constants.dart';
-import '../Fade Route.dart';
-import '../redux/actions.dart';
-import 'Additional Services.dart';
-import 'Address Page.dart';
-import 'SP Details.dart';
+
+import '../../Appbar.dart';
+import '../../Constants.dart';
+import '../../redux/actions.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 // final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class ServiceProviderList extends StatefulWidget {
+class HospitalBedList extends StatefulWidget {
   @override
-  _ServiceProviderListState createState() => _ServiceProviderListState();
+  _HospitalBedListState createState() => _HospitalBedListState();
 }
 
-class _ServiceProviderListState extends State<ServiceProviderList> {
+class _HospitalBedListState extends State<HospitalBedList> {
   List<dynamic> filteredSp = [];
   // _launchCaller() async {
   //   const url = "tel:1234567";

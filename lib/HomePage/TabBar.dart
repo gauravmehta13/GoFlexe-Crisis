@@ -1,8 +1,8 @@
 import 'package:crisis/Drawer.dart';
 import 'package:crisis/HomePage/Home%20treatment.dart';
-import 'package:crisis/HomePage/Hospital.dart';
-import 'package:crisis/HomePage/Testing.dart';
-import 'package:crisis/HomePage/Vaccination.dart';
+import 'package:crisis/HomePage/Hospital/Hospital.dart';
+import 'package:crisis/HomePage/Testing/Testing.dart';
+import 'package:crisis/HomePage/Vaccination/Vaccination.dart';
 import 'package:flutter/material.dart';
 
 class GoFlexeTabBar extends StatefulWidget {

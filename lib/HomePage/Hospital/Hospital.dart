@@ -4,12 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import '../Constants.dart';
-import '../Fade Route.dart';
-import '../Order/Service Provider List.dart';
-import '../model/app_state.dart';
+import '../../Constants.dart';
+import '../../Fade Route.dart';
+import 'Hospital Beds.dart';
+import '../../model/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../redux/actions.dart';
+import '../../redux/actions.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
@@ -180,7 +180,7 @@ class _HospitalState extends State<Hospital>
                           });
                       Navigator.push(
                         context,
-                        FadeRoute(page: ServiceProviderList()),
+                        FadeRoute(page: HospitalBedList()),
                       );
                     }
                   }
