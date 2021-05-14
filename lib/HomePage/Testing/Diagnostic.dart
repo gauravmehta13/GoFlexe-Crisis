@@ -5,6 +5,9 @@ import 'package:crisis/model/StateDistrict%20Model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../Fade Route.dart';
+import 'Diagnostic Centers.dart';
+
 class Diagnostic extends StatefulWidget {
   @override
   _DiagnosticState createState() => _DiagnosticState();
@@ -24,6 +27,7 @@ class _DiagnosticState extends State<Diagnostic> {
   bool loading = true;
   bool districtLoading = false;
   String districtName = "";
+  String stateName = "";
 
   States states;
   District districts;
@@ -94,6 +98,9 @@ class _DiagnosticState extends State<Diagnostic> {
                     getSelectedValue: (state) {
                       getDistricts(state.value);
                       setState(() {
+                        stateName = state.label;
+                      });
+                      setState(() {
                         districtController.text = "";
                       });
                       print(state.label);
@@ -153,7 +160,14 @@ class _DiagnosticState extends State<Diagnostic> {
                     onPressed: districtName.isEmpty
                         ? null
                         : () {
-                            displaySnackBar("Coming Soon", context);
+                            Navigator.push(
+                              context,
+                              FadeRoute(
+                                  page: DiagnosticCenters(
+                                stateName: stateName,
+                                distrctName: districtName,
+                              )),
+                            );
                           },
                     child: Text(
                       "Find Diagnostic Center",

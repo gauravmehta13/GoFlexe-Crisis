@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:crisis/Drawer.dart';
 import 'package:crisis/HomePage/Home%20Treatment/Home%20treatment.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/HomePage/Testing/Testing.dart';
 import 'package:crisis/HomePage/Vaccination/Vaccination.dart';
 import 'package:flutter/material.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 
 class GoFlexeTabBar extends StatefulWidget {
   @override
@@ -14,12 +17,19 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
     with TickerProviderStateMixin {
   TabController _tabController;
   TabController _controller;
+  Timer _timer;
 
   @override
   void initState() {
     _controller = TabController(length: 1, vsync: this);
     _tabController = TabController(length: 4, vsync: this);
     super.initState();
+    _timer = new Timer(const Duration(minutes: 1), () {
+      showDialog(
+        context: context,
+        builder: (context) => _dialog,
+      );
+    });
   }
 
   @override
@@ -126,4 +136,25 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
       ),
     );
   }
+
+  final _dialog = RatingDialog(
+    // your app's name?
+    title: 'Found this Helpful?',
+    // encourage your user to leave a high rating?
+    message:
+        'Tap a star to set your rating. Add more description here if you want.',
+    // your app's logo?
+    image: SizedBox(height: 100, child: Image.asset("assets/rating.png")),
+    submitButton: 'Submit',
+    onCancelled: () => print('cancelled'),
+    onSubmitted: (response) {
+      print('rating: ${response.rating}, comment: ${response.comment}');
+
+      // TODO: add your own logic
+      if (response.rating < 3.0) {
+        // send their comments to your email or anywhere you wish
+        // ask the user to contact you instead of leaving a bad review
+      }
+    },
+  );
 }

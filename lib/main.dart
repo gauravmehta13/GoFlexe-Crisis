@@ -21,7 +21,6 @@ Future<void> main() async {
       Store<AppState>(reducer, initialState: _initialState);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MyApp(store: _store));
 }
 

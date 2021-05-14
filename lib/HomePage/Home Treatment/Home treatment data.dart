@@ -27,7 +27,9 @@ class Meds {
       Meds(
           name: "Moderate Symptoms",
           meds: Medications.getModerateMedications()),
-      Meds(name: "Severe Symptoms", meds: Medications.getSevereMedications()),
+      Meds(
+          name: "Severe Symptoms (Don't Self Medicate)",
+          meds: Medications.getSevereMedications()),
     ];
   }
 }

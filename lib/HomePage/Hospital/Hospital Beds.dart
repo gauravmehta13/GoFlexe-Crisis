@@ -36,7 +36,6 @@ class _HospitalBedListState extends State<HospitalBedList> {
   bool sortby = false;
   bool priceSort = false;
   bool ratingSort = false;
-  List city = ["wareouse", "sp", "de"];
   bool warehouseFilter = false;
   bool premiumFilter = false;
   bool insuranceFilter = false;
@@ -55,7 +54,7 @@ class _HospitalBedListState extends State<HospitalBedList> {
         data: {
           'tenantSet_id': 'CRISIS01',
           'tenantUsecase': 'CRISIS01',
-          'useCase': items['usecase'] != null ? items['usecase'] : 'Hospital',
+          'useCase': 'hospital',
           'state': items['stateName'],
           'district': items['districtName']
         });

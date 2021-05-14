@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Constants.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -49,10 +47,10 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
         setState(() {
           tempData[i]["slots"] = x;
         });
-
-        tempData.sort(
-            (a, b) => a["slots"].toString().compareTo(b["slots"].toString()));
       }
+
+      tempData.sort(
+          (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
       setState(() {
         data = tempData;
         filteredData = tempData;
@@ -73,10 +71,9 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
         setState(() {
           tempData[i]["slots"] = x;
         });
-
-        tempData.sort(
-            (a, b) => a["slots"].toString().compareTo(b["slots"].toString()));
       }
+      tempData.sort(
+          (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
       setState(() {
         data = tempData;
         filteredData = tempData;
@@ -231,7 +228,6 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                               ),
                             ),
                             ListView.builder(
-                                reverse: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: filteredData.length,

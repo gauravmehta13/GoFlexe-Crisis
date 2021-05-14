@@ -569,8 +569,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               SizedBox(
                                 height: 20,
                               ),
-                              Image.network(
-                                  "https://cdn.thewire.in/wp-content/uploads/2020/04/05204920/Screenshot-2020-04-05-at-7.40.03-PM.png")
+                              Image.asset("assets/test.jpg")
                             ],
                           ),
                         ),
