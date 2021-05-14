@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "e464ac31ab2a948625fda67ce1614792",
+  "assets/AssetManifest.json": "8eeb98dc6734c40007ef1dce8ac4ad9b",
 "assets/assets/0009.jpg": "0310cd7a1db0dc7db7773292606313b4",
 "assets/assets/0012.jpg": "7201a563ac50a35c8fcb26c95f26a1d9",
 "assets/assets/0013.jpg": "f668c0dd5cd02f9a5adca065a8d1cc02",
@@ -31,7 +31,8 @@ const RESOURCES = {
 "assets/assets/oximeter.png": "231a51ddddb376e3def419aa9d2f1809",
 "assets/assets/pulseOximeter.png": "4d5cdce92506e5769c00506e1f9ff1ee",
 "assets/assets/rating.png": "37c280a8425d4226aa18b0873619f225",
-"assets/assets/result.jpg": "c1efd5e2fd18685165d66c4acfa205c3",
+"assets/assets/research.png": "d49ccb65805275ee352ef79598a0b342",
+"assets/assets/result.jpg": "b703f28786e650d639ded82f42af2dfe",
 "assets/assets/safe.png": "02903800b2a22c0988adf69da8fd2001",
 "assets/assets/splash.png": "2fd0b642199f483c10169a932ce15bc3",
 "assets/assets/steroids.png": "cf710c7f04881cfba695d191a869142d",
@@ -59,12 +60,12 @@ const RESOURCES = {
 "icons/icon-256x256.png": "1bff694c81c42c85631214459327f94d",
 "icons/icon-384x384.png": "9452436d86511f299365201854d5a9b3",
 "icons/icon-512x512.png": "aefa8c9226b036cd7dc5d0c8d8ed67d3",
-"index.html": "fdbf4b862c0b1aec02aaa02f36fd8186",
-"/": "fdbf4b862c0b1aec02aaa02f36fd8186",
-"main.dart.js": "4b92cc0365d6afe518b722568c3a3615",
+"index.html": "dbfdd9b1c3b52d080ead8901e0bf0670",
+"/": "dbfdd9b1c3b52d080ead8901e0bf0670",
+"main.dart.js": "e02e7dcba2da93ab6c3b98985bdf8d1f",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
 "splash/img/light-background.png": "2fd0b642199f483c10169a932ce15bc3",
-"splash/style.css": "f38b46f4946aa7c41b459ed0f982f1a6",
+"splash/style.css": "abd3b5811afac21066420e2e2459e800",
 "version.json": "c237c2309dcdd2a210496344dac05f37"
 };
 
