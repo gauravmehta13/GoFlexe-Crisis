@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "bb7248ab5f41ff0d664f9f828cfd237f",
+  "assets/AssetManifest.json": "957a291eb8ae85a0093d4700160279d0",
 "assets/assets/0009.jpg": "0310cd7a1db0dc7db7773292606313b4",
 "assets/assets/0012.jpg": "7201a563ac50a35c8fcb26c95f26a1d9",
 "assets/assets/0013.jpg": "f668c0dd5cd02f9a5adca065a8d1cc02",
@@ -30,11 +30,15 @@ const RESOURCES = {
 "assets/assets/pulseOximeter.png": "4d5cdce92506e5769c00506e1f9ff1ee",
 "assets/assets/result.jpg": "2f21410beaf96a6ffce8e5a9480b6057",
 "assets/assets/safe.png": "02903800b2a22c0988adf69da8fd2001",
+"assets/assets/splash.png": "396af0dd16d50d470b7884a8f7dcfa58",
+"assets/assets/steroids.png": "cf710c7f04881cfba695d191a869142d",
 "assets/assets/symptoms%2520(1).png": "839ec4511b11fd5b3b0e8642e9a74ef7",
 "assets/assets/symptoms%2520(2).png": "c2d8bc01368aa22f1f1b3dc8bb37b3e7",
 "assets/assets/symptoms.png": "cd3c176cde6e84d1fdeaea6876c2cd0e",
+"assets/assets/syringe.png": "a0641aa48abcfcc74c1e3a58fc2aef04",
 "assets/assets/testing.png": "e7e49bdd6b5ea794aafa5a6031083853",
 "assets/assets/thermometer.png": "9dfb6bd9804876bdc5b95cc33b57091e",
+"assets/assets/vaccine.png": "34563ef1c6d23cc8b4a690365c8d5135",
 "assets/assets/vitamins.png": "45425ec968a8cbbfe65e0c3e69f801e2",
 "assets/assets/warning.png": "27e28f8d3352a284662ef957558ef77d",
 "assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
@@ -51,10 +55,12 @@ const RESOURCES = {
 "icons/icon-256x256.png": "1bff694c81c42c85631214459327f94d",
 "icons/icon-384x384.png": "9452436d86511f299365201854d5a9b3",
 "icons/icon-512x512.png": "aefa8c9226b036cd7dc5d0c8d8ed67d3",
-"index.html": "b9abbb62ea379efb43eae9abd98a547a",
-"/": "b9abbb62ea379efb43eae9abd98a547a",
-"main.dart.js": "47645abe99661b1a923755c9ce508b19",
-"manifest.json": "7cd44a123f25a1b984479019446b146a",
+"index.html": "7daeecac35b266a8561c09fbcaf7bcc4",
+"/": "7daeecac35b266a8561c09fbcaf7bcc4",
+"main.dart.js": "c9499bd660f492b1041ac1171405ebec",
+"manifest.json": "60320ba02c37509221c1002ecc6c9f23",
+"splash/img/light-background.png": "396af0dd16d50d470b7884a8f7dcfa58",
+"splash/style.css": "125a85b13a4d513472c10e995bfc3612",
 "version.json": "c237c2309dcdd2a210496344dac05f37"
 };
 
