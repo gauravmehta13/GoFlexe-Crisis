@@ -1,5 +1,3 @@
-import 'package:crisis/data/Item%20Choices.dart';
-
 class ShiftType {
   String payload;
   ShiftType(this.payload);
@@ -103,11 +101,6 @@ class PickupFloor {
 class DropFloor {
   final String payload;
   DropFloor(this.payload);
-}
-
-class PredefinedItems {
-  final List<PreDefinedItems> payload;
-  PredefinedItems(this.payload);
 }
 
 class PickupStreetAddress {
