@@ -547,7 +547,14 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                       ),
                                       box30,
                                       districtLoading == true
-                                          ? LinearProgressIndicator()
+                                          ? LinearProgressIndicator(
+                                              backgroundColor:
+                                                  Color(0xFF3f51b5),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation(
+                                                Color(0xFFf9a825),
+                                              ),
+                                            )
                                           : TextFieldSearch(
                                               minStringLength: 0,
                                               decoration: new InputDecoration(

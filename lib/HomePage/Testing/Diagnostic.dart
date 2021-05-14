@@ -113,7 +113,12 @@ class _DiagnosticState extends State<Diagnostic> {
                   )),
               box10,
               districtLoading == true
-                  ? LinearProgressIndicator()
+                  ? LinearProgressIndicator(
+                      backgroundColor: Color(0xFF3f51b5),
+                      valueColor: AlwaysStoppedAnimation(
+                        Color(0xFFf9a825),
+                      ),
+                    )
                   : Container(
                       padding: EdgeInsets.all(10),
                       child: TextFieldSearch(

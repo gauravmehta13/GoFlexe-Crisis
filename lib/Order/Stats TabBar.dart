@@ -2,6 +2,8 @@ import 'package:crisis/Order/Stats.dart';
 import 'package:crisis/Order/indian_states.dart';
 import 'package:flutter/material.dart';
 
+import '../Constants.dart';
+
 class StatsTabBar extends StatefulWidget {
   @override
   _StatsTabBarState createState() => _StatsTabBarState();
@@ -35,13 +37,10 @@ class _StatsTabBarState extends State<StatsTabBar>
       ),
       body: Column(
         children: [
+          box30,
           Container(
-            height: 100,
             child: Stack(
               children: [
-                Container(
-                  height: 60,
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Center(

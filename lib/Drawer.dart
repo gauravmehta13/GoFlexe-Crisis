@@ -1,8 +1,14 @@
+import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
+import 'package:crisis/Screens/Faq.dart';
+import 'package:crisis/Screens/MythBusters.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'Fade Route.dart';
+import 'Order/Stats TabBar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -103,24 +109,56 @@ class _MyDrawerState extends State<MyDrawer> {
                   size: 18,
                 ),
               ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  displaySnackBar("Coming Soon", context);
 
-              // ListTile(
-              //   dense: true,
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //     Navigator.push(
-              //       context,
-              //       FadeRoute(page: StatsTabBar()),
-              //     );
-              //   },
-              //   title: Text("Live Data"),
-              //   leading: FaIcon(
-              //     FontAwesomeIcons.solidNewspaper,
-              //     color: Colors.black87,
-              //     size: 18,
-              //   ),
-              // ),
-
+                  // Navigator.push(
+                  //   context,
+                  //   FadeRoute(page: StatsTabBar()),
+                  // );
+                },
+                title: Text("Live Data"),
+                leading: FaIcon(
+                  FontAwesomeIcons.solidNewspaper,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: FAQ()),
+                  );
+                },
+                title: Text("FAQ's"),
+                leading: FaIcon(
+                  FontAwesomeIcons.question,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: MythBusters()),
+                  );
+                },
+                title: Text("MythBusters"),
+                leading: FaIcon(
+                  FontAwesomeIcons.checkCircle,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
               Spacer(),
               ListTile(
                 dense: true,

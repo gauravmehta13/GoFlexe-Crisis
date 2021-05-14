@@ -239,7 +239,7 @@ class _HospitalBedListState extends State<HospitalBedList> {
                                         height: 20,
                                       ),
                                       Text(
-                                        "No Hospitals Available at the moment",
+                                        "No Hospital Beds Available at the moment",
                                         style: TextStyle(
                                             color: Colors.grey[700],
                                             fontSize: 18),

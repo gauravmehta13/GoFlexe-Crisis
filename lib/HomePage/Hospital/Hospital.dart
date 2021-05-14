@@ -198,6 +198,7 @@ class _HospitalState extends State<Hospital>
               child: Form(
                 key: key,
                 child: Container(
+                  height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.all(20),
                   child: StoreConnector<AppState, AppState>(
                     converter: (store) => store.state,
@@ -218,6 +219,7 @@ class _HospitalState extends State<Hospital>
                           ),
                           box20,
                           DropdownSearch<String>(
+                            // showSearchBox: true,
                             mode: Mode.MENU,
                             showSelectedItem: true,
                             items: states,
