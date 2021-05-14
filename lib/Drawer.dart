@@ -122,48 +122,13 @@ class _MyDrawerState extends State<MyDrawer> {
               // ),
 
               Spacer(),
-              // ListTile(
-              //   dense: true,
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       FadeRoute(page: Videos()),
-              //     );
-              //   },
-              //   title: Text("About Us"),
-              //   // minLeadingWidth: 25,
-              //   leading: FaIcon(
-              //     FontAwesomeIcons.youtube,
-              //     color: Colors.black87,
-              //     size: 18,
-              //   ),
-              // ),
-              // ListTile(
-              //   dense: true,
-              //   onTap: () async {
-              //     const url = 'https://partnergoflexe.netlify.app/#/';
-
-              //     if (await canLaunch(url)) {
-              //       await launch(url, forceSafariVC: false);
-              //     } else {
-              //       throw 'Could not launch $url';
-              //     }
-              //   },
-              //   title: Text("Join as Partner"),
-              //   // minLeadingWidth: 25,
-              //   leading: FaIcon(
-              //     FontAwesomeIcons.peopleCarry,
-              //     color: Colors.black87,
-              //     size: 18,
-              //   ),
-              // ),
               ListTile(
                 dense: true,
                 onTap: () {},
-                title: Text("Report a Complaint"),
+                title: Text("Give Feedback"),
                 // minLeadingWidth: 25,
                 leading: FaIcon(
-                  FontAwesomeIcons.heartBroken,
+                  Icons.feedback,
                   color: Colors.black87,
                   size: 18,
                 ),

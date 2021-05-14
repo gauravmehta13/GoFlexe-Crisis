@@ -63,6 +63,7 @@ class _DiagnosticState extends State<Diagnostic> {
   }
 
   Future<List> fetchDistricts() async {
+    await Future.delayed(Duration(milliseconds: 30));
     return districts?.districts ?? [];
   }
 
@@ -96,6 +97,7 @@ class _DiagnosticState extends State<Diagnostic> {
                       return fetchStates();
                     },
                     getSelectedValue: (state) {
+                      FocusScope.of(context).unfocus();
                       getDistricts(state.value);
                       setState(() {
                         stateName = state.label;
@@ -138,6 +140,7 @@ class _DiagnosticState extends State<Diagnostic> {
                             return fetchDistricts();
                           },
                           getSelectedValue: (state) {
+                            FocusScope.of(context).unfocus();
                             setState(() {
                               districtName = state.label;
                             });

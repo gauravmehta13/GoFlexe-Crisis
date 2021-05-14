@@ -41,7 +41,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
   bool itemsFound;
 
   void resetList() {
-    List tempList = new List();
+    List tempList = [];
     setState(() {
       // after loop is done, set the filteredList state from the tempList
       this.filteredList = tempList;
@@ -219,6 +219,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
             onTap: () {
               // set the controller value to what was selected
               setState(() {
+                FocusScope.of(context).unfocus();
                 // if we have a label property, and getSelectedValue function
                 // send getSelectedValue to parent widget using the label property
                 if (widget.getSelectedValue != null) {
@@ -265,7 +266,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
         child: _listViewBuilder(context),
       );
     }
-    return null;
+    return _loadingIndicator();
   }
 
   OverlayEntry _createOverlayEntry() {

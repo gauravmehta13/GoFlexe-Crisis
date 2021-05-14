@@ -533,6 +533,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                           return fetchStates();
                                         },
                                         getSelectedValue: (state) {
+                                          FocusScope.of(context).unfocus();
                                           getDistricts(state.value);
                                           setState(() {
                                             districtController.text = "";
@@ -575,6 +576,8 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                                 return fetchDistricts();
                                               },
                                               getSelectedValue: (district) {
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                                 setState(() {
                                                   districtId =
                                                       district.value.toString();

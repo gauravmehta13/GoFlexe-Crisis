@@ -625,6 +625,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w600),
                               ),
+                              box10,
                               Center(
                                 child: Image.asset("assets/result.jpg"),
                               ),
