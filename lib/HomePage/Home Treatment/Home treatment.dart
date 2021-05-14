@@ -269,6 +269,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                             fontSize: 15, fontWeight: FontWeight.w600),
                       ),
                       box20,
+                      Divider(),
                       IgnorePointer(
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -278,7 +279,6 @@ class _HomeTreatmentState extends State<HomeTreatment>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Divider(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text("${meds[i].name}",
@@ -340,6 +340,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                       );
                                     },
                                   ),
+                                  box10,
                                   Divider(),
                                 ],
                               ),
@@ -592,6 +593,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                   ),
                                 ),
                           box30,
+                          box30,
                           Container(
                             padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
                             child: SizedBox(
@@ -612,7 +614,8 @@ class _HomeTreatmentState extends State<HomeTreatment>
                               ),
                             ),
                           ),
-                          box20
+                          box30,
+                          box30,
                         ],
                       )))
             ],

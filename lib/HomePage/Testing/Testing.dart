@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math' as math;
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Testing/symptoms.dart';
@@ -616,8 +615,8 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               ),
                               Center(
                                 child: SizedBox(
-                                    height: 50,
-                                    child: Image.asset("assets/confusion.png")),
+                                    height: 60,
+                                    child: Image.asset("assets/research.png")),
                               ),
                               box10,
                               Text(
@@ -625,7 +624,64 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w600),
                               ),
-                              box10,
+                              box20,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "I am RT PCR Negative but have symptoms. What to interpret?",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.red[800]),
+                                  ),
+                                  box10,
+                                  Text(
+                                    "• What to do is in your hands, i.e., getting the test done",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                  box10,
+                                  Text(
+                                    "• What to interpret is in your Doctor's hands",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                  box20,
+                                  Text(
+                                    "So, What to do?",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.red[800]),
+                                  ),
+                                  box10,
+                                  Text(
+                                    "Simple, Based on your symptoms and history, your doctor will advice either CT Scan or other tests.",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                  box20,
+                                  Text(
+                                    "What not to do?",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.red[800]),
+                                  ),
+                                  box10,
+                                  Text(
+                                    "Ignoring the symptoms thinking you're RT PCR Negative. Remember, RT PCR Negative COVID gets worse and more serious because of diagnostic delay or patients not consulting their doctor.",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              box20,
                               Center(
                                 child: Image.asset("assets/result.jpg"),
                               ),

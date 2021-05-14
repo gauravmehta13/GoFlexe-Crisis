@@ -307,6 +307,8 @@ class _VaccinationState extends State<Vaccination> {
                           ],
                         ),
                       ),
+                    box30,
+                    box30
                   ],
                 ),
               ))));
