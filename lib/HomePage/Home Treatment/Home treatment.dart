@@ -14,7 +14,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
   final devicesKey = new GlobalKey();
   final medicationKey = new GlobalKey();
   final isolationKey = new GlobalKey();
-  final diagnoseKey = new GlobalKey();
+  final homeCareKey = new GlobalKey();
   final sliverListtKey = new GlobalKey();
   ScrollController scrollController;
   TabController _tabController;
@@ -22,7 +22,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
   double devicesHeight;
   double medicationHeight;
   double isolationHeight;
-  double diagnoseHeight;
+  double homeCareHeight;
   List<DevicesRequired> devices;
   List<Meds> meds;
   List<Warnings> warnings;
@@ -32,8 +32,8 @@ class _HomeTreatmentState extends State<HomeTreatment>
     super.initState();
 
     scrollController = ScrollController();
-    _tabController = new TabController(length: 3, vsync: this);
-    _topTabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 4, vsync: this);
+    _topTabController = new TabController(length: 4, vsync: this);
     addScrollControllerListener();
     devices = DevicesRequired.getDevicesRequired();
     meds = Meds.getMeds();
@@ -52,8 +52,8 @@ class _HomeTreatmentState extends State<HomeTreatment>
       if (isolationKey.currentContext != null) {
         isolationHeight = isolationKey.currentContext.size.height;
       }
-      if (diagnoseKey.currentContext != null) {
-        diagnoseHeight = diagnoseKey.currentContext.size.height;
+      if (homeCareKey.currentContext != null) {
+        homeCareHeight = homeCareKey.currentContext.size.height;
       }
       if (scrollController.offset > devicesHeight &&
           scrollController.offset < medicationHeight + devicesHeight) {
@@ -76,7 +76,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                 medicationHeight +
                     devicesHeight +
                     isolationHeight +
-                    diagnoseHeight) {
+                    homeCareHeight) {
           _tabController.animateTo(3);
         } else {}
       } else if (scrollController.position.userScrollDirection ==
@@ -96,7 +96,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                 medicationHeight +
                     devicesHeight +
                     isolationHeight +
-                    diagnoseHeight) {
+                    homeCareHeight) {
           _tabController.animateTo(3);
         } else {}
       }
@@ -299,7 +299,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
         break;
       case 3:
         {
-          if (diagnoseKey.currentContext == null) {
+          if (homeCareKey.currentContext == null) {
             if (_tabController.previousIndex == 0) {
               scrollController.position
                   .ensureVisible(
@@ -350,7 +350,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                         )
                             .then((value) {
                           scrollController.position.ensureVisible(
-                            diagnoseKey.currentContext.findRenderObject(),
+                            homeCareKey.currentContext.findRenderObject(),
                             alignment:
                                 0.0, // How far into view the item should be scrolled (between 0 and 1).
                             duration: const Duration(milliseconds: 200),
@@ -379,7 +379,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                 )
                     .then((value) {
                   scrollController.position.ensureVisible(
-                    diagnoseKey.currentContext.findRenderObject(),
+                    homeCareKey.currentContext.findRenderObject(),
                     alignment:
                         0.0, // How far into view the item should be scrolled (between 0 and 1).
                     duration: const Duration(milliseconds: 200),
@@ -389,7 +389,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
             }
           } else {
             scrollController.position.ensureVisible(
-              diagnoseKey.currentContext.findRenderObject(),
+              homeCareKey.currentContext.findRenderObject(),
               alignment: 0.0,
               // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 800),
@@ -406,40 +406,52 @@ class _HomeTreatmentState extends State<HomeTreatment>
       delegate: _SliverAppBarDelegate(
         minHeight: 50.0,
         maxHeight: 50.0,
-        child: Container(
-          color: Colors.white,
-          child: TabBar(
-            onTap: (val) {
-              tabBarOnTap(val);
-            },
-            unselectedLabelColor: Colors.grey.shade700,
-            indicatorColor: Color(0xFF3f51b5),
-            indicatorWeight: 2.0,
-            labelColor: Color(0xFF3f51b5),
-            controller: _tabController,
-            tabs: <Widget>[
-              new Tab(
-                child: Text(
-                  "Devices",
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+        child: Center(
+          child: Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            color: Colors.white,
+            child: TabBar(
+              onTap: (val) {
+                tabBarOnTap(val);
+              },
+              unselectedLabelColor: Colors.grey.shade700,
+              indicatorColor: Color(0xFF3f51b5),
+              indicatorWeight: 2.0,
+              isScrollable: true,
+              labelColor: Color(0xFF3f51b5),
+              controller: _tabController,
+              tabs: <Widget>[
+                new Tab(
+                  child: Text(
+                    "Devices",
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                  ),
                 ),
-              ),
-              new Tab(
-                child: Text(
-                  "Basic Medication",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                new Tab(
+                  child: Text(
+                    "Medication",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                  ),
                 ),
-              ),
-              new Tab(
-                child: Text(
-                  "Isolation",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                new Tab(
+                  child: Text(
+                    "Isolation",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                  ),
                 ),
-              ),
-            ],
-            indicatorSize: TabBarIndicatorSize.tab,
+                new Tab(
+                  child: Text(
+                    "Home Care",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                  ),
+                ),
+              ],
+              indicatorSize: TabBarIndicatorSize.tab,
+            ),
           ),
         ),
       ),
@@ -609,11 +621,12 @@ class _HomeTreatmentState extends State<HomeTreatment>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Divider(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text("${meds[i].name}",
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.w600,
                                         )),
                                   ),
@@ -665,12 +678,12 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                                 ],
                                               ),
                                             ),
-                                            Divider(),
                                           ],
                                         ),
                                       );
                                     },
                                   ),
+                                  Divider(),
                                 ],
                               ),
                             );
@@ -712,7 +725,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
                       // Center(
                       //   child: SizedBox(
                       //       height: 50,
-                      //       child: Image.asset("assets/diagnose.png")),
+                      //       child: Image.asset("assets/homeCare.png")),
                       // ),
                       // SizedBox(
                       //   height: 20,

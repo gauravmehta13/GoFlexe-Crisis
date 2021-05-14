@@ -23,7 +23,11 @@ class Meds {
   Meds({this.meds, this.name});
   static List<Meds> getMeds() {
     return <Meds>[
-      Meds(name: "Basic Medication", meds: Medications.getBasicMedications()),
+      Meds(name: "Mild Symptoms", meds: Medications.getBasicMedications()),
+      Meds(
+          name: "Moderate Symptoms",
+          meds: Medications.getModerateMedications()),
+      Meds(name: "Severe Symptoms", meds: Medications.getSevereMedications()),
     ];
   }
 }
@@ -42,18 +46,68 @@ class Medications {
           description:
               "(Once a day for 3 days). Avoid in pregnant and lactating women."),
       Medications(
+          name: "Tab Azithromycin",
+          url: "medicine.png",
+          description:
+              "Azithromycin presents in vitro activity against SARS-CoV-2 and could act in different points of the viral cycle."),
+      Medications(
           name: "Tab Paracetamol 650 mg",
           url: "medicine.png",
           description: "For Fever (Can be taken every 6-8 hours.)"),
       Medications(
           name: "Inhaled Budesonide",
           url: "inhaler.png",
-          description: "Depending on your symptoms, Your doctor may ask you"),
+          description: "(Given at a dose of 800mcg BD for 5 days)"),
       Medications(
-          name: "Vitamins",
+          name: "Multi Vitamins",
           url: "vitamins.png",
           description:
               " Vitamins B, C and D, as well as zinc may be helpful in boosting your immune system."),
+    ];
+  }
+
+  static List<Medications> getModerateMedications() {
+    return <Medications>[
+      Medications(
+          name: "Tab FabiFlu 400mg",
+          url: "medicine.png",
+          description:
+              "(2 Tabs twice a day). Anti-viral medicine used to treat mild to moderate COVID-19 disease under emergency conditions."),
+      Medications(
+          name: "Tab Doxycycline",
+          url: "medicine.png",
+          description:
+              "(Twice a day) Doxycycline is used to treat infections caused by bacteria, including pneumonia and other respiratory tract infections"),
+      Medications(
+          name: "Tab Montek LC",
+          url: "medicine.png",
+          description:
+              "Used in the treatment of allergic symptoms such as runny nose, stuffy nose, sneezing, itching, swelling, watery eyes and congestion or stuffiness."),
+      Medications(
+          name: "Capsule Pan-D",
+          url: "medicine.png",
+          description:
+              "Used to treat gastroesophageal reflux disease (Acid reflux)."),
+    ];
+  }
+
+  static List<Medications> getSevereMedications() {
+    return <Medications>[
+      Medications(
+          name: "Dexamethasone (Steroid)",
+          url: "steroids.png",
+          description:
+              "According to preliminary findings shared with WHO, for patients on ventilators, the treatment was shown to reduce mortality by about one third, and for patients requiring only oxygen, mortality was cut by about one fifth."),
+      Medications(
+          name: "Remdesivir Injection",
+          url: "syringe.png",
+          description:
+              "Remdesivir is given by injection into a vein usually once daily for 5 to 10 days. It is infused over a period ranging from 30 minutes to 2 hours."),
+      Medications(
+          name: "Tocilizumab Injection",
+          url: "syringe.png",
+          description:
+              "Tocilizumab has been recognized as one of the few existing biologic useful for combating COVID-19 infections especially in critically ill patient."),
     ];
   }
 }

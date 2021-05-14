@@ -591,7 +591,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                               height: 20,
                             ),
                             Text(
-                              "Diagnose",
+                              "Find Diagnostic centre near you",
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w600),
                             ),

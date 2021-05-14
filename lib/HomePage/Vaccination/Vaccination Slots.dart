@@ -308,7 +308,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                                             0
                                                         ? filteredData[index]
                                                                     ["slots"] >
-                                                                5
+                                                                3
                                                             ? Colors.green[200]
                                                             : Colors.orangeAccent[
                                                                 200]

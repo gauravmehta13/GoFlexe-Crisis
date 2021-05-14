@@ -206,14 +206,17 @@ class _HospitalState extends State<Hospital>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
                               height: 100,
                               child: Image.asset("assets/hospital.png")),
                           SizedBox(
-                            height: 40,
+                            height: 20,
                           ),
+                          Text(
+                            "Find Hospital Bed near you",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w600),
+                          ),
+                          box20,
                           DropdownSearch<String>(
                             mode: Mode.MENU,
                             showSelectedItem: true,
