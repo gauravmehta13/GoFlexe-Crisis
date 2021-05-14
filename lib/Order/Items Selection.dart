@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:crisis/data/Item%20Choices.dart';
 import 'package:crisis/model/app_state.dart';
 import 'package:crisis/redux/actions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -34,7 +33,6 @@ class _ItemsSelectionState extends State<ItemsSelection> {
   List<dynamic> vehicles = [];
   List<dynamic> items = [];
   List<bool> additionalSelected = [];
-  List<PreDefinedItems> testItems = [];
 
   @override
   void initState() {
