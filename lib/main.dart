@@ -32,11 +32,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // Noti noti = AppNoti();
   @override
   void initState() {
     super.initState();
-    // Future(noti.init);
   }
 
   @override
