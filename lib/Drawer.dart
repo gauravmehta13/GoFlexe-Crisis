@@ -187,76 +187,21 @@ class _MyDrawerState extends State<MyDrawer> {
                   size: 18,
                 ),
               ),
-              ExpansionTile(
-                title: Row(
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.mailBulk,
-                      color: Colors.black87,
-                      size: 18,
-                    ),
-                    SizedBox(
-                      width: 35,
-                    ),
-                    Text(
-                      "Contact Us",
-                      style: TextStyle(fontSize: 13),
-                    ),
-                  ],
+              ListTile(
+                dense: true,
+                onTap: () {
+                  _sendMail();
+                },
+                title: Text(
+                  "Contact Us",
                 ),
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                          icon: FaIcon(
-                            FontAwesomeIcons.linkedin,
-                            color: Color(0xFF0072b1),
-                          ),
-                          onPressed: () {}),
-                      IconButton(
-                        icon: Icon(
-                          Icons.mail_outline,
-                          color: Color(0xFFD44638),
-                        ),
-                        onPressed: () {
-                          _sendMail();
-                        },
-                      ),
-                      IconButton(
-                          icon: FaIcon(
-                            FontAwesomeIcons.twitter,
-                            color: Color(0xFF00acee),
-                          ),
-                          onPressed: () {}),
-                      IconButton(
-                          icon: FaIcon(
-                            FontAwesomeIcons.telegram,
-                            color: Color(0xFF0088cc),
-                          ),
-                          onPressed: () {})
-                    ],
-                  )
-                  // ListTile(
-                  //   onTap: () {},
-                  //   title: Text("E-Mail"),
-                  // minLeadingWidth: 25,
-                  //   leading: Icon(
-                  //     Icons.mail_outline,
-                  //     color: Colors.black87,
-                  //   ),
-                  // ),
-                  // ListTile(
-                  //   onTap: () {},
-                  //   title: Text("LinkedIn"),
-                  // minLeadingWidth: 25,
-                  //   leading: FaIcon(
-                  //     FontAwesomeIcons.linkedin,
-                  //     color: Colors.black87,
-                  //   ),
-                  // ),
-                ],
+                leading: FaIcon(
+                  FontAwesomeIcons.mailBulk,
+                  color: Colors.black87,
+                  size: 18,
+                ),
               ),
+              box10,
               if (_auth.currentUser != null)
                 ListTile(
                   dense: true,
