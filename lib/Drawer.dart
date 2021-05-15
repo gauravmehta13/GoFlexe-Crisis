@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'Fade Route.dart';
-import 'Order/Stats TabBar.dart';
+import 'Screens/Covid Stats/Stats TabBar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -110,12 +110,10 @@ class _MyDrawerState extends State<MyDrawer> {
                 dense: true,
                 onTap: () {
                   Navigator.pop(context);
-                  displaySnackBar("Coming Soon", context);
-
-                  // Navigator.push(
-                  //   context,
-                  //   FadeRoute(page: StatsTabBar()),
-                  // );
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: StatsTabBar()),
+                  );
                 },
                 title: Text("Live Data"),
                 leading: FaIcon(

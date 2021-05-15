@@ -1,8 +1,8 @@
-import 'package:crisis/Order/Stats.dart';
-import 'package:crisis/Order/indian_states.dart';
+import 'package:crisis/Screens/Covid%20Stats/Stats.dart';
+import 'package:crisis/Screens/Covid%20Stats/Indian%20States.dart';
 import 'package:flutter/material.dart';
 
-import '../Constants.dart';
+import '../../Constants.dart';
 
 class StatsTabBar extends StatefulWidget {
   @override

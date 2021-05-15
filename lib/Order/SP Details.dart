@@ -1,15 +1,12 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
-import '../Appbar.dart';
 import '../Constants.dart';
-import '../Fade Route.dart';
 
 class SpDetails extends StatefulWidget {
   final spId;
