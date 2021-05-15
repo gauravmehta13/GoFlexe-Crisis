@@ -890,102 +890,107 @@ class _HomeTreatmentState extends State<HomeTreatment>
         break;
       case 3:
         {
-          if (homeCareKey.currentContext == null) {
-            if (_tabController.previousIndex == 0) {
-              scrollController.position
-                  .ensureVisible(
-                devicesKey.currentContext.findRenderObject(),
-                alignment:
-                    0.0, // How far into view the item should be scrolled (between 0 and 1).
-                duration: const Duration(milliseconds: 200),
-              )
-                  .then((value) {
-                scrollController.position
-                    .ensureVisible(
-                  devicesKey.currentContext.findRenderObject(),
-                  alignment:
-                      0.5, // How far into view the item should be scrolled (between 0 and 1).
-                  duration: const Duration(milliseconds: 200),
-                )
-                    .then((value) {
-                  scrollController.position
-                      .ensureVisible(
-                    medicationKey.currentContext.findRenderObject(),
-                    alignment:
-                        0.0, // How far into view the item should be scrolled (between 0 and 1).
-                    duration: const Duration(milliseconds: 200),
-                  )
-                      .then((value) {
-                    scrollController.position
-                        .ensureVisible(
-                      medicationKey.currentContext.findRenderObject(),
-                      alignment:
-                          0.5, // How far into view the item should be scrolled (between 0 and 1).
-                      duration: const Duration(milliseconds: 200),
-                    )
-                        .then((value) {
-                      scrollController.position
-                          .ensureVisible(
-                        isolationKey.currentContext.findRenderObject(),
-                        alignment:
-                            0.0, // How far into view the item should be scrolled (between 0 and 1).
-                        duration: const Duration(milliseconds: 200),
-                      )
-                          .then((value) {
-                        scrollController.position
-                            .ensureVisible(
-                          isolationKey.currentContext.findRenderObject(),
-                          alignment:
-                              0.5, // How far into view the item should be scrolled (between 0 and 1).
-                          duration: const Duration(milliseconds: 200),
-                        )
-                            .then((value) {
-                          scrollController.position.ensureVisible(
-                            homeCareKey.currentContext.findRenderObject(),
-                            alignment:
-                                0.0, // How far into view the item should be scrolled (between 0 and 1).
-                            duration: const Duration(milliseconds: 200),
-                          );
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            } else {
-              scrollController.position
-                  .ensureVisible(
-                medicationKey.currentContext.findRenderObject(),
-                alignment:
-                    1.0, // How far into view the item should be scrolled (between 0 and 1).
-                duration: const Duration(milliseconds: 200),
-              )
-                  .then((value) {
-                scrollController.position
-                    .ensureVisible(
-                  isolationKey.currentContext.findRenderObject(),
-                  alignment:
-                      0.0, // How far into view the item should be scrolled (between 0 and 1).
-                  duration: const Duration(milliseconds: 200),
-                )
-                    .then((value) {
-                  scrollController.position.ensureVisible(
-                    homeCareKey.currentContext.findRenderObject(),
-                    alignment:
-                        0.0, // How far into view the item should be scrolled (between 0 and 1).
-                    duration: const Duration(milliseconds: 200),
-                  );
-                });
-              });
-            }
-          } else {
-            scrollController.position.ensureVisible(
-              homeCareKey.currentContext.findRenderObject(),
-              alignment: 0.0,
-              // How far into view the item should be scrolled (between 0 and 1).
-              duration: const Duration(milliseconds: 800),
-            );
-          }
+          // if (homeCareKey.currentContext == null) {
+          //   if (_tabController.previousIndex == 0) {
+          //     scrollController.position
+          //         .ensureVisible(
+          //       devicesKey.currentContext.findRenderObject(),
+          //       alignment:
+          //           0.0, // How far into view the item should be scrolled (between 0 and 1).
+          //       duration: const Duration(milliseconds: 200),
+          //     )
+          //         .then((value) {
+          //       scrollController.position
+          //           .ensureVisible(
+          //         devicesKey.currentContext.findRenderObject(),
+          //         alignment:
+          //             0.5, // How far into view the item should be scrolled (between 0 and 1).
+          //         duration: const Duration(milliseconds: 200),
+          //       )
+          //           .then((value) {
+          //         scrollController.position
+          //             .ensureVisible(
+          //           medicationKey.currentContext.findRenderObject(),
+          //           alignment:
+          //               0.0, // How far into view the item should be scrolled (between 0 and 1).
+          //           duration: const Duration(milliseconds: 200),
+          //         )
+          //             .then((value) {
+          //           scrollController.position
+          //               .ensureVisible(
+          //             medicationKey.currentContext.findRenderObject(),
+          //             alignment:
+          //                 0.5, // How far into view the item should be scrolled (between 0 and 1).
+          //             duration: const Duration(milliseconds: 200),
+          //           )
+          //               .then((value) {
+          //             scrollController.position
+          //                 .ensureVisible(
+          //               isolationKey.currentContext.findRenderObject(),
+          //               alignment:
+          //                   0.0, // How far into view the item should be scrolled (between 0 and 1).
+          //               duration: const Duration(milliseconds: 200),
+          //             )
+          //                 .then((value) {
+          //               scrollController.position
+          //                   .ensureVisible(
+          //                 isolationKey.currentContext.findRenderObject(),
+          //                 alignment:
+          //                     0.5, // How far into view the item should be scrolled (between 0 and 1).
+          //                 duration: const Duration(milliseconds: 200),
+          //               )
+          //                   .then((value) {
+          //                 scrollController.position.ensureVisible(
+          //                   homeCareKey.currentContext.findRenderObject(),
+          //                   alignment:
+          //                       0.0, // How far into view the item should be scrolled (between 0 and 1).
+          //                   duration: const Duration(milliseconds: 200),
+          //                 );
+          //               });
+          //             });
+          //           });
+          //         });
+          //       });
+          //     });
+          //   } else {
+          //     scrollController.position
+          //         .ensureVisible(
+          //       medicationKey.currentContext.findRenderObject(),
+          //       alignment:
+          //           1.0, // How far into view the item should be scrolled (between 0 and 1).
+          //       duration: const Duration(milliseconds: 200),
+          //     )
+          //         .then((value) {
+          //       scrollController.position
+          //           .ensureVisible(
+          //         isolationKey.currentContext.findRenderObject(),
+          //         alignment:
+          //             0.0, // How far into view the item should be scrolled (between 0 and 1).
+          //         duration: const Duration(milliseconds: 200),
+          //       )
+          //           .then((value) {
+          //         scrollController.position.ensureVisible(
+          //           homeCareKey.currentContext.findRenderObject(),
+          //           alignment:
+          //               0.0, // How far into view the item should be scrolled (between 0 and 1).
+          //           duration: const Duration(milliseconds: 200),
+          //         );
+          //       });
+          //     });
+          //   }
+          // } else {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn,
+          );
+          //   scrollController.position.ensureVisible(
+          //     homeCareKey.currentContext.findRenderObject(),
+          //     alignment: 0.0,
+          //     // How far into view the item should be scrolled (between 0 and 1).
+          //     duration: const Duration(milliseconds: 800),
+          //   );
+          // }
         }
         break;
     }

@@ -90,6 +90,11 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
             if (this
                 .filteredList[i]
                 .label
+                .substring(
+                    0,
+                    widget.controller.text.length < filteredList[i].label.length
+                        ? widget.controller.text.length
+                        : filteredList[i].label.length)
                 .toLowerCase()
                 .contains(widget.controller.text.toLowerCase())) {
               // if there is a match, add to the temp list
@@ -304,7 +309,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
     return CompositedTransformTarget(
       link: this._layerLink,
       child: TextField(
-        scrollPadding: const EdgeInsets.only(bottom: 100.0),
+        scrollPadding: const EdgeInsets.only(bottom: 150.0),
         controller: widget.controller,
         focusNode: this._focusNode,
         decoration: widget.decoration != null
