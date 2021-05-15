@@ -11,7 +11,7 @@ class DataTextChart extends StatelessWidget {
   final Color titleColor;
   final Color numberColor;
   final Color deltaNumberColor;
-  var data;
+  final data;
   final Color lineColor;
   final Color pointColor;
 

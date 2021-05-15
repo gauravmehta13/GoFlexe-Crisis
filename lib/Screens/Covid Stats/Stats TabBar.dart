@@ -37,7 +37,7 @@ class _StatsTabBarState extends State<StatsTabBar>
         elevation: 0,
         title: Text(
           "Covid Tracking",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         bottom: TabBar(
           controller: _controller,

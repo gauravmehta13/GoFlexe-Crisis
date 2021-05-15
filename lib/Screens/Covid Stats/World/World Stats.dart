@@ -20,6 +20,9 @@ class _WorldStatsState extends State<WorldStats> {
   var totalData;
   bool loading = true;
   String _timeString;
+  List<double> confirmed = [];
+  List<double> deceased = [];
+  List<double> recovered = [];
 
   @override
   void initState() {
@@ -36,6 +39,59 @@ class _WorldStatsState extends State<WorldStats> {
     });
   }
 
+  getGraphData() async {
+    try {
+      var dio = Dio();
+      String url =
+          'https://corona.lmao.ninja/v3/covid-19/historical/all?lastdays=365';
+
+      BaseOptions options = BaseOptions(
+          receiveTimeout: 100000, connectTimeout: 100000, baseUrl: url);
+      dio = Dio(options);
+      final response = await dio.get(url);
+      print(response.data);
+      var temp = response.data;
+      var tempCases = temp["cases"];
+      var tempDeath = temp["deaths"];
+      var tempRecovered = temp["recovered"];
+
+      for (var i = 0; i < tempCases.length; i++) {
+        if (i == 0) {
+          confirmed.add(
+              double.parse(tempCases.values.elementAt(i).toString()) + 0.1);
+        }
+        confirmed.add(double.parse(tempCases.values.elementAt(i).toString()));
+      }
+
+      for (var i = 0; i < tempRecovered.length; i++) {
+        if (i == 0) {
+          recovered.add(
+              double.parse(tempRecovered.values.elementAt(i).toString()) + 0.1);
+        }
+        recovered
+            .add(double.parse(tempRecovered.values.elementAt(i).toString()));
+      }
+      for (var i = 0; i < tempDeath.length; i++) {
+        if (i == 0) {
+          deceased.add(
+              double.parse(tempDeath.values.elementAt(i).toString()) + 0.1);
+        }
+        deceased.add(double.parse(tempDeath.values.elementAt(i).toString()));
+      }
+
+      setState(() {
+        loading = false;
+      });
+    } catch (e) {
+      setState(() {
+        confirmed = null;
+        deceased = null;
+        recovered = null;
+        loading = false;
+      });
+    }
+  }
+
   getStats() async {
     const url = 'https://corona.lmao.ninja/v3/covid-19/all';
     Dio _dio;
@@ -47,8 +103,8 @@ class _WorldStatsState extends State<WorldStats> {
 
     setState(() {
       totalData = response.data;
-      loading = false;
     });
+    getGraphData();
   }
 
   @override
@@ -129,7 +185,7 @@ class _WorldStatsState extends State<WorldStats> {
                                       numberColor: Color(0xFFF83F38),
                                       deltaNumberColor: Color(0xFF9E2726),
                                       titleColor: Color(0xFFF83F38),
-                                      data: null,
+                                      data: confirmed,
                                       lineColor: Color(0xFFF83F38),
                                       pointColor: Color(0xFFF83F38),
                                     ),
@@ -163,7 +219,7 @@ class _WorldStatsState extends State<WorldStats> {
                                       numberColor: Color(0xFF41A745),
                                       deltaNumberColor: Color(0xFF276A39),
                                       titleColor: Color(0xFF41A745),
-                                      data: null,
+                                      data: recovered,
                                       lineColor: Color(0xFF41A745),
                                       pointColor: Color(0xFF41A745),
                                     ),
@@ -176,7 +232,7 @@ class _WorldStatsState extends State<WorldStats> {
                                       numberColor: Color(0xFF6B747C),
                                       deltaNumberColor: Color(0xFF494E58),
                                       titleColor: Color(0xFF6B747C),
-                                      data: null,
+                                      data: deceased,
                                       lineColor: Color(0xFF6B747C),
                                       pointColor: Color(0xFF6B747C),
                                     ),
