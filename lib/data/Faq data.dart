@@ -70,7 +70,7 @@ List<FAQModel> faqData = [
   FAQModel(
     title: 'Is there a vaccine, drug or treatment for COVID-19?',
     description:
-        'Not yet. To date, there is no vaccine and no specific antiviral medicine to prevent or treat COVID-2019. However, those affected should receive care to relieve symptoms. People with serious illness should be hospitalized. Most patients recover thanks to supportive care.',
+        "Two vaccines that have been granted emergency use authorization by the Central Drugs Standard Control Organization (CDSCO) in India are Covishield® (AstraZeneca's vaccine manufactured by Serum Institute of India) and Covaxin® (manufactured by Bharat Biotech Limited).",
   ),
   FAQModel(
     title: 'Is COVID-19 the same as SARS?',

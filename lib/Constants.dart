@@ -1,5 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:rating_dialog/rating_dialog.dart';
+
+Future<void> giveFeedback(ctx) async {
+  return showDialog(
+      context: ctx,
+      builder: (ctx) => RatingDialog(
+            // your app's name?
+            title: 'Found this Helpful?',
+            // encourage your user to leave a high rating?
+            message:
+                'Tap a star to set your rating. Add more description here if you want.',
+            // your app's logo?
+            image:
+                SizedBox(height: 100, child: Image.asset("assets/rating.png")),
+            submitButton: 'Submit',
+            onCancelled: () => print('cancelled'),
+            onSubmitted: (response) {
+              print('rating: ${response.rating}, comment: ${response.comment}');
+              // TODO: add your own logic
+              if (response.rating < 3.0) {
+                // send their comments to your email or anywhere you wish
+                // ask the user to contact you instead of leaving a bad review
+              }
+            },
+          ));
+}
 
 const EdgeInsets padding10 = EdgeInsets.all(10);
 const SizedBox box10 = SizedBox(

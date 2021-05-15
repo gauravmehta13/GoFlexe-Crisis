@@ -1,5 +1,6 @@
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
+import 'package:crisis/Screens/Disclaimer.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,10 +41,6 @@ class _MyDrawerState extends State<MyDrawer> {
                   decoration: BoxDecoration(color: Color(0xFF3f51b5)),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
                       SizedBox(
                         width: 10,
                       ),
@@ -162,11 +159,30 @@ class _MyDrawerState extends State<MyDrawer> {
               Spacer(),
               ListTile(
                 dense: true,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  giveFeedback(context);
+                },
                 title: Text("Give Feedback"),
                 // minLeadingWidth: 25,
                 leading: FaIcon(
                   Icons.feedback,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: Disclaimer()),
+                  );
+                },
+                title: Text("Medical Disclaimer"),
+                leading: FaIcon(
+                  FontAwesomeIcons.notesMedical,
                   color: Colors.black87,
                   size: 18,
                 ),
@@ -241,7 +257,6 @@ class _MyDrawerState extends State<MyDrawer> {
                   // ),
                 ],
               ),
-              Divider(),
               if (_auth.currentUser != null)
                 ListTile(
                   dense: true,
@@ -255,6 +270,21 @@ class _MyDrawerState extends State<MyDrawer> {
                     size: 18,
                   ),
                 ),
+              Container(
+                color: primaryColor,
+                width: double.maxFinite,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Center(
+                    child: Text("Powered By GoFlexe",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/TabBar.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'redux/reducers.dart';
 
 Future<void> main() async {
-  final _initialState = AppState(
-      car: false,
-      bike: false,
-      warehousing: false,
-      packingRequirement: false,
-      pickupLift: true,
-      dropLift: true);
+  final _initialState = AppState();
   final Store<AppState> _store =
       Store<AppState>(reducer, initialState: _initialState);
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,18 +56,18 @@ class _MyAppState extends State<MyApp> {
               textTheme: GoogleFonts.montserratTextTheme(
                 Theme.of(context).textTheme,
               ),
-              selectedRowColor: Color(0xFF3f51b5),
-              primaryColor: Color(0xFF3f51b5),
-              accentColor: Color(0xFF3f51b5),
-              backgroundColor: Color(0xFF3f51b5),
+              selectedRowColor: primaryColor,
+              primaryColor: primaryColor,
+              accentColor: primaryColor,
+              backgroundColor: primaryColor,
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF3f51b5), // background
+                  primary: primaryColor, // background
                   onPrimary: Colors.white, // foreground
                 ),
               ),
               buttonTheme: ButtonThemeData(
-                buttonColor: Color(0xFF3f51b5),
+                buttonColor: primaryColor,
               )),
           home: GoFlexeTabBar()),
     );
