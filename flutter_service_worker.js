@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "de0eeea87b89af77e5055edc8ddc2f3e",
+  "assets/AssetManifest.json": "84249bb954c164a6acff0601e6331b1d",
 "assets/assets/0009.jpg": "0310cd7a1db0dc7db7773292606313b4",
 "assets/assets/0012.jpg": "7201a563ac50a35c8fcb26c95f26a1d9",
 "assets/assets/0013.jpg": "f668c0dd5cd02f9a5adca065a8d1cc02",
@@ -22,6 +22,7 @@ const RESOURCES = {
 "assets/assets/holding-phone.png": "90d8a60b21ea30840c8a89f8b6ab500f",
 "assets/assets/homeTreatment.png": "c4c7e9cc3804a2dec3dd51270c49ea2b",
 "assets/assets/hospital.png": "df33467ec50f299c304c4cdce1aa29cb",
+"assets/assets/hospitalBed.png": "6b2e8bf2fd2827d5280a16dc3a1081e4",
 "assets/assets/inhaler.png": "2f9d4be93fb42041411d6be6ef91edf2",
 "assets/assets/injection.png": "1185b404140d5d66c467539156a41a61",
 "assets/assets/isolation.png": "f6e3410ab2a6fcca8a2fa2c993c8ffd0",
@@ -61,12 +62,12 @@ const RESOURCES = {
 "icons/icon-256x256.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-384x384.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-512x512.png": "35136776c18ce58fb74f9353d7e978a8",
-"index.html": "1f881541bcc2fe6efa599767d018e179",
-"/": "1f881541bcc2fe6efa599767d018e179",
-"main.dart.js": "b6b30cfce891bfa3a22c391c6ac5e84a",
+"index.html": "1d924b16fc649ce82e12f72d6062cc34",
+"/": "1d924b16fc649ce82e12f72d6062cc34",
+"main.dart.js": "45d84e2b368be4763eacba3df64abe4f",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
 "splash/img/light-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
-"splash/style.css": "125a85b13a4d513472c10e995bfc3612",
+"splash/style.css": "abd3b5811afac21066420e2e2459e800",
 "version.json": "c237c2309dcdd2a210496344dac05f37"
 };
 
