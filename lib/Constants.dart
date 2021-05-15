@@ -1,6 +1,40 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:rating_dialog/rating_dialog.dart';
+
+MyGlobals myGlobals = MyGlobals();
+
+class MyGlobals {
+  GlobalKey _scaffoldKey;
+  MyGlobals() {
+    _scaffoldKey = GlobalKey();
+  }
+  GlobalKey get scaffoldKey => _scaffoldKey;
+}
+
+sendFeedback(rating, comment) async {
+  var dio = Dio();
+  try {
+    final response = await dio.post(
+        'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
+        data: {
+          'tenantSet_id': 'CRISIS01',
+          'tenantUsecase': 'CRISIS01',
+          "useCase": "feedback",
+          "rating": rating.toString(),
+          "comment": comment.toString()
+        });
+    print(response);
+    Map<String, dynamic> map = json.decode(response.toString());
+    displaySnackBar(map["resp"]["allPrices"].toString(),
+        myGlobals.scaffoldKey.currentContext);
+  } catch (e) {
+    print(e);
+  }
+}
 
 Future<void> giveFeedback(ctx) async {
   return showDialog(
@@ -18,11 +52,7 @@ Future<void> giveFeedback(ctx) async {
             onCancelled: () => print('cancelled'),
             onSubmitted: (response) {
               print('rating: ${response.rating}, comment: ${response.comment}');
-              // TODO: add your own logic
-              if (response.rating < 3.0) {
-                // send their comments to your email or anywhere you wish
-                // ask the user to contact you instead of leaving a bad review
-              }
+              sendFeedback(response.rating, response.comment);
             },
           ));
 }

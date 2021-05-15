@@ -52,6 +52,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: myGlobals.scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         title: Text(
