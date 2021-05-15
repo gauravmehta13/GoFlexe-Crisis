@@ -71,15 +71,16 @@ class DataTextChart extends StatelessWidget {
                 SizedBox(
                   height: 30.w,
                 ),
-                Sparkline(
-                  data: data,
-                  fallbackHeight: 100.w,
-                  fallbackWidth: 200.w,
-                  lineColor: lineColor,
-                  pointsMode: PointsMode.last,
-                  pointColor: pointColor,
-                  pointSize: 5,
-                ),
+                if (data != null)
+                  Sparkline(
+                    data: data,
+                    fallbackHeight: 100.w,
+                    fallbackWidth: 200.w,
+                    lineColor: lineColor,
+                    pointsMode: PointsMode.last,
+                    pointColor: pointColor,
+                    pointSize: 5,
+                  ),
               ],
             ),
           ],

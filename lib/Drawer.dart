@@ -54,16 +54,6 @@ class _MyDrawerState extends State<MyDrawer> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        // Text(userName,
-                                        //     //   name,
-                                        //     style: TextStyle(
-                                        //       fontWeight: FontWeight.w600,
-                                        //       fontSize: 14,
-                                        //       color: Colors.white,
-                                        //     )),
-                                        // SizedBox(
-                                        //   height: 5,
-                                        // ),
                                         Text(
                                             (_auth?.currentUser?.phoneNumber ??
                                                 ""),
