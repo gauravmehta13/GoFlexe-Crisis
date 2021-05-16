@@ -207,7 +207,10 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
               // reset the list so it's empty and not visible
               resetList();
               // remove the focus node so we aren't editing the text
-              FocusScope.of(context).unfocus();
+              final FocusScopeNode currentScope = FocusScope.of(context);
+              if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                FocusManager.instance.primaryFocus.unfocus();
+              }
             },
             child: ListTile(
               title: Text('No matching items.'),
@@ -224,7 +227,10 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
             onTap: () {
               // set the controller value to what was selected
               setState(() {
-                FocusScope.of(context).unfocus();
+                final FocusScopeNode currentScope = FocusScope.of(context);
+                if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                  FocusManager.instance.primaryFocus.unfocus();
+                }
                 // if we have a label property, and getSelectedValue function
                 // send getSelectedValue to parent widget using the label property
                 if (widget.getSelectedValue != null) {
@@ -237,7 +243,10 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
               // reset the list so it's empty and not visible
               resetList();
               // remove the focus node so we aren't editing the text
-              FocusScope.of(context).unfocus();
+              final FocusScopeNode currentScope = FocusScope.of(context);
+              if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                FocusManager.instance.primaryFocus.unfocus();
+              }
             },
             child: ListTile(
                 title: widget.getSelectedValue != null

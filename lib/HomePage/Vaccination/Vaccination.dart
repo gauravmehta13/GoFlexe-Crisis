@@ -49,7 +49,12 @@ class _VaccinationState extends State<Vaccination> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () async {
-                        FocusScope.of(context).unfocus();
+                        final FocusScopeNode currentScope =
+                            FocusScope.of(context);
+                        if (!currentScope.hasPrimaryFocus &&
+                            currentScope.hasFocus) {
+                          FocusManager.instance.primaryFocus.unfocus();
+                        }
                         Navigator.push(
                             context,
                             FadeRoute(
@@ -71,7 +76,12 @@ class _VaccinationState extends State<Vaccination> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () async {
-                        FocusScope.of(context).unfocus();
+                        final FocusScopeNode currentScope =
+                            FocusScope.of(context);
+                        if (!currentScope.hasPrimaryFocus &&
+                            currentScope.hasFocus) {
+                          FocusManager.instance.primaryFocus.unfocus();
+                        }
                         await launch("https://selfregistration.cowin.gov.in/");
                       },
                       child: Text(
@@ -211,7 +221,13 @@ class _VaccinationState extends State<Vaccination> {
                                       return fetchStates();
                                     },
                                     getSelectedValue: (state) {
-                                      FocusScope.of(context).unfocus();
+                                      final FocusScopeNode currentScope =
+                                          FocusScope.of(context);
+                                      if (!currentScope.hasPrimaryFocus &&
+                                          currentScope.hasFocus) {
+                                        FocusManager.instance.primaryFocus
+                                            .unfocus();
+                                      }
                                       getDistricts(state.value);
                                       setState(() {
                                         districtController.text = "";
@@ -256,7 +272,13 @@ class _VaccinationState extends State<Vaccination> {
                                             return fetchDistricts();
                                           },
                                           getSelectedValue: (district) {
-                                            FocusScope.of(context).unfocus();
+                                            final FocusScopeNode currentScope =
+                                                FocusScope.of(context);
+                                            if (!currentScope.hasPrimaryFocus &&
+                                                currentScope.hasFocus) {
+                                              FocusManager.instance.primaryFocus
+                                                  .unfocus();
+                                            }
                                             setState(() {
                                               districtId =
                                                   district.value.toString();

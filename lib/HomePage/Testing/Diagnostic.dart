@@ -97,7 +97,12 @@ class _DiagnosticState extends State<Diagnostic> {
                       return fetchStates();
                     },
                     getSelectedValue: (state) {
-                      FocusScope.of(context).unfocus();
+                      final FocusScopeNode currentScope =
+                          FocusScope.of(context);
+                      if (!currentScope.hasPrimaryFocus &&
+                          currentScope.hasFocus) {
+                        FocusManager.instance.primaryFocus.unfocus();
+                      }
                       getDistricts(state.value);
                       setState(() {
                         stateName = state.label;
@@ -145,7 +150,12 @@ class _DiagnosticState extends State<Diagnostic> {
                             return fetchDistricts();
                           },
                           getSelectedValue: (state) {
-                            FocusScope.of(context).unfocus();
+                            final FocusScopeNode currentScope =
+                                FocusScope.of(context);
+                            if (!currentScope.hasPrimaryFocus &&
+                                currentScope.hasFocus) {
+                              FocusManager.instance.primaryFocus.unfocus();
+                            }
                             setState(() {
                               districtName = state.label;
                             });

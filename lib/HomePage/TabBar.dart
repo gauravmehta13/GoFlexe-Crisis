@@ -82,7 +82,10 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
             ),
             child: TabBar(
               onTap: (e) {
-                FocusScope.of(context).unfocus();
+                final FocusScopeNode currentScope = FocusScope.of(context);
+                if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                  FocusManager.instance.primaryFocus.unfocus();
+                }
               },
               controller: _tabController,
               indicator: BoxDecoration(

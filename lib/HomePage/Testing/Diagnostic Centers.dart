@@ -43,7 +43,7 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
     Map<String, dynamic> map = json.decode(resp.toString());
     setState(() {
       data = map['resp']['allPrices'];
-      filteredData = map['resp']["allPrices"];
+      filteredData = data;
       loading = false;
     });
   }
@@ -63,7 +63,7 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
             width: MediaQuery.of(context).size.width,
             child: loading == true
                 ? Loading()
-                : filteredData.length == 0
+                : data.length == 0
                     ? Container(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
@@ -107,11 +107,15 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
                                   setState(() {
                                     filteredData = (data)
                                         .where((u) => (u["centre"]
+                                                .toString()
                                                 .toLowerCase()
                                                 .contains(
                                                     string.toLowerCase()) ||
-                                            u['address'].toLowerCase().contains(
-                                                string.toLowerCase())))
+                                            u['address']
+                                                .toString()
+                                                .toLowerCase()
+                                                .contains(
+                                                    string.toLowerCase())))
                                         .toList();
                                   });
                                 },
