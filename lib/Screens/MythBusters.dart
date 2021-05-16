@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:crisis/Constants.dart';
 import 'package:crisis/Widgets/Loading.dart';
+import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -77,9 +78,11 @@ class _MythBustersState extends State<MythBusters> {
                                 setState(() {
                                   filteredMyth = (mythBusterData)
                                       .where((u) => (u["myth"]
+                                              .toString()
                                               .toLowerCase()
                                               .contains(string.toLowerCase()) ||
                                           u["fact"]
+                                              .toString()
                                               .toLowerCase()
                                               .contains(string.toLowerCase())))
                                       .toList();
@@ -112,93 +115,104 @@ class _MythBustersState extends State<MythBusters> {
                             ),
                           ),
                           box20,
-                          ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: filteredMyth.length,
-                              itemBuilder: (context, i) {
-                                return Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(2),
-                                      side: BorderSide(
-                                        color: Colors.grey,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(8.0),
-                                          color: Colors.orangeAccent[100],
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "MYTH :",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                  child: Text(
-                                                filteredMyth[i]["myth"],
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              )),
-                                            ],
+                          filteredMyth.length == 0
+                              ? NoResult()
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: filteredMyth.length,
+                                  itemBuilder: (context, i) {
+                                    return Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                          side: BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
                                           ),
                                         ),
-                                        Container(
-                                          color: Colors.green,
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                  padding: EdgeInsets.all(5),
-                                                  child: Center(
-                                                    child: RotatedBox(
-                                                        quarterTurns: 3,
-                                                        child: Text(
-                                                          "Fact",
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.white,
-                                                          ),
-                                                        )),
-                                                  )),
-                                              Expanded(
-                                                child: Container(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  constraints: BoxConstraints(
-                                                    minHeight:
-                                                        50, //minimum height
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              color: Colors.orangeAccent[100],
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "MYTH :",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600),
                                                   ),
-                                                  color: Colors.white,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(10, 5, 0, 5),
-                                                    child: Text(
-                                                      filteredMyth[i]["fact"],
-                                                      style: TextStyle(
-                                                          fontSize: 13,
-                                                          color:
-                                                              Colors.grey[700]),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Expanded(
+                                                      child: Text(
+                                                    filteredMyth[i]["myth"],
+                                                    style: TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  )),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              color: Colors.green,
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                      padding:
+                                                          EdgeInsets.all(5),
+                                                      child: Center(
+                                                        child: RotatedBox(
+                                                            quarterTurns: 3,
+                                                            child: Text(
+                                                              "Fact",
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            )),
+                                                      )),
+                                                  Expanded(
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      constraints:
+                                                          BoxConstraints(
+                                                        minHeight:
+                                                            50, //minimum height
+                                                      ),
+                                                      color: Colors.white,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                10, 5, 0, 5),
+                                                        child: Text(
+                                                          filteredMyth[i]
+                                                              ["fact"],
+                                                          style: TextStyle(
+                                                              fontSize: 13,
+                                                              color: Colors
+                                                                  .grey[700]),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ));
-                              }),
+                                            )
+                                          ],
+                                        ));
+                                  }),
                         ],
                       ),
                     ))));

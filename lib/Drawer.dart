@@ -101,10 +101,10 @@ class _MyDrawerState extends State<MyDrawer> {
                 onTap: () {
                   Navigator.pop(context);
                   displaySnackBar("Coming Soon", context);
-                  // Navigator.push(
-                  //   context,
-                  //   FadeRoute(page: StatsTabBar()),
-                  // );
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: StatsTabBar()),
+                  );
                 },
                 title: Text("Live Data"),
                 leading: FaIcon(
@@ -234,7 +234,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
 _sendMail() async {
   // Android and iOS
-  const uri = 'mailto:contact@goflexe.com';
+  const uri = 'mailto:goflexe@gmail.com';
   if (await canLaunch(uri)) {
     await launch(uri);
   } else {

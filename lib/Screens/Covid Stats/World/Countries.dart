@@ -2,6 +2,7 @@ import 'package:crisis/Constants.dart';
 import 'package:crisis/Screens/Covid%20Stats/World/CountryDetails.dart';
 import 'package:crisis/Widgets/Country%20Card.dart';
 import 'package:crisis/Widgets/Loading.dart';
+import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:crisis/model/regex.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -109,68 +110,77 @@ class _CountriesStatsState extends State<CountriesStats> {
                         ),
                       ),
                     ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1 / 1.1,
-                      ),
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: tempData.length,
-                      itemBuilder: (context, index) {
-                        // print(tempData[index]["country"]);
-                        if (tempData.length == 0) {
-                          return SizedBox(height: 0.0);
-                        } else {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              top: ScreenUtil().setWidth(40),
-                              left: ScreenUtil().setWidth(30),
-                              right: ScreenUtil().setWidth(30),
+                    tempData.length == 0
+                        ? NoResult()
+                        : GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 1 / 1.1,
                             ),
-                            child: GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: tempData.length,
+                            itemBuilder: (context, index) {
+                              // print(tempData[index]["country"]);
+                              if (tempData.length == 0) {
+                                return SizedBox(height: 0.0);
+                              } else {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    top: ScreenUtil().setWidth(40),
+                                    left: ScreenUtil().setWidth(30),
+                                    right: ScreenUtil().setWidth(30),
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height -
+                                                  200,
+                                              child: CountryDetails(
+                                                totalData: tempData[index],
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    child: CountryCard(
+                                      stateName: tempData[index]["country"],
+                                      confirmed: addSeperator(
+                                          tempData[index]["cases"].toString()),
+                                      deltaConfirmed: addSeperator(
+                                          tempData[index]["todayCases"]
+                                              .toString()),
+                                      active: addSeperator(
+                                          tempData[index]["active"].toString()),
+                                      recovered: addSeperator(tempData[index]
+                                              ["recovered"]
+                                          .toString()),
+                                      deltaRecovered: addSeperator(
+                                          tempData[index]["todayRecovered"]
+                                              .toString()),
+                                      deceased: addSeperator(
+                                          tempData[index]["deaths"].toString()),
+                                      deltaDeceased: addSeperator(
+                                          tempData[index]["todayDeaths"]
+                                              .toString()),
+                                      image: tempData[index]["countryInfo"]
+                                          ["flag"],
                                     ),
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                200,
-                                        child: CountryDetails(
-                                          totalData: tempData[index],
-                                        ),
-                                      );
-                                    });
-                              },
-                              child: CountryCard(
-                                stateName: tempData[index]["country"],
-                                confirmed: addSeperator(
-                                    tempData[index]["cases"].toString()),
-                                deltaConfirmed: addSeperator(
-                                    tempData[index]["todayCases"].toString()),
-                                active: addSeperator(
-                                    tempData[index]["active"].toString()),
-                                recovered: addSeperator(
-                                    tempData[index]["recovered"].toString()),
-                                deltaRecovered: addSeperator(tempData[index]
-                                        ["todayRecovered"]
-                                    .toString()),
-                                deceased: addSeperator(
-                                    tempData[index]["deaths"].toString()),
-                                deltaDeceased: addSeperator(
-                                    tempData[index]["todayDeaths"].toString()),
-                                image: tempData[index]["countryInfo"]["flag"],
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                   ],
                 ),
               ));

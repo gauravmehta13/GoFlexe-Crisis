@@ -286,9 +286,9 @@ class _CovidStatsState extends State<CovidStats> {
                                   backgroundColor: Color(0xFFFDE1E1),
                                   title: 'Confirmed Per Million',
                                   description:
-                                      '${((double.parse(statewise.confirmed) / 135260000) * 1000000).toStringAsFixed(0)} out of every 1 million people in India have tested positive for the virus.',
+                                      '${((double.parse(statewise.confirmed) / 1392031412) * 1000000).toStringAsFixed(0)} out of every 1 million people in India have tested positive for the virus.',
                                   number:
-                                      '${((double.parse(statewise.confirmed) / 135260000) * 1000000).toStringAsFixed(2)}',
+                                      '${((double.parse(statewise.confirmed) / 1392031412) * 1000000).toStringAsFixed(2)}',
                                   numberColor: Color(0xFFF83F38),
                                   titleAndDescriptionColor: Color(0xFFF96B6A),
                                 ),
@@ -359,9 +359,9 @@ class _CovidStatsState extends State<CovidStats> {
                                   backgroundColor: Color(0xFFE5E3F3),
                                   title: 'Tests Per Million',
                                   description:
-                                      'For every 1 million people in India, ${(((testData['data']['totalSamplesTested']) / 135260000) * 1000000).toStringAsFixed(0)} people were tested.',
+                                      'For every 1 million people in India, ${(((testData['data']['totalSamplesTested']) / 1392031412) * 1000000).toStringAsFixed(0)} people were tested.',
                                   number:
-                                      '≈ ${(((testData['data']['totalSamplesTested']) / 135260000) * 1000000).toStringAsFixed(0)}',
+                                      '≈ ${(((testData['data']['totalSamplesTested']) / 1392031412) * 1000000).toStringAsFixed(0)}',
                                   numberColor: Color(0xFF4655AC),
                                   titleAndDescriptionColor: Color(0xFF7878C2),
                                 ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:crisis/Constants.dart';
 import 'package:crisis/Widgets/Loading.dart';
+import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -78,9 +79,11 @@ class _FAQState extends State<FAQ> {
                                 setState(() {
                                   filteredFAQ = (faqData)
                                       .where((u) => (u["title"]
+                                              .toString()
                                               .toLowerCase()
                                               .contains(string.toLowerCase()) ||
                                           u["description"]
+                                              .toString()
                                               .toLowerCase()
                                               .contains(string.toLowerCase())))
                                       .toList();
@@ -113,46 +116,48 @@ class _FAQState extends State<FAQ> {
                             ),
                           ),
                           box20,
-                          ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: filteredFAQ.length,
-                              itemBuilder: (context, i) {
-                                return Card(
-                                  child: ExpansionTile(
-                                    title: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.question_answer,
-                                          color: Color(0xFF9fa8da),
+                          filteredFAQ.length == 0
+                              ? NoResult()
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: filteredFAQ.length,
+                                  itemBuilder: (context, i) {
+                                    return Card(
+                                      child: ExpansionTile(
+                                        title: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.question_answer,
+                                              color: Color(0xFF9fa8da),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              filteredFAQ[i]["title"],
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600),
+                                            )),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                15, 5, 15, 15),
                                             child: Text(
-                                          filteredFAQ[i]["title"],
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600),
-                                        )),
-                                      ],
-                                    ),
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 5, 15, 15),
-                                        child: Text(
-                                          filteredFAQ[i]["description"],
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[700]),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }),
+                                              filteredFAQ[i]["description"],
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey[700]),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }),
                         ],
                       ),
                     ))));
