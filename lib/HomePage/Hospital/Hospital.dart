@@ -159,6 +159,7 @@ class _HospitalState extends State<Hospital>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
         child: SizedBox(
@@ -195,6 +196,7 @@ class _HospitalState extends State<Hospital>
       body: stateLoading == true
           ? Loading()
           : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Form(
                 key: key,
                 child: Container(

@@ -62,6 +62,7 @@ class _CountriesStatsState extends State<CountriesStats> {
         body: loading == true
             ? Loading()
             : SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     box10,

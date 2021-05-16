@@ -406,46 +406,49 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         minHeight: 50.0,
         maxHeight: 50.0,
         child: Container(
+          width: double.maxFinite,
           color: Colors.white,
-          child: TabBar(
-            onTap: (val) {
-              tabBarOnTap(val);
-            },
-            unselectedLabelColor: Colors.grey.shade700,
-            indicatorColor: Color(0xFF3f51b5),
-            isScrollable: true,
-            indicatorWeight: 2.0,
-            labelColor: Color(0xFF3f51b5),
-            controller: _tabController,
-            tabs: <Widget>[
-              new Tab(
-                child: Text(
-                  "Symptoms",
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+          child: Center(
+            child: TabBar(
+              onTap: (val) {
+                tabBarOnTap(val);
+              },
+              unselectedLabelColor: Colors.grey.shade700,
+              indicatorColor: Color(0xFF3f51b5),
+              isScrollable: true,
+              indicatorWeight: 2.0,
+              labelColor: Color(0xFF3f51b5),
+              controller: _tabController,
+              tabs: <Widget>[
+                new Tab(
+                  child: Text(
+                    "Symptoms",
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                  ),
                 ),
-              ),
-              new Tab(
-                child: Text(
-                  "Test Types",
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                new Tab(
+                  child: Text(
+                    "Test Types",
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                  ),
                 ),
-              ),
-              new Tab(
-                child: Text(
-                  "Diagnose",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                new Tab(
+                  child: Text(
+                    "Diagnose",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                  ),
                 ),
-              ),
-              new Tab(
-                child: Text(
-                  "Interpretation",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                new Tab(
+                  child: Text(
+                    "Interpretation",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                  ),
                 ),
-              ),
-            ],
-            indicatorSize: TabBarIndicatorSize.tab,
+              ],
+              indicatorSize: TabBarIndicatorSize.tab,
+            ),
           ),
         ),
       ),
@@ -466,6 +469,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         child: Column(children: [
           Expanded(
             child: CustomScrollView(
+              physics: BouncingScrollPhysics(),
               controller: scrollController,
               slivers: <Widget>[
                 makeTabBarHeader(),

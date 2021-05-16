@@ -21,16 +21,17 @@ class _CountryDetailsState extends State<CountryDetails> {
   final totalData;
   _CountryDetailsState({this.totalData});
   var dio = Dio();
-  bool loading = true;
-  List<double> confirmed = [];
-  List<double> deceased = [];
-  List<double> recovered = [];
+  bool loading = false;
+  List<double> confirmed;
+  List<double> deceased;
+  List<double> recovered;
 
   void initState() {
     super.initState();
-    getStats();
+    // getStats();
   }
 
+// not showing graphs as of now
   getStats() async {
     try {
       String url =

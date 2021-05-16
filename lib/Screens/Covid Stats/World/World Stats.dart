@@ -20,9 +20,9 @@ class _WorldStatsState extends State<WorldStats> {
   var totalData;
   bool loading = true;
   String _timeString;
-  List<double> confirmed = [];
-  List<double> deceased = [];
-  List<double> recovered = [];
+  List<double> confirmed;
+  List<double> deceased;
+  List<double> recovered;
 
   @override
   void initState() {
@@ -39,6 +39,7 @@ class _WorldStatsState extends State<WorldStats> {
     });
   }
 
+// not showing graphs as of now
   getGraphData() async {
     try {
       var dio = Dio();
@@ -103,8 +104,9 @@ class _WorldStatsState extends State<WorldStats> {
 
     setState(() {
       totalData = response.data;
+      loading = false;
     });
-    getGraphData();
+    // getGraphData();
   }
 
   @override

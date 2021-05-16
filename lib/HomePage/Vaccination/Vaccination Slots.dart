@@ -172,6 +172,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                         ),
                       )
                     : SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         child: Column(
                           children: [
                             box20,

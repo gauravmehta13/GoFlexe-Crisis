@@ -127,6 +127,7 @@ class _HospitalBedListState extends State<HospitalBedList> {
             child: MyAppBar(curStep: 0)),
         body: SafeArea(
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Container(
                 padding: EdgeInsets.all(10),
                 child: StoreConnector<AppState, AppState>(

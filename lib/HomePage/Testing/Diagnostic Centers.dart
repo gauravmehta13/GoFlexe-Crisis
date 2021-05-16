@@ -94,6 +94,7 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
                         ),
                       )
                     : SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         child: Column(
                           children: [
                             box20,

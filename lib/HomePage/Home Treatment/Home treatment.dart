@@ -82,28 +82,28 @@ class _HomeTreatmentState extends State<HomeTreatment>
                 new Tab(
                   child: Text(
                     "Devices",
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
                   ),
                 ),
                 new Tab(
                   child: Text(
                     "Medication",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
                   ),
                 ),
                 new Tab(
                   child: Text(
                     "Isolation",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
                   ),
                 ),
                 new Tab(
                   child: Text(
                     "Home Care",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
                   ),
                 ),
               ],
@@ -129,45 +129,154 @@ class _HomeTreatmentState extends State<HomeTreatment>
         body: Container(
             child: Column(children: [
       Expanded(
-          child:
-              CustomScrollView(controller: scrollController, slivers: <Widget>[
-        makeTabBarHeader(),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Card(
-                child: Container(
-                  key: devicesKey,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 20,
+          child: CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              controller: scrollController,
+              slivers: <Widget>[
+            makeTabBarHeader(),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Card(
+                    child: Container(
+                      key: devicesKey,
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: SizedBox(
+                                height: 50,
+                                child: Image.asset("assets/device.png")),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Devices Required",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                          box10,
+                          Container(
+                              child: IgnorePointer(
+                            child: Column(
+                              children: [
+                                Divider(),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: devices.length,
+                                  itemBuilder: (context, i) {
+                                    return Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/${devices[i].url}",
+                                                  height: 30,
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text("${devices[i].name}",
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          Divider(),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          )),
+                          box10,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: SizedBox(
+                                height: 50,
+                                child: Image.asset("assets/oximeter.png")),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Interpretation",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                          box10,
+                          Center(
+                            child: Image.asset("assets/o2level.png"),
+                          ),
+                          box10,
+                          Row(
+                            children: [
+                              Text(
+                                "* ",
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.grey[700]),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Hypoxemia is defined as decreased pressure in blood and oxygen available to the body or and indivisual tissue or organ.",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.grey[700]),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                      Center(
-                        child: SizedBox(
-                            height: 50,
-                            child: Image.asset("assets/device.png")),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Devices Required",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                      box10,
-                      Container(
-                          child: IgnorePointer(
-                        child: Column(
-                          children: [
-                            Divider(),
-                            ListView.builder(
+                    ),
+                  ),
+                  Card(
+                    child: Container(
+                      key: medicationKey,
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: SizedBox(
+                                height: 50,
+                                child: Image.asset("assets/medication.png")),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Medication",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                          box20,
+                          Divider(),
+                          IgnorePointer(
+                            child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: devices.length,
+                              itemCount: meds.length,
                               itemBuilder: (context, i) {
                                 return Container(
                                   child: Column(
@@ -176,270 +285,15 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              "assets/${devices[i].url}",
-                                              height: 30,
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text("${devices[i].name}",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                )),
-                                          ],
-                                        ),
+                                        child: Text("${meds[i].name}",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                            )),
                                       ),
-                                      Divider(),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      )),
-                      box10,
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: SizedBox(
-                            height: 50,
-                            child: Image.asset("assets/oximeter.png")),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Interpretation",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                      box10,
-                      Center(
-                        child: Image.asset("assets/o2level.png"),
-                      ),
-                      box10,
-                      Row(
-                        children: [
-                          Text(
-                            "* ",
-                            style: TextStyle(
-                                fontSize: 15, color: Colors.grey[700]),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Hypoxemia is defined as decreased pressure in blood and oxygen available to the body or and indivisual tissue or organ.",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.grey[700]),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                child: Container(
-                  key: medicationKey,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: SizedBox(
-                            height: 50,
-                            child: Image.asset("assets/medication.png")),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Medication",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                      box20,
-                      Divider(),
-                      IgnorePointer(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: meds.length,
-                          itemBuilder: (context, i) {
-                            return Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("${meds[i].name}",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                        )),
-                                  ),
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: meds[i].meds.length,
-                                    itemBuilder: (context, j) {
-                                      return Container(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/${meds[i].meds[j].url}",
-                                                    height: 30,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            "${meds[i].meds[j].name}",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                            )),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                            "${meds[i].meds[j].description}",
-                                                            style: TextStyle(
-                                                                fontSize: 10,
-                                                                color:
-                                                                    Colors.grey[
-                                                                        700])),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  box10,
-                                  Divider(),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: warnings.length,
-                        itemBuilder: (context, i) {
-                          return Container(
-                            margin: EdgeInsets.all(10),
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                color: warnings[i].serious == true
-                                    ? Colors.orangeAccent[200]
-                                    : Color(0xFFe2e7ff),
-                                border: Border.all(width: 0.1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text("${warnings[i].name}",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      // Center(
-                      //   child: SizedBox(
-                      //       height: 50,
-                      //       child: Image.asset("assets/homeCare.png")),
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // Text(
-                      //   "Basic Diagnosis medication",
-                      //   style: TextStyle(
-                      //       fontSize: 15, fontWeight: FontWeight.w600),
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                  child: Container(
-                      key: isolationKey,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(10),
-                      child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: isolationTab.length,
-                          itemBuilder: (context, i) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Center(
-                                  child: SizedBox(
-                                      height: 50,
-                                      child: Image.asset(
-                                          "assets/${isolationTab[i].url}")),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  isolationTab[i].name,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                box10,
-                                Container(
-                                    child: IgnorePointer(
-                                  child: Column(
-                                    children: [
-                                      box10,
                                       ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount: isolationTab[i].tips.length,
+                                        itemCount: meds[i].meds.length,
                                         itemBuilder: (context, j) {
                                           return Container(
                                             child: Column(
@@ -451,16 +305,38 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                                       const EdgeInsets.all(8.0),
                                                   child: Row(
                                                     children: [
-                                                      Text("• "),
+                                                      Image.asset(
+                                                        "assets/${meds[i].meds[j].url}",
+                                                        height: 30,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 20,
+                                                      ),
                                                       Expanded(
-                                                        child: Text(
-                                                            "${isolationTab[i].tips[j].tip}",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            )),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                                "${meds[i].meds[j].name}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                )),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                                "${meds[i].meds[j].description}",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        700])),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -470,165 +346,312 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                           );
                                         },
                                       ),
+                                      box10,
+                                      Divider(),
                                     ],
                                   ),
-                                )),
-                                Divider(
-                                  color: Colors.grey,
-                                )
-                              ],
-                            );
-                          }))),
-              Card(
-                  child: Container(
-                      key: homeCareKey,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: SizedBox(
-                                height: 60,
-                                child: Image.asset("assets/homeTreatment.png")),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Find home care centers near you",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
-                          ),
-                          box30,
-                          loading == true
-                              ? Loading()
-                              : Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Column(
-                                    children: [
-                                      box20,
-                                      TextFieldSearch(
-                                        minStringLength: 0,
-                                        decoration: new InputDecoration(
-                                          isDense: true,
-                                          contentPadding: EdgeInsets.all(15),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4)),
-                                            borderSide: BorderSide(
-                                              width: 1,
-                                              color: Color(0xFF2821B5),
-                                            ),
-                                          ),
-                                          border: new OutlineInputBorder(
-                                              borderSide: new BorderSide(
-                                                  color: Colors.grey)),
-                                          labelText: 'Search State',
-                                        ),
-                                        controller: stateController,
-                                        initialList: states?.states ?? [],
-                                        future: () {
-                                          return fetchStates();
-                                        },
-                                        getSelectedValue: (state) {
-                                          FocusScope.of(context).unfocus();
-                                          getDistricts(state.value);
-                                          setState(() {
-                                            districtController.text = "";
-                                          });
-                                          print(state.label);
-                                          print(state
-                                              .value); // this prints the selected option which could be an object
-                                        },
-                                        label: '',
-                                      ),
-                                      box30,
-                                      districtLoading == true
-                                          ? LinearProgressIndicator(
-                                              backgroundColor:
-                                                  Color(0xFF3f51b5),
-                                              valueColor:
-                                                  AlwaysStoppedAnimation(
-                                                Color(0xFFf9a825),
-                                              ),
-                                            )
-                                          : TextFieldSearch(
-                                              minStringLength: 0,
-                                              decoration: new InputDecoration(
-                                                isDense: true,
-                                                contentPadding:
-                                                    EdgeInsets.all(15),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(4)),
-                                                  borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Color(0xFF2821B5),
-                                                  ),
-                                                ),
-                                                border: new OutlineInputBorder(
-                                                    borderSide: new BorderSide(
-                                                        color: Colors.grey)),
-                                                labelText: 'Search District',
-                                              ),
-                                              label: 'Enter District',
-                                              controller: districtController,
-                                              initialList:
-                                                  districts?.districts ?? [],
-                                              future: () {
-                                                return fetchDistricts();
-                                              },
-                                              getSelectedValue: (district) {
-                                                FocusScope.of(context)
-                                                    .unfocus();
-                                                setState(() {
-                                                  districtId =
-                                                      district.value.toString();
-                                                  districtName =
-                                                      district.label.toString();
-                                                });
-                                                print(district.label);
-                                                print(district
-                                                    .value); // this prints the selected option which could be an object
-                                              }),
-                                    ],
-                                  ),
-                                ),
-                          box30,
-                          box30,
-                          Container(
-                            padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
-                            child: SizedBox(
-                              height: 50,
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color(0xFFf9a825), // background
-                                  onPrimary: Colors.white, // foreground
-                                ),
-                                onPressed: () {
-                                  displaySnackBar("Coming Soon", context);
-                                },
-                                child: Text(
-                                  "Find Home Care Center",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
+                                );
+                              },
                             ),
                           ),
-                          box30,
-                          box30,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: warnings.length,
+                            itemBuilder: (context, i) {
+                              return Container(
+                                margin: EdgeInsets.all(10),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    color: warnings[i].serious == true
+                                        ? Colors.orangeAccent[200]
+                                        : Color(0xFFe2e7ff),
+                                    border: Border.all(width: 0.1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text("${warnings[i].name}",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          // Center(
+                          //   child: SizedBox(
+                          //       height: 50,
+                          //       child: Image.asset("assets/homeCare.png")),
+                          // ),
+                          // SizedBox(
+                          //   height: 20,
+                          // ),
+                          // Text(
+                          //   "Basic Diagnosis medication",
+                          //   style: TextStyle(
+                          //       fontSize: 15, fontWeight: FontWeight.w600),
+                          // ),
+                          // SizedBox(
+                          //   height: 20,
+                          // ),
                         ],
-                      )))
-            ],
-          ),
-        )
-      ]))
+                      ),
+                    ),
+                  ),
+                  Card(
+                      child: Container(
+                          key: isolationKey,
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(10),
+                          child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: isolationTab.length,
+                              itemBuilder: (context, i) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Center(
+                                      child: SizedBox(
+                                          height: 50,
+                                          child: Image.asset(
+                                              "assets/${isolationTab[i].url}")),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      isolationTab[i].name,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    box10,
+                                    Container(
+                                        child: IgnorePointer(
+                                      child: Column(
+                                        children: [
+                                          box10,
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                isolationTab[i].tips.length,
+                                            itemBuilder: (context, j) {
+                                              return Container(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Text("• "),
+                                                          Expanded(
+                                                            child: Text(
+                                                                "${isolationTab[i].tips[j].tip}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                )),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                    Divider(
+                                      color: Colors.grey,
+                                    )
+                                  ],
+                                );
+                              }))),
+                  Card(
+                      child: Container(
+                          key: homeCareKey,
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Center(
+                                child: SizedBox(
+                                    height: 60,
+                                    child: Image.asset(
+                                        "assets/homeTreatment.png")),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Find home care centers near you",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w600),
+                              ),
+                              box30,
+                              loading == true
+                                  ? Loading()
+                                  : Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Column(
+                                        children: [
+                                          box20,
+                                          TextFieldSearch(
+                                            minStringLength: 0,
+                                            decoration: new InputDecoration(
+                                              isDense: true,
+                                              contentPadding:
+                                                  EdgeInsets.all(15),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(4)),
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: Color(0xFF2821B5),
+                                                ),
+                                              ),
+                                              border: new OutlineInputBorder(
+                                                  borderSide: new BorderSide(
+                                                      color: Colors.grey)),
+                                              labelText: 'Search State',
+                                            ),
+                                            controller: stateController,
+                                            initialList: states?.states ?? [],
+                                            future: () {
+                                              return fetchStates();
+                                            },
+                                            getSelectedValue: (state) {
+                                              FocusScope.of(context).unfocus();
+                                              getDistricts(state.value);
+                                              setState(() {
+                                                districtController.text = "";
+                                              });
+                                              print(state.label);
+                                              print(state
+                                                  .value); // this prints the selected option which could be an object
+                                            },
+                                            label: '',
+                                          ),
+                                          box30,
+                                          districtLoading == true
+                                              ? LinearProgressIndicator(
+                                                  backgroundColor:
+                                                      Color(0xFF3f51b5),
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation(
+                                                    Color(0xFFf9a825),
+                                                  ),
+                                                )
+                                              : TextFieldSearch(
+                                                  minStringLength: 0,
+                                                  decoration:
+                                                      new InputDecoration(
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.all(15),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  4)),
+                                                      borderSide: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Color(0xFF2821B5),
+                                                      ),
+                                                    ),
+                                                    border:
+                                                        new OutlineInputBorder(
+                                                            borderSide:
+                                                                new BorderSide(
+                                                                    color: Colors
+                                                                        .grey)),
+                                                    labelText:
+                                                        'Search District',
+                                                  ),
+                                                  label: 'Enter District',
+                                                  controller:
+                                                      districtController,
+                                                  initialList:
+                                                      districts?.districts ??
+                                                          [],
+                                                  future: () {
+                                                    return fetchDistricts();
+                                                  },
+                                                  getSelectedValue: (district) {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      districtId = district
+                                                          .value
+                                                          .toString();
+                                                      districtName = district
+                                                          .label
+                                                          .toString();
+                                                    });
+                                                    print(district.label);
+                                                    print(district
+                                                        .value); // this prints the selected option which could be an object
+                                                  }),
+                                        ],
+                                      ),
+                                    ),
+                              box30,
+                              box30,
+                              Container(
+                                padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
+                                child: SizedBox(
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(0xFFf9a825), // background
+                                      onPrimary: Colors.white, // foreground
+                                    ),
+                                    onPressed: () {
+                                      displaySnackBar("Coming Soon", context);
+                                    },
+                                    child: Text(
+                                      "Find Home Care Center",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              box30,
+                              box30,
+                            ],
+                          )))
+                ],
+              ),
+            )
+          ]))
     ])));
   }
 

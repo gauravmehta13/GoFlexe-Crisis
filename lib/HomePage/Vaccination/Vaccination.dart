@@ -37,6 +37,7 @@ class _VaccinationState extends State<Vaccination> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         bottomNavigationBar: Container(
           padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
           child: SizedBox(
@@ -93,252 +94,257 @@ class _VaccinationState extends State<Vaccination> {
         body: loading == true
             ? Loading()
             : SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Form(
                     child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Center(
-                      child: SizedBox(
-                          height: 60,
-                          child: Image.asset("assets/injection.png")),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Vaccination",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text("Search for vaccination slots"),
-                    box30,
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  district = true;
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: district == true
-                                        ? Color(0xFF9eaeff)
-                                        : Colors.white,
-                                    border: Border.all(
-                                        color: district == false
-                                            ? Color(0xFF9eaeff)
-                                            : Colors.transparent),
-                                    borderRadius: BorderRadius.circular(2)),
-                                child: Center(
-                                  child: Text(
-                                    "District",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  district = false;
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: district == false
-                                        ? Color(0xFF9eaeff)
-                                        : Colors.white,
-                                    border: Border.all(
-                                        color: district == true
-                                            ? Color(0xFF9eaeff)
-                                            : Colors.transparent),
-                                    borderRadius: BorderRadius.circular(2)),
-                                child: Center(
-                                  child: Text(
-                                    "Pin Code",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    box20,
-                    if (district == true)
-                      loading == true
-                          ? Loading()
-                          : Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                children: [
-                                  box20,
-                                  TextFieldSearch(
-                                    minStringLength: 0,
-                                    decoration: new InputDecoration(
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.all(15),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)),
-                                        borderSide: BorderSide(
-                                          width: 1,
-                                          color: Color(0xFF2821B5),
-                                        ),
-                                      ),
-                                      border: new OutlineInputBorder(
-                                          borderSide: new BorderSide(
-                                              color: Colors.grey)),
-                                      labelText: 'Search State',
-                                    ),
-                                    controller: stateController,
-                                    initialList: states?.states ?? [],
-                                    future: () {
-                                      return fetchStates();
-                                    },
-                                    getSelectedValue: (state) {
-                                      final FocusScopeNode currentScope =
-                                          FocusScope.of(context);
-                                      if (!currentScope.hasPrimaryFocus &&
-                                          currentScope.hasFocus) {
-                                        FocusManager.instance.primaryFocus
-                                            .unfocus();
-                                      }
-                                      getDistricts(state.value);
-                                      setState(() {
-                                        districtController.text = "";
-                                      });
-                                      print(state.label);
-                                      print(state
-                                          .value); // this prints the selected option which could be an object
-                                    },
-                                    label: '',
-                                  ),
-                                  box30,
-                                  districtLoading == true
-                                      ? LinearProgressIndicator(
-                                          backgroundColor: Color(0xFF3f51b5),
-                                          valueColor: AlwaysStoppedAnimation(
-                                            Color(0xFFf9a825),
-                                          ),
-                                        )
-                                      : TextFieldSearch(
-                                          minStringLength: 0,
-                                          decoration: new InputDecoration(
-                                            isDense: true,
-                                            contentPadding: EdgeInsets.all(15),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                              borderSide: BorderSide(
-                                                width: 1,
-                                                color: Color(0xFF2821B5),
-                                              ),
-                                            ),
-                                            border: new OutlineInputBorder(
-                                                borderSide: new BorderSide(
-                                                    color: Colors.grey)),
-                                            labelText: 'Search District',
-                                          ),
-                                          label: 'Enter District',
-                                          controller: districtController,
-                                          initialList:
-                                              districts?.districts ?? [],
-                                          future: () {
-                                            return fetchDistricts();
-                                          },
-                                          getSelectedValue: (district) {
-                                            final FocusScopeNode currentScope =
-                                                FocusScope.of(context);
-                                            if (!currentScope.hasPrimaryFocus &&
-                                                currentScope.hasFocus) {
-                                              FocusManager.instance.primaryFocus
-                                                  .unfocus();
-                                            }
-                                            setState(() {
-                                              districtId =
-                                                  district.value.toString();
-                                              districtName =
-                                                  district.label.toString();
-                                            });
-                                            print(district.label);
-                                            print(district
-                                                .value); // this prints the selected option which could be an object
-                                          }),
-                                ],
-                              ),
-                            ),
-                    if (district == false)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
+                      Center(
+                        child: SizedBox(
+                            height: 60,
+                            child: Image.asset("assets/injection.png")),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Vaccination",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("Search for vaccination slots"),
+                      box30,
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
                           children: [
-                            box20,
-                            TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return "Required";
-                                }
-                                return null;
-                              },
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.number,
-                              maxLength: 6,
-                              controller: pinController,
-                              onChanged: (value) {
-                                setState(() {
-                                  pinCode = value;
-                                });
-                              },
-                              decoration: new InputDecoration(
-                                isDense: true,
-                                contentPadding: EdgeInsets.all(15),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: Color(0xFF2821B5),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    district = true;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: district == true
+                                          ? Color(0xFF9eaeff)
+                                          : Colors.white,
+                                      border: Border.all(
+                                          color: district == false
+                                              ? Color(0xFF9eaeff)
+                                              : Colors.transparent),
+                                      borderRadius: BorderRadius.circular(2)),
+                                  child: Center(
+                                    child: Text(
+                                      "District",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
-                                border: new OutlineInputBorder(
-                                    borderSide:
-                                        new BorderSide(color: Colors.grey)),
-                                labelText: 'Search by pincode',
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    district = false;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: district == false
+                                          ? Color(0xFF9eaeff)
+                                          : Colors.white,
+                                      border: Border.all(
+                                          color: district == true
+                                              ? Color(0xFF9eaeff)
+                                              : Colors.transparent),
+                                      borderRadius: BorderRadius.circular(2)),
+                                  child: Center(
+                                    child: Text(
+                                      "Pin Code",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    box30,
-                    box30
-                  ],
-                ),
-              ))));
+                      box20,
+                      if (district == true)
+                        loading == true
+                            ? Loading()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Column(
+                                  children: [
+                                    box20,
+                                    TextFieldSearch(
+                                      minStringLength: 0,
+                                      decoration: new InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.all(15),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4)),
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                            color: Color(0xFF2821B5),
+                                          ),
+                                        ),
+                                        border: new OutlineInputBorder(
+                                            borderSide: new BorderSide(
+                                                color: Colors.grey)),
+                                        labelText: 'Search State',
+                                      ),
+                                      controller: stateController,
+                                      initialList: states?.states ?? [],
+                                      future: () {
+                                        return fetchStates();
+                                      },
+                                      getSelectedValue: (state) {
+                                        final FocusScopeNode currentScope =
+                                            FocusScope.of(context);
+                                        if (!currentScope.hasPrimaryFocus &&
+                                            currentScope.hasFocus) {
+                                          FocusManager.instance.primaryFocus
+                                              .unfocus();
+                                        }
+                                        getDistricts(state.value);
+                                        setState(() {
+                                          districtController.text = "";
+                                        });
+                                        print(state.label);
+                                        print(state
+                                            .value); // this prints the selected option which could be an object
+                                      },
+                                      label: '',
+                                    ),
+                                    box30,
+                                    districtLoading == true
+                                        ? LinearProgressIndicator(
+                                            backgroundColor: Color(0xFF3f51b5),
+                                            valueColor: AlwaysStoppedAnimation(
+                                              Color(0xFFf9a825),
+                                            ),
+                                          )
+                                        : TextFieldSearch(
+                                            minStringLength: 0,
+                                            decoration: new InputDecoration(
+                                              isDense: true,
+                                              contentPadding:
+                                                  EdgeInsets.all(15),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(4)),
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: Color(0xFF2821B5),
+                                                ),
+                                              ),
+                                              border: new OutlineInputBorder(
+                                                  borderSide: new BorderSide(
+                                                      color: Colors.grey)),
+                                              labelText: 'Search District',
+                                            ),
+                                            label: 'Enter District',
+                                            controller: districtController,
+                                            initialList:
+                                                districts?.districts ?? [],
+                                            future: () {
+                                              return fetchDistricts();
+                                            },
+                                            getSelectedValue: (district) {
+                                              final FocusScopeNode
+                                                  currentScope =
+                                                  FocusScope.of(context);
+                                              if (!currentScope
+                                                      .hasPrimaryFocus &&
+                                                  currentScope.hasFocus) {
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    .unfocus();
+                                              }
+                                              setState(() {
+                                                districtId =
+                                                    district.value.toString();
+                                                districtName =
+                                                    district.label.toString();
+                                              });
+                                              print(district.label);
+                                              print(district
+                                                  .value); // this prints the selected option which could be an object
+                                            }),
+                                  ],
+                                ),
+                              ),
+                      if (district == false)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: [
+                              box20,
+                              TextFormField(
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return "Required";
+                                  }
+                                  return null;
+                                },
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
+                                maxLength: 6,
+                                controller: pinController,
+                                onChanged: (value) {
+                                  setState(() {
+                                    pinCode = value;
+                                  });
+                                },
+                                decoration: new InputDecoration(
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.all(15),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: Color(0xFF2821B5),
+                                    ),
+                                  ),
+                                  border: new OutlineInputBorder(
+                                      borderSide:
+                                          new BorderSide(color: Colors.grey)),
+                                  labelText: 'Search by pincode',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      box30,
+                      box30
+                    ],
+                  ),
+                ))));
   }
 
   getStates() async {

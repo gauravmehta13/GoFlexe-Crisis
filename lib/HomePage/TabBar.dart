@@ -51,6 +51,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: myGlobals.scaffoldKey,
       appBar: AppBar(
         elevation: 0,
@@ -101,19 +102,28 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                 Tab(
                   child: Text(
                     "Testing",
-                    style: TextStyle(fontSize: 11),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Home Treatment",
-                    style: TextStyle(fontSize: 11),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Hospitalisation",
-                    style: TextStyle(fontSize: 11),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
                 // second tab [you can add an icon using the icon property]
@@ -121,7 +131,10 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                 Tab(
                   child: Text(
                     "Vaccination",
-                    style: TextStyle(fontSize: 11),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ],

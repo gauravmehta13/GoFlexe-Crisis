@@ -13,21 +13,23 @@ class StatsTabBar extends StatefulWidget {
 
 class _StatsTabBarState extends State<StatsTabBar>
     with TickerProviderStateMixin {
-  TabController _controller;
-  TabController _tabController;
+  TabController statsTabController;
+  TabController indiaTabController;
+  TabController worldTabController;
 
   @override
   void initState() {
-    _controller = TabController(length: 2, vsync: this);
-    _tabController = TabController(length: 2, vsync: this);
+    statsTabController = TabController(length: 2, vsync: this);
+    indiaTabController = TabController(length: 2, vsync: this);
+    worldTabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
-    _tabController.dispose();
+    statsTabController.dispose();
+    indiaTabController.dispose();
   }
 
   @override
@@ -40,7 +42,7 @@ class _StatsTabBarState extends State<StatsTabBar>
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         bottom: TabBar(
-          controller: _controller,
+          controller: statsTabController,
           tabs: [
             Tab(
               text: "India",
@@ -55,7 +57,7 @@ class _StatsTabBarState extends State<StatsTabBar>
         children: [
           Expanded(
             child: TabBarView(
-              controller: _controller,
+              controller: statsTabController,
               children: [
                 Column(
                   children: [
@@ -72,7 +74,7 @@ class _StatsTabBarState extends State<StatsTabBar>
                         ),
                       ),
                       child: TabBar(
-                        controller: _tabController,
+                        controller: indiaTabController,
                         indicator: BoxDecoration(
                             borderRadius: BorderRadius.circular(
                               25.0,
@@ -102,7 +104,7 @@ class _StatsTabBarState extends State<StatsTabBar>
                     // tab bar view here
                     Expanded(
                       child: TabBarView(
-                        controller: _tabController,
+                        controller: indiaTabController,
                         children: [
                           CovidStats(),
                           IndianStates(),
@@ -126,7 +128,7 @@ class _StatsTabBarState extends State<StatsTabBar>
                         ),
                       ),
                       child: TabBar(
-                        controller: _tabController,
+                        controller: worldTabController,
                         indicator: BoxDecoration(
                             borderRadius: BorderRadius.circular(
                               25.0,
@@ -155,7 +157,7 @@ class _StatsTabBarState extends State<StatsTabBar>
                     // tab bar view here
                     Expanded(
                       child: TabBarView(
-                        controller: _tabController,
+                        controller: worldTabController,
                         children: [WorldStats(), CountriesStats()],
                       ),
                     ),

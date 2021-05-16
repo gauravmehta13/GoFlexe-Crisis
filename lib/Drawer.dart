@@ -100,10 +100,11 @@ class _MyDrawerState extends State<MyDrawer> {
                 dense: true,
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    FadeRoute(page: StatsTabBar()),
-                  );
+                  displaySnackBar("Coming Soon", context);
+                  // Navigator.push(
+                  //   context,
+                  //   FadeRoute(page: StatsTabBar()),
+                  // );
                 },
                 title: Text("Live Data"),
                 leading: FaIcon(

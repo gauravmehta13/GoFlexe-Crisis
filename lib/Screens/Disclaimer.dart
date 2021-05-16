@@ -12,6 +12,7 @@ class Disclaimer extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Container(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
