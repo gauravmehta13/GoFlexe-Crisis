@@ -1,3 +1,4 @@
+import 'package:crisis/Constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -19,10 +20,9 @@ class ChatBubble extends StatelessWidget {
       decoration: ShapeDecoration(
         //color: isReply ? const Color(0xDD5785f3) : const Color(0xFFFFFFFF),
         gradient: isReply
-            ? LinearGradient(
-            colors: [const Color(0xFF0771f6), const Color(0xFF0762d5)])
+            ? LinearGradient(colors: [primaryColor, primaryColor])
             : LinearGradient(
-            colors: [const Color(0xFFFFFFFF), const Color(0xCCFFFFFF)]),
+                colors: [const Color(0xFFFFFFFF), const Color(0xCCFFFFFF)]),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),

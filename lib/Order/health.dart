@@ -1,7 +1,9 @@
+import 'package:crisis/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'health/chat.dart';
+import 'health/chat_bubble.dart';
 import 'health/chat_chip.dart';
 import 'health/chat_data.dart';
 import 'health/self_assess.dart';
@@ -18,7 +20,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
   ScrollController _scrollController;
   Animation _animation;
   List value;
-  List chatDatas;
+  List chatDatas = [];
   int currentChat = 0;
   double maxScroll;
   double minScroll;
@@ -28,11 +30,13 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
   void initState() {
     _selfAssess = SelfAssess();
     _scrollController = ScrollController();
-    chatDatas = [
-      ChatData(question: _selfAssess.question1, options: _selfAssess.option1),
-      ChatData(question: _selfAssess.question2, options: _selfAssess.option2),
-      ChatData(question: _selfAssess.question3, options: _selfAssess.option3),
-    ];
+    for (var i = 0; i < healthData.length; i++) {
+      chatDatas.add(
+        ChatData(
+            question: healthData[i]["question"],
+            options: healthData[i]["option"]),
+      );
+    }
     updateChatFlow();
     super.initState();
   }
@@ -49,17 +53,17 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
   }
 
   updateChatFlow() {
-    updateUI(chatDatas[currentChat]);
+    updateUI(chatDatas[currentChat], currentChat);
     currentChat++;
   }
 
   addTestScore(CovidTest covidTest) {
     if (covidTest == CovidTest.OK) {
       addAnswer(_selfAssess.answerOk);
-    } else if (covidTest == CovidTest.ATNOMINALRISK) {
-      addAnswer(_selfAssess.answerNominalRisk);
     } else if (covidTest == CovidTest.ATRISK) {
       addAnswer(_selfAssess.answerAtRisk);
+    } else if (covidTest == CovidTest.ATNOMINALRISK) {
+      addAnswer(_selfAssess.answerNominalRisk);
     }
   }
 
@@ -76,7 +80,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  updateUI(ChatData chatData) {
+  updateUI(ChatData chatData, i) {
     value = [];
     _animationController = AnimationController(
         vsync: this, duration: Duration(seconds: chatData.question.length + 1))
@@ -89,8 +93,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
         addChat(chatData.question[_animation.value]);
       }
       if (_animation.isCompleted) {
-        _chatFlow.add(
-          ChatChip(
+        _chatFlow.add(ChatChip(
             chatChips: chatData.options,
             problemscallback: (value) {
               problemsCount = problemsCount + value;
@@ -101,17 +104,17 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
                 updateChatFlow();
               } else if (currentChat == chatDatas.length) {
                 currentChat++;
+                print(problemsCount);
                 TestScore testScore =
                     TestScore(problems: problemsCount, totalProblems: 12);
                 addTestScore(testScore.getCoronaScore());
                 setState(() {});
               }
-            },
-          ),
-        );
-        print('Current chat: $currentChat');
-        setState(() {});
+            }));
       }
+
+      print('Current chat: $currentChat');
+      setState(() {});
     });
   }
 
@@ -136,8 +139,6 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         brightness: Brightness.light,
-        backgroundColor: Colors.white,
-        centerTitle: true,
         title: Column(
           children: <Widget>[
             Row(
@@ -146,7 +147,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
                   'Covid-19',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF325384),
+                    color: Colors.white,
                   ),
                 ),
                 SizedBox(
@@ -156,7 +157,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
                   'Self Assessment Test',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: secondaryColor,
                   ),
                 ),
               ],
@@ -193,9 +194,9 @@ class TestScore {
 
   CovidTest getCoronaScore() {
     CovidTest result;
-    if (problems > totalProblems * 0.3) {
+    if (problems >= 3) {
       result = CovidTest.ATRISK;
-    } else if (problems > totalProblems * 0.2) {
+    } else if (problems >= 2) {
       result = CovidTest.ATNOMINALRISK;
     } else {
       result = CovidTest.OK;

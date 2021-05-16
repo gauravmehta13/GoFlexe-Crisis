@@ -1,6 +1,9 @@
+import 'package:crisis/Constants.dart';
 import 'package:crisis/Order/health/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+List allReply = [];
 
 class ChatChip extends StatefulWidget {
   final List<String> chatChips;
@@ -85,6 +88,8 @@ class _ChatChipState extends State<ChatChip> {
             replies.add(chips[selected]);
           }
         }
+        Map tempMap = {"index": value, "reply": replies};
+        allReply.add(tempMap);
         setState(() {});
       } else {
         showReply = true;
@@ -93,8 +98,12 @@ class _ChatChipState extends State<ChatChip> {
             replies.add(chips[selected]);
           }
         }
+        Map tempMap = {"index": value, "reply": replies};
+        allReply.add(tempMap);
         setState(() {});
       }
+      print(replies.toString());
+      print(allReply.toString());
     }
   }
 
@@ -156,12 +165,12 @@ class _ChatChipState extends State<ChatChip> {
                 labelStyle: GoogleFonts.montserrat(
                   color: _selectedValue[index]
                       ? const Color(0xFFFFFFFF)
-                      : const Color(0xcc007bff),
+                      : primaryColor,
                   fontSize: 14,
                 ),
                 labelPadding: EdgeInsets.symmetric(
                     horizontal: width * 0.035, vertical: width * 0.007),
-                selectedColor: const Color(0xcc007bff),
+                selectedColor: primaryColor,
                 backgroundColor: const Color(0xFFFFFFFF),
                 // shape: RoundedRectangleBorder(
                 //     side: BorderSide(), borderRadius: BorderRadius.circular(20)),
