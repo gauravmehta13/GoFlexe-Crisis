@@ -423,27 +423,27 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 new Tab(
                   child: Text(
                     "Symptoms",
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
                   ),
                 ),
                 new Tab(
                   child: Text(
                     "Test Types",
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
                   ),
                 ),
                 new Tab(
                   child: Text(
                     "Diagnose",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
                   ),
                 ),
                 new Tab(
                   child: Text(
                     "Interpretation",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
                   ),
                 ),
               ],

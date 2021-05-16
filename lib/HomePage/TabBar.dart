@@ -104,7 +104,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                     "Testing",
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -113,7 +113,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                     "Home Treatment",
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -122,7 +122,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                     "Hospitalisation",
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -133,7 +133,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
                     "Vaccination",
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

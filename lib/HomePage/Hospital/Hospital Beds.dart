@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crisis/Widgets/Loading.dart';
+import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:crisis/model/app_state.dart';
 import 'package:dio/dio.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -147,7 +148,7 @@ class _HospitalBedListState extends State<HospitalBedList> {
                               width: MediaQuery.of(context).size.width,
                               child: Center(child: Loading()),
                             )
-                          : filteredSp.length == 0
+                          : spList.length == 0
                               ? Container(
                                   height: MediaQuery.of(context).size.height,
                                   width: MediaQuery.of(context).size.width,
@@ -210,10 +211,12 @@ class _HospitalBedListState extends State<HospitalBedList> {
                                             setState(() {
                                               filteredSp = (spList)
                                                   .where((u) => (u['name']
+                                                          .toString()
                                                           .toLowerCase()
                                                           .contains(string
                                                               .toLowerCase()) ||
                                                       u['address']
+                                                          .toString()
                                                           .toLowerCase()
                                                           .contains(string
                                                               .toLowerCase())))
@@ -250,452 +253,89 @@ class _HospitalBedListState extends State<HospitalBedList> {
                                       SizedBox(
                                         height: 15,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          // GestureDetector(
-                                          //   onTap: () {
-                                          //     setState(() {
-                                          //       sortby = false;
-                                          //     });
-                                          //     showModalBottomSheet(
-                                          //         context: context,
-                                          //         builder: (BuildContext context) {
-                                          //           return StatefulBuilder(builder:
-                                          //               (context, setState) {
-                                          //             return Container(
-                                          //               child: Column(
-                                          //                 crossAxisAlignment:
-                                          //                     CrossAxisAlignment
-                                          //                         .start,
-                                          //                 children: [
-                                          //                   Card(
-                                          //                     child: Container(
-                                          //                       child: Row(
-                                          //                         children: [
-                                          //                           IconButton(
-                                          //                               icon: Icon(Icons
-                                          //                                   .close),
-                                          //                               onPressed:
-                                          //                                   () {
-                                          //                                 Navigator.pop(
-                                          //                                     context);
-                                          //                               }),
-                                          //                           Text(
-                                          //                             "Filter",
-                                          //                             style:
-                                          //                                 TextStyle(
-                                          //                               fontSize:
-                                          //                                   13,
-                                          //                               fontWeight:
-                                          //                                   FontWeight
-                                          //                                       .w600,
-                                          //                             ),
-                                          //                           ),
-                                          //                           Spacer(),
-                                          //                           TextButton(
-                                          //                               onPressed:
-                                          //                                   () {
-                                          //                                 clearAllFilters();
-                                          //                               },
-                                          //                               child: Text(
-                                          //                                 "Clear All",
-                                          //                                 style: TextStyle(
-                                          //                                     color:
-                                          //                                         primaryColor),
-                                          //                               ))
-                                          //                         ],
-                                          //                       ),
-                                          //                     ),
-                                          //                   ),
-                                          //                   SizedBox(
-                                          //                     height: 20,
-                                          //                   ),
-                                          //                   Container(
-                                          //                     padding: EdgeInsets
-                                          //                         .symmetric(
-                                          //                       horizontal: 40,
-                                          //                     ),
-                                          //                     child: Column(
-                                          //                       children: [
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           //font change
-                                          //                           title: new Text(
-                                          //                             "Warehouse",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await filter(
-                                          //                                 "warehouse");
-                                          //                             setState(() {
-                                          //                               warehouseFilter =
-                                          //                                   val;
-                                          //                               filteredSp =
-                                          //                                   filteredSp;
-                                          //                             });
-                                          //                           },
-                                          //                           value:
-                                          //                               warehouseFilter,
-                                          //                         ),
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           //font change
-                                          //                           title: new Text(
-                                          //                             "Installation",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await filter(
-                                          //                                 "installation");
-                                          //                             setState(() {
-                                          //                               installationFilter =
-                                          //                                   val;
-                                          //                               filteredSp =
-                                          //                                   filteredSp;
-                                          //                             });
-                                          //                           },
-                                          //                           value:
-                                          //                               installationFilter,
-                                          //                         ),
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           //font change
-                                          //                           title: new Text(
-                                          //                             "Unpacking",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await filter(
-                                          //                                 "unpacking");
-                                          //                             setState(() {
-                                          //                               unpackingFilter =
-                                          //                                   val;
-                                          //                               filteredSp =
-                                          //                                   filteredSp;
-                                          //                             });
-                                          //                           },
-                                          //                           value:
-                                          //                               unpackingFilter,
-                                          //                         ),
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           //font change
-                                          //                           title: new Text(
-                                          //                             "Insurance",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await filter(
-                                          //                                 "insurance");
-                                          //                             setState(() {
-                                          //                               insuranceFilter =
-                                          //                                   val;
-                                          //                               filteredSp =
-                                          //                                   filteredSp;
-                                          //                             });
-                                          //                           },
-                                          //                           value:
-                                          //                               insuranceFilter,
-                                          //                         ),
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           //font change
-                                          //                           title: new Text(
-                                          //                             "Premium Packaging",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await filter(
-                                          //                                 "premium");
-                                          //                             setState(() {
-                                          //                               premiumFilter =
-                                          //                                   val;
-                                          //                               filteredSp =
-                                          //                                   filteredSp;
-                                          //                             });
-                                          //                           },
-                                          //                           value:
-                                          //                               premiumFilter,
-                                          //                         ),
-                                          //                       ],
-                                          //                     ),
-                                          //                   ),
-                                          //                   Spacer()
-                                          //                 ],
-                                          //               ),
-                                          //             );
-                                          //           });
-                                          //         });
-                                          //   },
-                                          //   child: Container(
-                                          //     padding:
-                                          //         EdgeInsets.fromLTRB(10, 6, 10, 6),
-                                          //     decoration: BoxDecoration(
-                                          //         color: Colors.grey[100],
-                                          //         border: Border.all(
-                                          //           color: C.primaryColor,
-                                          //         ),
-                                          //         borderRadius: BorderRadius.all(
-                                          //             Radius.circular(20))),
-                                          //     child: Text(
-                                          //       "Filter",
-                                          //       style: TextStyle(
-                                          //           fontSize: 13,
-                                          //           color: Colors.grey),
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          // GestureDetector(
-                                          //   onTap: () {
-                                          //     showModalBottomSheet(
-                                          //         context: context,
-                                          //         builder: (BuildContext context) {
-                                          //           return StatefulBuilder(builder:
-                                          //               (context, setState) {
-                                          //             return Container(
-                                          //               child: Column(
-                                          //                 crossAxisAlignment:
-                                          //                     CrossAxisAlignment
-                                          //                         .start,
-                                          //                 children: [
-                                          //                   Card(
-                                          //                     child: Container(
-                                          //                       child: Row(
-                                          //                         children: [
-                                          //                           IconButton(
-                                          //                               icon: Icon(Icons
-                                          //                                   .close),
-                                          //                               onPressed:
-                                          //                                   () {
-                                          //                                 Navigator.pop(
-                                          //                                     context);
-                                          //                               }),
-                                          //                           Text(
-                                          //                             "Sort By",
-                                          //                             style:
-                                          //                                 TextStyle(
-                                          //                               fontSize:
-                                          //                                   13,
-                                          //                               fontWeight:
-                                          //                                   FontWeight
-                                          //                                       .w600,
-                                          //                             ),
-                                          //                           ),
-                                          //                           Spacer(),
-                                          //                           TextButton(
-                                          //                               onPressed:
-                                          //                                   () {
-                                          //                                 clearAllSort();
-                                          //                               },
-                                          //                               child: Text(
-                                          //                                 "Clear All",
-                                          //                                 style: TextStyle(
-                                          //                                     color:
-                                          //                                         primaryColor),
-                                          //                               ))
-                                          //                         ],
-                                          //                       ),
-                                          //                     ),
-                                          //                   ),
-                                          //                   SizedBox(
-                                          //                     height: 20,
-                                          //                   ),
-                                          //                   Container(
-                                          //                     padding: EdgeInsets
-                                          //                         .symmetric(
-                                          //                             horizontal:
-                                          //                                 40),
-                                          //                     child: Column(
-                                          //                       children: [
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           title: new Text(
-                                          //                             "Price",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await sort(
-                                          //                                 priceSort,
-                                          //                                 filteredSp,
-                                          //                                 'price');
-                                          //                             setState(() {
-                                          //                               priceSort =
-                                          //                                   val;
-                                          //                             });
-                                          //                             Navigator.pop(
-                                          //                                 context);
-                                          //                           },
-                                          //                           value:
-                                          //                               priceSort,
-                                          //                         ),
-                                          //                         CheckboxListTile(
-                                          //                           dense: true,
-                                          //                           title: new Text(
-                                          //                             "Ratings",
-                                          //                             style: TextStyle(
-                                          //                                 fontSize:
-                                          //                                     14,
-                                          //                                 fontWeight:
-                                          //                                     FontWeight
-                                          //                                         .w600,
-                                          //                                 letterSpacing:
-                                          //                                     0.5),
-                                          //                           ),
-                                          //                           onChanged:
-                                          //                               (val) async {
-                                          //                             await sort(
-                                          //                                 ratingSort,
-                                          //                                 filteredSp,
-                                          //                                 'rating');
-                                          //                             setState(() {
-                                          //                               ratingSort =
-                                          //                                   val;
-                                          //                             });
-                                          //                             Navigator.pop(
-                                          //                                 context);
-                                          //                           },
-                                          //                           value:
-                                          //                               ratingSort,
-                                          //                         ),
-                                          //                       ],
-                                          //                     ),
-                                          //                   ),
-                                          //                   Spacer()
-                                          //                 ],
-                                          //               ),
-                                          //             );
-                                          //           });
-                                          //         });
-                                          //   },
-                                          //   child: Container(
-                                          //     padding:
-                                          //         EdgeInsets.fromLTRB(10, 6, 10, 6),
-                                          //     decoration: BoxDecoration(
-                                          //         color: Colors.grey[100],
-                                          //         border: Border.all(
-                                          //           color: C.primaryColor,
-                                          //         ),
-                                          //         borderRadius: BorderRadius.all(
-                                          //             Radius.circular(20))),
-                                          //     child: Row(
-                                          //       children: [
-                                          //         Text(
-                                          //           "Sort By",
-                                          //           style: TextStyle(
-                                          //               fontSize: 13,
-                                          //               color: Colors.grey),
-                                          //         ),
-                                          //         SizedBox(
-                                          //           width: 5,
-                                          //         ),
-                                          //         Icon(
-                                          //           Icons.arrow_downward_rounded,
-                                          //           size: 10,
-                                          //           color: Colors.grey,
-                                          //         ),
-                                          //       ],
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      ListView.builder(
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: filteredSp.length,
-                                          itemBuilder: (context, index) {
-                                            return Card(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(10),
-                                                    ),
-                                                    side: BorderSide(
-                                                        width: 0.5,
-                                                        color: Colors.grey)),
-                                                elevation: 2,
-                                                child: Container(
-                                                  padding: EdgeInsets.all(10),
-                                                  child: Column(children: [
-                                                    Container(
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Expanded(
-                                                            flex: 10,
-                                                            child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                      filteredSp.length == 0
+                                          ? NoResult()
+                                          : ListView.builder(
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: filteredSp.length,
+                                              itemBuilder: (context, index) {
+                                                return Card(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  10),
+                                                            ),
+                                                            side: BorderSide(
+                                                                width: 0.5,
+                                                                color: Colors
+                                                                    .grey)),
+                                                    elevation: 2,
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      child: Column(children: [
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              Expanded(
+                                                                flex: 10,
+                                                                child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      box10,
+                                                                      Text(
+                                                                        filteredSp[index]['name']
+                                                                            .trim(),
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                16,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            color: Colors.grey[800]),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          launch('tel:' +
+                                                                              filteredSp[index]['mobile']);
+                                                                        },
+                                                                        child: Row(
+                                                                            children: [
+                                                                              Icon(Icons.phone, color: Colors.grey[600], size: 12),
+                                                                              SizedBox(
+                                                                                width: 5,
+                                                                              ),
+                                                                              Text(
+                                                                                (filteredSp[index]['mobile'] != null ? filteredSp[index]['mobile'] : 'NA'),
+                                                                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey[600]),
+                                                                              ),
+                                                                            ]),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                    ]),
+                                                              ),
+                                                              Spacer(),
+                                                              Column(
                                                                 children: [
-                                                                  box10,
                                                                   Text(
-                                                                    filteredSp[index]
-                                                                            [
-                                                                            'name']
-                                                                        .trim(),
+                                                                    " ${filteredSp[index]['price']} ",
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             16,
@@ -703,234 +343,176 @@ class _HospitalBedListState extends State<HospitalBedList> {
                                                                             FontWeight
                                                                                 .w600,
                                                                         color: Colors
-                                                                            .grey[800]),
+                                                                            .black),
+                                                                  ),
+                                                                  Text(
+                                                                    "Beds Available",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .black),
                                                                   ),
                                                                   SizedBox(
-                                                                    height: 10,
+                                                                    height: 20,
                                                                   ),
                                                                   GestureDetector(
                                                                     onTap: () {
-                                                                      launch('tel:' +
-                                                                          filteredSp[index]
-                                                                              [
-                                                                              'mobile']);
+                                                                      showModalBottomSheet(
+                                                                          isScrollControlled:
+                                                                              true,
+                                                                          shape:
+                                                                              RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(10.0),
+                                                                          ),
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (BuildContext context) {
+                                                                            return Text(
+                                                                              "Coming soon",
+                                                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+                                                                            );
+                                                                            // return SpDetails(
+                                                                            //     spId: filteredSp[index]
+                                                                            //         [
+                                                                            //         "serviceProviderId"]);
+                                                                          });
                                                                     },
-                                                                    child: Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                              Icons.phone,
-                                                                              color: Colors.grey[600],
-                                                                              size: 12),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                5,
-                                                                          ),
-                                                                          Text(
-                                                                            (filteredSp[index]['mobile'] != null
-                                                                                ? filteredSp[index]['mobile']
-                                                                                : 'NA'),
-                                                                            style: TextStyle(
-                                                                                fontSize: 12,
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.grey[600]),
-                                                                          ),
-                                                                        ]),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 10,
-                                                                  ),
-                                                                ]),
-                                                          ),
-                                                          Spacer(),
-                                                          Column(
-                                                            children: [
-                                                              Text(
-                                                                " ${filteredSp[index]['price']} ",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                              Text(
-                                                                "Beds Available",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      shape:
-                                                                          RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(10.0),
-                                                                      ),
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (BuildContext
-                                                                              context) {
-                                                                        return Text(
-                                                                          "Coming soon",
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.w600,
-                                                                              color: Colors.black),
-                                                                        );
-                                                                        // return SpDetails(
-                                                                        //     spId: filteredSp[index]
-                                                                        //         [
-                                                                        //         "serviceProviderId"]);
-                                                                      });
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
+                                                                    child:
+                                                                        Container(
+                                                                      padding: EdgeInsets.symmetric(
                                                                           horizontal:
                                                                               10),
-                                                                  // child: Text(
-                                                                  //   "More Info",
-                                                                  //   style: TextStyle(
-                                                                  //       fontSize:
-                                                                  //           12,
-                                                                  //       fontWeight:
-                                                                  //           FontWeight
-                                                                  //               .w600,
-                                                                  //       color: Color(
-                                                                  //           0xFF3f51b5)),
-                                                                  // ),
-                                                                ),
-                                                              )
+                                                                      // child: Text(
+                                                                      //   "More Info",
+                                                                      //   style: TextStyle(
+                                                                      //       fontSize:
+                                                                      //           12,
+                                                                      //       fontWeight:
+                                                                      //           FontWeight
+                                                                      //               .w600,
+                                                                      //       color: Color(
+                                                                      //           0xFF3f51b5)),
+                                                                      // ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
                                                             ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Container(
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.location_pin,
-                                                            size: 18,
-                                                            color: Colors.grey,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                Icons
+                                                                    .location_pin,
+                                                                size: 18,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  filteredSp[index]
+                                                                          [
+                                                                          'address'] ??
+                                                                      "NA",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          700]),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  maxLines: 5,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Expanded(
-                                                            child: Text(
-                                                              filteredSp[index][
-                                                                      'address'] ??
-                                                                  "NA",
-                                                              style: TextStyle(
-                                                                  fontSize: 13,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      700]),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              maxLines: 5,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Divider(),
-                                                    if (filteredSp[index]
-                                                                ["offerings"]
-                                                            .length !=
-                                                        0)
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Image.asset(
-                                                            "assets/hospitalBed.png",
-                                                            height: 30,
-                                                            width: 30,
-                                                          ),
-                                                          Container(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width -
-                                                                100,
-                                                            child: GridView
-                                                                .builder(
-                                                                    physics:
-                                                                        NeverScrollableScrollPhysics(),
-                                                                    padding: EdgeInsets
-                                                                        .only(
+                                                        ),
+                                                        Divider(),
+                                                        if (filteredSp[index][
+                                                                    "offerings"]
+                                                                .length !=
+                                                            0)
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                "assets/hospitalBed.png",
+                                                                height: 30,
+                                                                width: 30,
+                                                              ),
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width -
+                                                                    100,
+                                                                child: GridView
+                                                                    .builder(
+                                                                        physics:
+                                                                            NeverScrollableScrollPhysics(),
+                                                                        padding: EdgeInsets.only(
                                                                             left:
                                                                                 5),
-                                                                    shrinkWrap:
-                                                                        true,
-                                                                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                                                                        crossAxisCount:
-                                                                            2,
-                                                                        childAspectRatio:
-                                                                            6 /
+                                                                        shrinkWrap:
+                                                                            true,
+                                                                        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                                                                            crossAxisCount:
+                                                                                2,
+                                                                            childAspectRatio: 6 /
                                                                                 1,
-                                                                        crossAxisSpacing:
-                                                                            0,
-                                                                        mainAxisSpacing:
-                                                                            0),
-                                                                    itemCount: filteredSp[index]
-                                                                            [
-                                                                            "offerings"]
-                                                                        .length,
-                                                                    itemBuilder:
-                                                                        (BuildContext
-                                                                                ctx,
-                                                                            i) {
-                                                                      return Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          Text(
-                                                                            filteredSp[index]["offerings"][i]["label"],
-                                                                            style:
-                                                                                TextStyle(color: Colors.grey[900], fontSize: 13),
-                                                                          ),
-                                                                          Text(
-                                                                            " : ",
-                                                                            style:
-                                                                                TextStyle(color: Colors.grey[900], fontSize: 13),
-                                                                          ),
-                                                                          Text(
-                                                                            filteredSp[index]["offerings"][i]["value"]["vacant"].toString(),
-                                                                            style:
-                                                                                TextStyle(color: Colors.grey[900], fontSize: 13),
-                                                                          )
-                                                                        ],
-                                                                      );
-                                                                    }),
+                                                                            crossAxisSpacing:
+                                                                                0,
+                                                                            mainAxisSpacing:
+                                                                                0),
+                                                                        itemCount:
+                                                                            filteredSp[index]["offerings"]
+                                                                                .length,
+                                                                        itemBuilder:
+                                                                            (BuildContext ctx,
+                                                                                i) {
+                                                                          return Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Text(
+                                                                                filteredSp[index]["offerings"][i]["label"],
+                                                                                style: TextStyle(color: Colors.grey[900], fontSize: 13),
+                                                                              ),
+                                                                              Text(
+                                                                                " : ",
+                                                                                style: TextStyle(color: Colors.grey[900], fontSize: 13),
+                                                                              ),
+                                                                              Text(
+                                                                                filteredSp[index]["offerings"][i]["value"]["vacant"].toString(),
+                                                                                style: TextStyle(color: Colors.grey[900], fontSize: 13),
+                                                                              )
+                                                                            ],
+                                                                          );
+                                                                        }),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                  ]),
-                                                ));
-                                          }),
+                                                      ]),
+                                                    ));
+                                              }),
                                     ]);
                     })),
           ),
