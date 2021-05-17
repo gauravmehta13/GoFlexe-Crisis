@@ -4,6 +4,7 @@ import 'package:crisis/Screens/Covid%20Stats/Stats%20TabBar.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
 import 'package:crisis/Screens/Twitter%20Search.dart';
+import 'package:crisis/Screens/india_helplines.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height - 100,
+          width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
               Container(
@@ -51,12 +52,16 @@ class HomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
-                                    context,
-                                    FadeRoute(page: GoFlexeTabBar(index: 0)),
-                                  );
+                                      context,
+                                      FadeRoute(
+                                        page: GoFlexeTabBar(
+                                          index: 0,
+                                        ),
+                                      ));
                                 },
                                 child: Column(
                                   mainAxisAlignment:
@@ -78,8 +83,9 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: GoFlexeTabBar(index: 1)),
@@ -105,8 +111,9 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: GoFlexeTabBar(index: 2)),
@@ -134,8 +141,9 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: GoFlexeTabBar(index: 3)),
@@ -166,175 +174,216 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(),
                   Container(
                     color: Colors.transparent,
                     height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey[300],
+                          width: 0.5,
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                       shadowColor: Colors.black,
                       color: Colors.white,
                       child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    FadeRoute(page: GoFlexeTabBar(index: 0)),
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.bookMedical,
-                                      color: Color(0xFFc14098),
-                                      size: 18,
-                                    ),
-                                    Text(
-                                      "Symptoms",
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Divider(),
-                                    Text(
-                                      "Diagnostic Centres",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Text(
+                                "Find centres near you",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w600),
                               ),
                             ),
-                            RotatedBox(quarterTurns: 1, child: Divider()),
                             Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    FadeRoute(page: GoFlexeTabBar(index: 1)),
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.temperatureHigh,
-                                      color: Color(0xFFea9b88),
-                                      size: 18,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        print("tapped");
+                                        Navigator.push(
+                                          context,
+                                          FadeRoute(
+                                              page: GoFlexeTabBar(
+                                            index: 0,
+                                            centerIndex: 0,
+                                          )),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.bookMedical,
+                                            color: Color(0xFFc14098),
+                                            size: 18,
+                                          ),
+                                          Text(
+                                            "Diagnostic",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          // Divider(),
+                                          // Text(
+                                          //   "Find centres near you",
+                                          //   textAlign: TextAlign.center,
+                                          //   style: TextStyle(
+                                          //       fontSize: 11,
+                                          //       fontWeight: FontWeight.w600),
+                                          // )
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      "Treatment",
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
+                                  ),
+                                  RotatedBox(quarterTurns: 1, child: Divider()),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        print("tapped");
+                                        Navigator.push(
+                                          context,
+                                          FadeRoute(
+                                              page: GoFlexeTabBar(
+                                            index: 1,
+                                            centerIndex: 1,
+                                          )),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.temperatureHigh,
+                                            color: Color(0xFFea9b88),
+                                            size: 18,
+                                          ),
+                                          Text(
+                                            "Home Care",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          // Divider(),
+                                          // Text(
+                                          //   "Find centres near you",
+                                          //   textAlign: TextAlign.center,
+                                          //   style: TextStyle(
+                                          //       fontSize: 11,
+                                          //       fontWeight: FontWeight.w600),
+                                          // )
+                                        ],
+                                      ),
                                     ),
-                                    Divider(),
-                                    Text(
-                                      "Home Care Centers",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  RotatedBox(quarterTurns: 1, child: Divider()),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        print("tapped");
+                                        Navigator.push(
+                                          context,
+                                          FadeRoute(
+                                              page: GoFlexeTabBar(index: 2)),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.hospital,
+                                            color: Color(0xFF22b27f),
+                                            size: 18,
+                                          ),
+                                          Text(
+                                            "Hospitals",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          // Divider(),
+                                          // Text(
+                                          //   "Find centres near you",
+                                          //   textAlign: TextAlign.center,
+                                          //   style: TextStyle(
+                                          //       fontSize: 11,
+                                          //       fontWeight: FontWeight.w600),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  RotatedBox(quarterTurns: 1, child: Divider()),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        print("tapped");
+                                        Navigator.push(
+                                          context,
+                                          FadeRoute(
+                                              page: GoFlexeTabBar(index: 3)),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.syringe,
+                                            color: Color(0xFF63afcb),
+                                            size: 18,
+                                          ),
+                                          Text(
+                                            "Vaccine",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          // Divider(),
+                                          // Text(
+                                          //   "Find centres near you",
+                                          //   textAlign: TextAlign.center,
+                                          //   style: TextStyle(
+                                          //       fontSize: 11,
+                                          //       fontWeight: FontWeight.w600),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            RotatedBox(quarterTurns: 1, child: Divider()),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    FadeRoute(page: GoFlexeTabBar(index: 2)),
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.hospital,
-                                      color: Color(0xFF22b27f),
-                                      size: 18,
-                                    ),
-                                    Text(
-                                      "Hospitals",
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Divider(),
-                                    Text(
-                                      "Hospital\nBeds",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            RotatedBox(quarterTurns: 1, child: Divider()),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    FadeRoute(page: GoFlexeTabBar(index: 3)),
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.syringe,
-                                      color: Color(0xFF63afcb),
-                                      size: 18,
-                                    ),
-                                    Text(
-                                      "Vaccine",
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Divider(),
-                                    Text(
-                                      "Vaccination Centers",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
                           ],
                         ),
                       ),
                     ),
                   ),
-                  Spacer(),
+                  box10,
                   Container(
                     color: Colors.transparent,
                     height: 150,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey[300],
+                          width: 0.5,
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                       shadowColor: Colors.black,
                       color: Colors.white,
                       child: Container(
@@ -343,8 +392,9 @@ class HomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: StatsTabBar()),
@@ -371,8 +421,9 @@ class HomePage extends StatelessWidget {
                             ),
                             RotatedBox(quarterTurns: 1, child: Divider()),
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: FAQ()),
@@ -399,8 +450,9 @@ class HomePage extends StatelessWidget {
                             ),
                             RotatedBox(quarterTurns: 1, child: Divider()),
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: MythBusters()),
@@ -427,8 +479,9 @@ class HomePage extends StatelessWidget {
                             ),
                             RotatedBox(quarterTurns: 1, child: Divider()),
                             Expanded(
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
+                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: TwitterScreen()),
@@ -458,7 +511,206 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  //box10,
+                  // Container(
+                  //   color: Colors.transparent,
+                  //   margin: EdgeInsets.symmetric(horizontal: 10),
+                  //   height: 200,
+                  //   child: Card(
+                  //     shape: RoundedRectangleBorder(
+                  //       side: BorderSide(
+                  //         color: Colors.grey[300],
+                  //         width: 0.5,
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(5.0),
+                  //     ),
+                  //     shadowColor: Colors.black,
+                  //     color: Colors.white,
+                  //     child: Container(
+                  //       padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                  //       child: Column(
+                  //         children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.symmetric(vertical: 20),
+                  //             child: Text(
+                  //               "Realtime Covid Data",
+                  //               textAlign: TextAlign.center,
+                  //               style: TextStyle(
+                  //                   fontSize: 17, fontWeight: FontWeight.w600),
+                  //             ),
+                  //           ),
+                  //           Expanded(
+                  //             child: Row(
+                  //               mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceEvenly,
+                  //               children: [
+                  //                 Expanded(
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       print("tapped");
+                  //                       Navigator.push(
+                  //                         context,
+                  //                         FadeRoute(
+                  //                             page: GoFlexeTabBar(index: 0)),
+                  //                       );
+                  //                     },
+                  //                     child: Column(
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.spaceEvenly,
+                  //                       children: [
+                  //                         FaIcon(
+                  //                           Icons.all_out,
+                  //                           color: Color(0xFFc14098),
+                  //                           size: 18,
+                  //                         ),
+                  //                         Column(
+                  //                           children: [
+                  //                             Text(
+                  //                               "All Over India",
+                  //                               style: TextStyle(
+                  //                                   fontSize: 11,
+                  //                                   fontWeight:
+                  //                                       FontWeight.w600),
+                  //                             ),
+                  //                             // SizedBox(
+                  //                             //   height: 5,
+                  //                             // ),
+                  //                             // Text(
+                  //                             //   "See Covid Cases All over india",
+                  //                             //   textAlign: TextAlign.center,
+                  //                             //   style: TextStyle(
+                  //                             //     fontSize: 10,
+                  //                             //   ),
+                  //                             // )
+                  //                           ],
+                  //                         ),
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 RotatedBox(quarterTurns: 1, child: Divider()),
+                  //                 Expanded(
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       print("tapped");
+                  //                       Navigator.push(
+                  //                         context,
+                  //                         FadeRoute(
+                  //                             page: GoFlexeTabBar(index: 1)),
+                  //                       );
+                  //                     },
+                  //                     child: Column(
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.spaceEvenly,
+                  //                       children: [
+                  //                         FaIcon(
+                  //                           FontAwesomeIcons.temperatureHigh,
+                  //                           color: Color(0xFFea9b88),
+                  //                           size: 18,
+                  //                         ),
+                  //                         Text(
+                  //                           "State Wise",
+                  //                           style: TextStyle(
+                  //                               fontSize: 11,
+                  //                               fontWeight: FontWeight.w600),
+                  //                         ),
+                  //                         // Divider(),
+                  //                         // Text(
+                  //                         //   "Find centres near you",
+                  //                         //   textAlign: TextAlign.center,
+                  //                         //   style: TextStyle(
+                  //                         //       fontSize: 11,
+                  //                         //       fontWeight: FontWeight.w600),
+                  //                         // )
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 RotatedBox(quarterTurns: 1, child: Divider()),
+                  //                 Expanded(
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       print("tapped");
+                  //                       Navigator.push(
+                  //                         context,
+                  //                         FadeRoute(
+                  //                             page: GoFlexeTabBar(index: 2)),
+                  //                       );
+                  //                     },
+                  //                     child: Column(
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.spaceEvenly,
+                  //                       children: [
+                  //                         FaIcon(
+                  //                           FontAwesomeIcons.hospital,
+                  //                           color: Color(0xFF22b27f),
+                  //                           size: 18,
+                  //                         ),
+                  //                         Text(
+                  //                           "Global",
+                  //                           style: TextStyle(
+                  //                               fontSize: 11,
+                  //                               fontWeight: FontWeight.w600),
+                  //                         ),
+                  //                         // Divider(),
+                  //                         // Text(
+                  //                         //   "Find centres near you",
+                  //                         //   textAlign: TextAlign.center,
+                  //                         //   style: TextStyle(
+                  //                         //       fontSize: 11,
+                  //                         //       fontWeight: FontWeight.w600),
+                  //                         // )
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 RotatedBox(quarterTurns: 1, child: Divider()),
+                  //                 Expanded(
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       print("tapped");
+                  //                       Navigator.push(
+                  //                         context,
+                  //                         FadeRoute(
+                  //                             page: GoFlexeTabBar(index: 3)),
+                  //                       );
+                  //                     },
+                  //                     child: Column(
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.spaceEvenly,
+                  //                       children: [
+                  //                         FaIcon(
+                  //                           FontAwesomeIcons.syringe,
+                  //                           color: Color(0xFF63afcb),
+                  //                           size: 18,
+                  //                         ),
+                  //                         Text(
+                  //                           "Country Wise",
+                  //                           style: TextStyle(
+                  //                               fontSize: 11,
+                  //                               fontWeight: FontWeight.w600),
+                  //                         ),
+                  //                         // Divider(),
+                  //                         // Text(
+                  //                         //   "Find centres near you",
+                  //                         //   textAlign: TextAlign.center,
+                  //                         //   style: TextStyle(
+                  //                         //       fontSize: 11,
+                  //                         //       fontWeight: FontWeight.w600),
+                  //                         // )
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  box20,
                   CarouselSlider(
                       options: CarouselOptions(
                         height: 180,
@@ -475,23 +727,106 @@ class HomePage extends StatelessWidget {
                       ),
                       items: [
                         Card(
-                          child: Container(
-                              padding: EdgeInsets.all(10),
-                              width: MediaQuery.of(context).size.width,
-                              decoration:
-                                  BoxDecoration(color: Colors.lightBlue[50]),
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  "Covid-19 Help",
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              )),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                FadeRoute(page: IndiaHelplines()),
+                              );
+                            },
+                            child: Container(
+                                padding: EdgeInsets.all(10),
+                                // decoration:
+                                //     BoxDecoration(color: Colors.lightBlue[50]),
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Row(
+                                    children: [
+                                      Image.asset("assets/help.png"),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text("Covid-19 Help Lines",
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight:
+                                                        FontWeight.w800)),
+                                            box10,
+                                            Text(
+                                              '#IndiaFightsCorona',
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontSize: 13),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              'Lets Fight Together!!!',
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontSize: 13),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                        ),
+                        Card(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                FadeRoute(page: StatsTabBar()),
+                              );
+                            },
+                            child: Container(
+                                padding: EdgeInsets.all(10),
+                                // decoration:
+                                //     BoxDecoration(color: Colors.lightBlue[50]),
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Row(
+                                    children: [
+                                      Image.asset("assets/graph.png"),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text("Track Live Data",
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight:
+                                                        FontWeight.w800)),
+                                            box10,
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20),
+                                              child: Text(
+                                                "See Live Covid Cases of India and it's States",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.grey[700],
+                                                    fontSize: 13),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
                         )
                       ]),
-                  Spacer(
-                    flex: 5,
-                  ),
                 ],
               ),
             ],

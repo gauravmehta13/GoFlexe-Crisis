@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
               buttonTheme: ButtonThemeData(
                 buttonColor: primaryColor,
               )),
-          home: GoFlexeTabBar()),
+          home: HomePage()),
     );
   }
 }

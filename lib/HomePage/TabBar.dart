@@ -11,7 +11,8 @@ import '../Constants.dart';
 
 class GoFlexeTabBar extends StatefulWidget {
   final index;
-  GoFlexeTabBar({this.index});
+  final centerIndex;
+  GoFlexeTabBar({this.index, this.centerIndex});
   @override
   _GoFlexeTabBarState createState() => _GoFlexeTabBarState();
 }
@@ -136,7 +137,16 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [Testing(), HomeTreatment(), Hospital(), Vaccination()],
+              children: [
+                Testing(
+                  diagnostic: widget.centerIndex == 0 ? true : false,
+                ),
+                HomeTreatment(
+                  homeCare: widget.centerIndex == 1 ? true : false,
+                ),
+                Hospital(),
+                Vaccination()
+              ],
             ),
           ),
         ],

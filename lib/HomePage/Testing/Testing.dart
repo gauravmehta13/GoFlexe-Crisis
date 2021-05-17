@@ -9,6 +9,8 @@ import 'Diagnostic.dart';
 //https://mahmoudabdellatief-88944.medium.com/flutter-pinned-tabbar-with-triggered-scrolling-and-page-anchors-slivers-c81a19f221a6
 
 class Testing extends StatefulWidget {
+  bool diagnostic;
+  Testing({this.diagnostic});
   @override
   _TestingState createState() => _TestingState();
 }
@@ -38,6 +40,85 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
     addScrollControllerListener();
 
     symptoms = Symptoms.getSymptoms();
+    if (widget.diagnostic == true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scrollToDiagnostic();
+      });
+    }
+  }
+
+  scrollToDiagnostic() {
+    {
+      if (resultConfusionKey.currentContext == null) {
+        if (_tabController.previousIndex == 0) {
+          scrollController.position
+              .ensureVisible(
+            symptomKey.currentContext.findRenderObject(),
+            alignment: 0.0,
+            // How far into view the item should be scrolled (between 0 and 1).
+            duration: const Duration(milliseconds: 200),
+          )
+              .then((value) {
+            scrollController.position
+                .ensureVisible(
+              symptomKey.currentContext.findRenderObject(),
+              alignment: 0.5,
+              // How far into view the item should be scrolled (between 0 and 1).
+              duration: const Duration(milliseconds: 200),
+            )
+                .then((value) {
+              scrollController.position
+                  .ensureVisible(
+                testKey.currentContext.findRenderObject(),
+                alignment: 0.0,
+                // How far into view the item should be scrolled (between 0 and 1).
+                duration: const Duration(milliseconds: 200),
+              )
+                  .then((value) {
+                scrollController.position
+                    .ensureVisible(
+                  testKey.currentContext.findRenderObject(),
+                  alignment: 0.5,
+                  // How far into view the item should be scrolled (between 0 and 1).
+                  duration: const Duration(milliseconds: 200),
+                )
+                    .then((value) {
+                  scrollController.position.ensureVisible(
+                    resultConfusionKey.currentContext.findRenderObject(),
+                    alignment: 0.2,
+                    // How far into view the item should be scrolled (between 0 and 1).
+                    duration: const Duration(milliseconds: 200),
+                  );
+                });
+              });
+            });
+          });
+        } else if (_tabController.previousIndex == 1) {
+          scrollController.position
+              .ensureVisible(
+            testKey.currentContext.findRenderObject(),
+            alignment: 0.5,
+            // How far into view the item should be scrolled (between 0 and 1).
+            duration: const Duration(milliseconds: 200),
+          )
+              .then((value) {
+            scrollController.position.ensureVisible(
+              resultConfusionKey.currentContext.findRenderObject(),
+              alignment: 0.2,
+              // How far into view the item should be scrolled (between 0 and 1).
+              duration: const Duration(milliseconds: 200),
+            );
+          });
+        }
+      } else {
+        scrollController.position.ensureVisible(
+          resultConfusionKey.currentContext.findRenderObject(),
+          alignment: 0.0,
+          // How far into view the item should be scrolled (between 0 and 1).
+          duration: const Duration(milliseconds: 600),
+        );
+      }
+    }
   }
 
   void addScrollControllerListener() {

@@ -9,6 +9,8 @@ import 'dart:math' as math;
 import '../../Constants.dart';
 
 class HomeTreatment extends StatefulWidget {
+  bool homeCare;
+  HomeTreatment({this.homeCare});
   @override
   _HomeTreatmentState createState() => _HomeTreatmentState();
 }
@@ -55,6 +57,17 @@ class _HomeTreatmentState extends State<HomeTreatment>
     warnings = Warnings.getWarnings();
     isolationTab = IsolationTab.getIsolationTab();
     getStates();
+    print(widget.homeCare);
+    if (widget.homeCare == true) {
+      print("object");
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: Duration(seconds: 1),
+          curve: Curves.fastOutSlowIn,
+        );
+      });
+    }
   }
 
   SliverPersistentHeader makeTabBarHeader() {
