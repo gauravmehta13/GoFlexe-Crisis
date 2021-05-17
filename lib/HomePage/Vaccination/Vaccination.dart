@@ -14,6 +14,7 @@ class Vaccination extends StatefulWidget {
 }
 
 class _VaccinationState extends State<Vaccination> {
+  final ValueNotifier<String> keyword = ValueNotifier<String>("");
   var dio = Dio();
   TextEditingController stateController = TextEditingController();
   TextEditingController districtController = TextEditingController();
@@ -120,6 +121,34 @@ class _VaccinationState extends State<Vaccination> {
                       SizedBox(
                         height: 20,
                       ),
+                      // Autocomplete<IndiaState>(
+                      //   displayStringForOption: (option) => option.label,
+                      //   fieldViewBuilder: (context, textEditingController,
+                      //           focusNode, onFieldSubmitted) =>
+                      //       TextField(
+                      //     controller: textEditingController,
+                      //     focusNode: focusNode,
+                      //     // onEditingComplete: onFieldSubmitted,
+                      //     decoration: const InputDecoration(
+                      //         isDense: true,
+                      //         border: OutlineInputBorder(),
+                      //         hintText: "Enter State"),
+                      //   ),
+                      //   optionsBuilder: (textEditingValue) {
+                      //     if (textEditingValue.text == '') {
+                      //       return states.states;
+                      //     }
+                      //     return states.states.where((s) {
+                      //       return s.label
+                      //           .toLowerCase()
+                      //           .contains(textEditingValue.text.toLowerCase());
+                      //     });
+                      //   },
+                      //   onSelected: (IndiaState selection) {
+                      //     keyword.value = selection.label;
+                      //     print(selection.value);
+                      //   },
+                      // ),
                       Text("Search for vaccination slots"),
                       box30,
                       Container(

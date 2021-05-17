@@ -410,7 +410,7 @@ class _CovidStatsState extends State<CovidStats>
                         // padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
+                            color: Colors.grey[200],
                             boxShadow: [
                               BoxShadow(
                                 offset: Offset(0, 10),

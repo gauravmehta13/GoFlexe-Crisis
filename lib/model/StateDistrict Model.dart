@@ -1,6 +1,5 @@
 class States {
   List<IndiaState> states;
-
   States({this.states});
 
   States.fromJson(Map<String, dynamic> json) {
