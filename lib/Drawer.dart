@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'Fade Route.dart';
 import 'Screens/Covid Stats/Stats TabBar.dart';
-import 'Screens/Self Asses/health.dart';
+import 'Screens/Self Asses/Self Assesment.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
