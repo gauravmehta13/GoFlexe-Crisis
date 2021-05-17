@@ -85,6 +85,9 @@ class _TwitterScreenState extends State<TwitterScreen> {
                           onFieldSubmitted) =>
                       TextField(
                     controller: textEditingController,
+                    onTap: () {
+                      textEditingController.clear();
+                    },
                     focusNode: focusNode,
                     scrollPadding: const EdgeInsets.only(bottom: 150.0),
                     // onEditingComplete: onFieldSubmitted,

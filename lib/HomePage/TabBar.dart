@@ -5,12 +5,13 @@ import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/HomePage/Testing/Testing.dart';
 import 'package:crisis/HomePage/Vaccination/Vaccination.dart';
 import 'package:flutter/material.dart';
-import 'package:rating_dialog/rating_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Constants.dart';
 
 class GoFlexeTabBar extends StatefulWidget {
+  final index;
+  GoFlexeTabBar({this.index});
   @override
   _GoFlexeTabBarState createState() => _GoFlexeTabBarState();
 }
@@ -18,13 +19,12 @@ class GoFlexeTabBar extends StatefulWidget {
 class _GoFlexeTabBarState extends State<GoFlexeTabBar>
     with TickerProviderStateMixin {
   TabController _tabController;
-  TabController _controller;
   Timer _timer;
 
   @override
   void initState() {
-    _controller = TabController(length: 1, vsync: this);
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController =
+        TabController(length: 4, vsync: this, initialIndex: widget.index ?? 0);
     super.initState();
     _timer = new Timer(const Duration(minutes: 1), () {
       showFeedback();
@@ -45,7 +45,6 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
   void dispose() {
     super.dispose();
     _tabController.dispose();
-    _controller.dispose();
   }
 
   @override
@@ -59,14 +58,6 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
           "GoFlexe",
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
-        // bottom: TabBar(
-        //   controller: _controller,
-        //   tabs: [
-        //     Tab(
-        //       text: "Covid",
-        //     ),
-        //   ],
-        // ),
       ),
       drawer: MyDrawer(),
       body: Column(

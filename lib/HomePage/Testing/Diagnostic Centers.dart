@@ -4,6 +4,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Constants.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -156,90 +157,151 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
                                     shrinkWrap: true,
                                     itemCount: filteredData.length,
                                     itemBuilder: (context, index) {
-                                      return Card(
-                                        elevation: 2,
-                                        shape: new RoundedRectangleBorder(
-                                            side: new BorderSide(
-                                                color: Colors.grey, width: 0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(4.0)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Image.asset(
-                                                "assets/examination.png",
-                                                width: 50,
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 10),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Expanded(
-                                                            child: Text(
-                                                                filteredData[
-                                                                            index]
-                                                                        [
-                                                                        "centre"] ??
-                                                                    "",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600)),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 7,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.location_pin,
-                                                            size: 18,
-                                                            color: Colors.grey,
-                                                          ),
-                                                          Expanded(
-                                                            child: Text(
-                                                                filteredData[
-                                                                            index]
-                                                                        [
-                                                                        'address'] ??
-                                                                    "",
+                                      return GestureDetector(
+                                        onTap: () {
+                                          filteredData[index]["phone"] != null
+                                              ? launch('tel:' +
+                                                  filteredData[index]["phone"])
+                                              : displaySnackBar(
+                                                  "Contact No. Unavailable",
+                                                  context);
+                                        },
+                                        child: Card(
+                                          elevation: 2,
+                                          shape: new RoundedRectangleBorder(
+                                              side: new BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Image.asset(
+                                                      "assets/examination.png",
+                                                      width: 50,
+                                                    )
+                                                  ],
+                                                ),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 5,
+                                                            horizontal: 10),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                  filteredData[
+                                                                              index]
+                                                                          [
+                                                                          "centre"] ??
+                                                                      "",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600)),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        box10,
+                                                        Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Icon(
+                                                              Icons.phone,
+                                                              size: 15,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Text(
+                                                                filteredData[index]
+                                                                            [
+                                                                            "phone"] !=
+                                                                        null
+                                                                    ? filteredData[index]
+                                                                            [
+                                                                            "phone"]
+                                                                        .replaceAll(
+                                                                            new RegExp(
+                                                                                r"\s+\b|\b\s"),
+                                                                            "")
+                                                                    : "NA",
                                                                 style:
                                                                     TextStyle(
                                                                   color: Colors
                                                                           .grey[
                                                                       700],
-                                                                  fontSize: 11,
+                                                                  fontSize: 12,
                                                                 )),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                          ],
+                                                        ),
+                                                        box10,
+                                                        Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Icon(
+                                                              Icons
+                                                                  .location_pin,
+                                                              size: 15,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                  filteredData[
+                                                                              index]
+                                                                          [
+                                                                          'address'] ??
+                                                                      "",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        700],
+                                                                    fontSize:
+                                                                        11,
+                                                                  )),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       );

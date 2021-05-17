@@ -326,6 +326,7 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
             : InputDecoration(labelText: widget.label),
         style: widget.textStyle,
         onTap: () {
+          widget.controller.clear();
           _debouncer.run(() {
             setState(() {
               if (hasFuture) {
