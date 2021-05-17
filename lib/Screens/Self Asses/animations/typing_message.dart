@@ -1,6 +1,5 @@
+import 'package:crisis/Screens/Self%20Asses/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
-
-import '../chat_bubble.dart';
 
 class TypingMessage extends StatefulWidget {
   @override

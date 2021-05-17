@@ -1,12 +1,10 @@
 import 'package:crisis/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'health/chat.dart';
-import 'health/chat_bubble.dart';
-import 'health/chat_chip.dart';
-import 'health/chat_data.dart';
-import 'health/self_assess.dart';
+import 'widgets/chat.dart';
+import 'widgets/chat_chip.dart';
+import 'widgets/chat_data.dart';
+import 'widgets/self_assess.dart';
 
 class Health extends StatefulWidget {
   @override

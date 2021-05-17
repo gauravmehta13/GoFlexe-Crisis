@@ -1,6 +1,5 @@
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
-import 'package:crisis/Order/health.dart';
 import 'package:crisis/Screens/Disclaimer.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
@@ -11,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'Fade Route.dart';
 import 'Screens/Covid Stats/Stats TabBar.dart';
+import 'Screens/Self Asses/health.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -101,11 +101,11 @@ class _MyDrawerState extends State<MyDrawer> {
                 dense: true,
                 onTap: () {
                   Navigator.pop(context);
-                  displaySnackBar("Coming Soon", context);
-                  // Navigator.push(
-                  //   context,
-                  //   FadeRoute(page: StatsTabBar()),
-                  // );
+                  // displaySnackBar("Coming Soon", context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: StatsTabBar()),
+                  );
                 },
                 title: Text("Live Data"),
                 leading: FaIcon(
@@ -114,22 +114,22 @@ class _MyDrawerState extends State<MyDrawer> {
                   size: 18,
                 ),
               ),
-              // ListTile(
-              //   dense: true,
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //     Navigator.push(
-              //       context,
-              //       FadeRoute(page: Health()),
-              //     );
-              //   },
-              //   title: Text("Self Assesment"),
-              //   leading: FaIcon(
-              //     FontAwesomeIcons.personBooth,
-              //     color: Colors.black87,
-              //     size: 18,
-              //   ),
-              // ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: Health()),
+                  );
+                },
+                title: Text("Self Assesment"),
+                leading: FaIcon(
+                  FontAwesomeIcons.personBooth,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
               ListTile(
                 dense: true,
                 onTap: () {

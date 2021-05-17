@@ -1,7 +1,8 @@
+import 'package:crisis/Screens/Self%20Asses/animations/typing_message.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:delayed_display/delayed_display.dart';
-import 'animations/typing_message.dart';
+
 import 'chat_bubble.dart';
 
 class Chat extends StatefulWidget {
