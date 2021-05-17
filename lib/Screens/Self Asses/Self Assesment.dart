@@ -108,7 +108,6 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
                     TestScore(problems: problemsCount, totalProblems: 12);
                 await addTestScore(testScore.getCoronaScore());
                 setState(() {});
-                // showAboutDialog(context: context);
               }
             }));
       }
@@ -181,20 +180,18 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
       ),
       body: loading == true
           ? Loading()
-          : Material(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: height * 0.2),
-                controller: _scrollController,
-                // reverse: true,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: height,
-                    maxHeight: double.infinity,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _chatFlow,
-                  ),
+          : SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: height * 0.2),
+              controller: _scrollController,
+              // reverse: true,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: height,
+                  maxHeight: double.infinity,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _chatFlow,
                 ),
               ),
             ),
@@ -246,4 +243,3 @@ class SelfAssess {
     'You are advised for testing as your risk of infection is high. Please call the toll-free helpline 1075 to schedule your testing'
   ];
 }
-
