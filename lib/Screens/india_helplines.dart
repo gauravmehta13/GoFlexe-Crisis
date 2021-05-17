@@ -51,6 +51,7 @@ class _IndiaHelplinesState extends State<IndiaHelplines> {
                 ),
               ),
               ListTile(
+                dense: true,
                 leading: Icon(Icons.phone),
                 trailing: Icon(Icons.keyboard_arrow_right),
                 title: Text('Helpline Number'),
@@ -58,6 +59,7 @@ class _IndiaHelplinesState extends State<IndiaHelplines> {
                 onTap: () => _launchURL('tel:+91-11-23978046'),
               ),
               ListTile(
+                dense: true,
                 leading: Icon(Icons.email),
                 trailing: Icon(Icons.keyboard_arrow_right),
                 title: Text('Helpline Email ID'),
@@ -65,6 +67,7 @@ class _IndiaHelplinesState extends State<IndiaHelplines> {
                 onTap: () => _launchURL('mailto:ncov2019@gov.in'),
               ),
               ListTile(
+                dense: true,
                 leading: Icon(Icons.phone),
                 trailing: Icon(Icons.keyboard_arrow_right),
                 title: Text('Toll Free'),
@@ -72,6 +75,7 @@ class _IndiaHelplinesState extends State<IndiaHelplines> {
                 onTap: () => _launchURL('tel:1075'),
               ),
               ListTile(
+                dense: true,
                 leading: Icon(Icons.help),
                 trailing: Icon(Icons.keyboard_arrow_right),
                 title: Text('State & Union Territories'),
@@ -80,6 +84,7 @@ class _IndiaHelplinesState extends State<IndiaHelplines> {
                     'https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf'),
               ),
               ListTile(
+                dense: true,
                 leading: Icon(
                   FontAwesomeIcons.rupeeSign,
                 ),
