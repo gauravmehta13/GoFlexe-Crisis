@@ -5,6 +5,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'animations/typing_message.dart';
 import 'widgets/chat.dart';
 import 'widgets/chat_chip.dart';
 import 'widgets/chat_data.dart';
@@ -54,13 +55,18 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
   }
 
   addTestScore(CovidTest covidTest) {
-    if (covidTest == CovidTest.OK) {
-      addAnswer(_selfAssess.answerOk);
-    } else if (covidTest == CovidTest.ATRISK) {
-      addAnswer(_selfAssess.answerAtRisk);
-    } else if (covidTest == CovidTest.ATNOMINALRISK) {
-      addAnswer(_selfAssess.answerNominalRisk);
-    }
+    _chatFlow.add(TypingMessage());
+    Future.delayed(const Duration(seconds: 2), () {
+      _chatFlow.removeAt(_chatFlow.length - 1);
+      if (covidTest == CovidTest.OK) {
+        addAnswer(_selfAssess.answerOk);
+      } else if (covidTest == CovidTest.ATRISK) {
+        addAnswer(_selfAssess.answerAtRisk);
+      } else if (covidTest == CovidTest.ATNOMINALRISK) {
+        addAnswer(_selfAssess.answerNominalRisk);
+      }
+      setState(() {});
+    });
   }
 
   void addAnswer(List answers) {
@@ -95,7 +101,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
               problemsCount = problemsCount + value;
               print('Problem Colunt = $problemsCount');
             },
-            isCompletedCallBack: () {
+            isCompletedCallBack: () async {
               if (currentChat < chatDatas.length) {
                 updateChatFlow();
               } else if (currentChat == chatDatas.length) {
@@ -103,7 +109,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
                 print(problemsCount);
                 TestScore testScore =
                     TestScore(problems: problemsCount, totalProblems: 12);
-                addTestScore(testScore.getCoronaScore());
+                await addTestScore(testScore.getCoronaScore());
                 setState(() {});
                 // showAboutDialog(context: context);
               }

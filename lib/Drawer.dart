@@ -138,29 +138,13 @@ class _MyDrawerState extends State<MyDrawer> {
               ListTile(
                 dense: true,
                 onTap: () {
-                  Navigator.pop(context);
-                  giveFeedback(context);
+                  _sendMail();
                 },
-                title: Text("Give Feedback"),
-                // minLeadingWidth: 25,
-                leading: FaIcon(
-                  Icons.feedback,
-                  color: Colors.black87,
-                  size: 18,
+                title: Text(
+                  "Contact Us",
                 ),
-              ),
-              ListTile(
-                dense: true,
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    FadeRoute(page: Disclaimer()),
-                  );
-                },
-                title: Text("Medical Disclaimer"),
                 leading: FaIcon(
-                  FontAwesomeIcons.notesMedical,
+                  FontAwesomeIcons.mailBulk,
                   color: Colors.black87,
                   size: 18,
                 ),
@@ -184,13 +168,29 @@ class _MyDrawerState extends State<MyDrawer> {
               ListTile(
                 dense: true,
                 onTap: () {
-                  _sendMail();
+                  Navigator.pop(context);
+                  giveFeedback(context);
                 },
-                title: Text(
-                  "Contact Us",
-                ),
+                title: Text("Give Feedback"),
+                // minLeadingWidth: 25,
                 leading: FaIcon(
-                  FontAwesomeIcons.mailBulk,
+                  Icons.feedback,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: Disclaimer()),
+                  );
+                },
+                title: Text("Medical Disclaimer"),
+                leading: FaIcon(
+                  FontAwesomeIcons.notesMedical,
                   color: Colors.black87,
                   size: 18,
                 ),

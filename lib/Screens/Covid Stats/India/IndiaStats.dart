@@ -15,9 +15,6 @@ import 'package:number_display/number_display.dart';
 import 'package:charts_flutter/src/text_style.dart' as style;
 import 'package:charts_flutter/src/text_element.dart' as textElement;
 
-const kBackgroundColor = Color(0xFFFEFEFE);
-const kTitleTextColor = Color(0xFF303030);
-const kBodyTextColor = Color(0xFF4B4B4B);
 const kTextLightColor = Color(0xFF959595);
 const kInfectedColor = Color(0xFFFF8748);
 const kDeathColor = Color(0xFFFF4848);
@@ -432,7 +429,7 @@ class _CovidStatsState extends State<CovidStats>
                           tabs: [
                             Tab(
                               child: Text(
-                                'Infected',
+                                'Confirmed',
                                 style: TextStyle(fontSize: 13),
                               ),
                             ),
@@ -444,7 +441,7 @@ class _CovidStatsState extends State<CovidStats>
                             ),
                             Tab(
                               child: Text(
-                                'Deaths',
+                                'Deceased',
                                 style: TextStyle(fontSize: 13),
                               ),
                             )
