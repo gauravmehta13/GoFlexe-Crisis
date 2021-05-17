@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:crisis/Constants.dart';
+import 'package:crisis/Widgets/Loading.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'widgets/chat.dart';
@@ -13,6 +17,7 @@ class Health extends StatefulWidget {
 
 class _HealthState extends State<Health> with TickerProviderStateMixin {
   SelfAssess _selfAssess;
+  bool loading = true;
   List<Widget> _chatFlow = [];
   AnimationController _animationController;
   ScrollController _scrollController;
@@ -26,17 +31,10 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    super.initState();
     _selfAssess = SelfAssess();
     _scrollController = ScrollController();
-    for (var i = 0; i < healthData.length; i++) {
-      chatDatas.add(
-        ChatData(
-            question: healthData[i]["question"],
-            options: healthData[i]["option"]),
-      );
-    }
-    updateChatFlow();
-    super.initState();
+    getAssesmentData();
   }
 
   scrollToEnd() {
@@ -92,7 +90,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
       }
       if (_animation.isCompleted) {
         _chatFlow.add(ChatChip(
-            chatChips: chatData.options,
+            chatChips: chatData,
             problemscallback: (value) {
               problemsCount = problemsCount + value;
               print('Problem Colunt = $problemsCount');
@@ -107,6 +105,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
                     TestScore(problems: problemsCount, totalProblems: 12);
                 addTestScore(testScore.getCoronaScore());
                 setState(() {});
+                // showAboutDialog(context: context);
               }
             }));
       }
@@ -116,8 +115,42 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
     });
   }
 
-  showChatOptions(List options) {
-    _chatFlow.add(ChatChip(chatChips: options));
+  showChatOptions(ChatData data) {
+    _chatFlow.add(ChatChip(chatChips: data));
+  }
+
+  getAssesmentData() async {
+    var dio = Dio();
+    try {
+      final response = await dio.post(
+          'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
+          data: {
+            'tenantSet_id': 'CRISIS01',
+            'tenantUsecase': 'CRISIS01',
+            "useCase": "tips",
+            "type": "assesment",
+          });
+      print(response);
+      Map<String, dynamic> map = json.decode(response.toString());
+      print(map);
+
+      for (var i = 0; i < map["resp"].length; i++) {
+        chatDatas.add(
+          ChatData(
+              question: map["resp"][i]["question"],
+              options: map["resp"][i]["option"]),
+        );
+      }
+      updateChatFlow();
+      setState(() {
+        loading = false;
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -137,49 +170,31 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         brightness: Brightness.light,
-        title: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                  'Covid-19',
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Self Assessment Test',
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold,
-                    color: secondaryColor,
-                  ),
-                ),
-              ],
-            ),
-          ],
+        title: Text(
+          'Self Assessment Test',
+          style:
+              GoogleFonts.montserrat(fontWeight: FontWeight.w600, fontSize: 16),
         ),
       ),
-      body: Material(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: height * 0.2),
-          controller: _scrollController,
-          // reverse: true,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: height,
-              maxHeight: double.infinity,
+      body: loading == true
+          ? Loading()
+          : Material(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: height * 0.2),
+                controller: _scrollController,
+                // reverse: true,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: height,
+                    maxHeight: double.infinity,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _chatFlow,
+                  ),
+                ),
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _chatFlow,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

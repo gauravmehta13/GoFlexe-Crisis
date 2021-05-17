@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import "./ProgressBar.dart";
 import 'package:flutter/foundation.dart';
 
@@ -10,8 +11,9 @@ class MyAppBar extends StatelessWidget {
     return AppBar(
       elevation: 1,
       title: Text(
-        "GoFlexe",
-        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        'GoFlexe',
+        style:
+            GoogleFonts.montserrat(fontWeight: FontWeight.w600, fontSize: 16),
       ),
       bottom: PreferredSize(
         preferredSize: Size(double.infinity, 10.0),

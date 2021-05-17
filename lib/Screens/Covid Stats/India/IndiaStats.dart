@@ -1,20 +1,42 @@
+import 'dart:math';
+
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/model/general_data_model.dart';
 import 'package:crisis/Widgets/data_text_chart.dart';
 import 'package:crisis/Widgets/info_card.dart';
+import 'package:crisis/model/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:number_display/number_display.dart';
+import 'package:charts_flutter/src/text_style.dart' as style;
+import 'package:charts_flutter/src/text_element.dart' as textElement;
+
+const kBackgroundColor = Color(0xFFFEFEFE);
+const kTitleTextColor = Color(0xFF303030);
+const kBodyTextColor = Color(0xFF4B4B4B);
+const kTextLightColor = Color(0xFF959595);
+const kInfectedColor = Color(0xFFFF8748);
+const kDeathColor = Color(0xFFFF4848);
+const kRecovercolor = Color(0xFF36C12C);
+const kPrimaryColor = Color(0xFF3382CC);
+final kShadowColor = Color(0xFFB7B7B7).withOpacity(.16);
+final kActiveShadowColor = Color(0xFF4056C6).withOpacity(.15);
 
 class CovidStats extends StatefulWidget {
+  static String pointerValue;
+  static DateTime pointerTime;
+  static int type = 0;
+
   @override
   _CovidStatsState createState() => _CovidStatsState();
 }
 
-class _CovidStatsState extends State<CovidStats> {
+class _CovidStatsState extends State<CovidStats>
+    with SingleTickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     //do whatever you want with the bloc here.
@@ -32,11 +54,23 @@ class _CovidStatsState extends State<CovidStats> {
   var activeData;
   var recoveredData;
   var deceasedData;
+  TabController _tabController;
+  bool infectedSwitchControl = false;
+  bool recoveredSwitchControl = false;
+  bool deathsSwitchControl = false;
+  int tabIndex = 0;
+  List<dynamic> list = [];
 
   @override
   void initState() {
     super.initState();
     getStats();
+    _tabController = new TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        tabIndex = _tabController.index;
+      });
+    });
   }
 
   fetchTestData() async {
@@ -110,6 +144,8 @@ class _CovidStatsState extends State<CovidStats> {
 
     setState(() {
       allData = tempData;
+      list = response.data["cases_time_series"];
+      list = list.reversed.toList();
       chartData1 = tempData.casesTimeSeries;
       statewise = tempData.statewise[0];
       totalData1 = response.data;
@@ -373,12 +409,407 @@ class _CovidStatsState extends State<CovidStats> {
                       SizedBox(
                         height: 10,
                       ),
+                      new Container(
+                        // padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 10),
+                                blurRadius: 30,
+                                color: kShadowColor,
+                              )
+                            ]),
+                        child: TabBar(
+                          // onTap: (index){
+                          //   setState(() {
+                          //     tabIndex = index;
+                          //     CovidStats.type = index;
+                          //   });
+                          // },
+                          controller: _tabController,
+                          tabs: [
+                            Tab(
+                              child: Text(
+                                'Infected',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'Recovered',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'Deaths',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            )
+                          ],
+                          unselectedLabelColor: kTextLightColor,
+                          indicatorColor: tabIndex == 0
+                              ? kInfectedColor
+                              : tabIndex == 1
+                                  ? kRecovercolor
+                                  : kDeathColor,
+                          labelColor: tabIndex == 0
+                              ? kInfectedColor
+                              : tabIndex == 1
+                                  ? kRecovercolor
+                                  : kDeathColor,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorWeight: 3.0,
+                          indicatorPadding: EdgeInsets.all(10),
+                          isScrollable: false,
+                        ),
+                      ),
+
+                      Container(
+                        height: 400.0,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: <Widget>[
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'Daily',
+                                          style: TextStyle(
+                                              color:
+                                                  infectedSwitchControl == true
+                                                      ? kInfectedColor
+                                                      : kTextLightColor),
+                                        ),
+                                        Switch(
+                                          onChanged: (bool value) {
+                                            setState(() {
+                                              infectedSwitchControl =
+                                                  !infectedSwitchControl;
+                                            });
+                                          },
+                                          value: infectedSwitchControl,
+                                          activeColor: kInfectedColor,
+                                          activeTrackColor: Colors.orange[100],
+                                          inactiveThumbColor: Colors.white,
+                                          inactiveTrackColor: Colors.grey,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  // margin: EdgeInsets.only(top : 20),
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 20, left: 10, right: 3),
+                                  height: 300,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 10),
+                                          blurRadius: 30,
+                                          color: kShadowColor,
+                                        )
+                                      ]),
+                                  child: infectedSwitchControl
+                                      ? createBarChart('dailyconfirmed')
+                                      : createChart('totalconfirmed'),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'Daily',
+                                          style: TextStyle(
+                                              color:
+                                                  recoveredSwitchControl == true
+                                                      ? kRecovercolor
+                                                      : kTextLightColor),
+                                        ),
+                                        Switch(
+                                          onChanged: (bool value) {
+                                            setState(() {
+                                              recoveredSwitchControl =
+                                                  !recoveredSwitchControl;
+                                            });
+                                          },
+                                          value: recoveredSwitchControl,
+                                          activeColor: kRecovercolor,
+                                          activeTrackColor: Colors.green[100],
+                                          inactiveThumbColor: Colors.white,
+                                          inactiveTrackColor: Colors.grey,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 20, left: 10, right: 3),
+                                  height: 300,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 10),
+                                          blurRadius: 30,
+                                          color: kShadowColor,
+                                        )
+                                      ]),
+                                  child: recoveredSwitchControl == true
+                                      ? createBarChart('dailyrecovered')
+                                      : createChart('totalrecovered'),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'Daily',
+                                          style: TextStyle(
+                                              color: deathsSwitchControl == true
+                                                  ? kDeathColor
+                                                  : kTextLightColor),
+                                        ),
+                                        Switch(
+                                          onChanged: (bool value) {
+                                            setState(() {
+                                              deathsSwitchControl =
+                                                  !deathsSwitchControl;
+                                            });
+                                          },
+                                          value: deathsSwitchControl,
+                                          activeColor: kDeathColor,
+                                          activeTrackColor: Colors.red[100],
+                                          inactiveThumbColor: Colors.white,
+                                          inactiveTrackColor: Colors.grey,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 20, left: 10, right: 3),
+                                  height: 300,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 10),
+                                          blurRadius: 30,
+                                          color: kShadowColor,
+                                        )
+                                      ]),
+                                  child: deathsSwitchControl == true
+                                      ? createBarChart('dailydeceased')
+                                      : createChart('totaldeceased'),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ));
   }
 
+  charts.Series<TimeSeriesNums, DateTime> createSeries(
+      String id, List<TimeSeriesNums> list, String type) {
+    return charts.Series<TimeSeriesNums, DateTime>(
+        id: id,
+        colorFn: (_, index) =>
+            type == "totalconfirmed" || type == "dailyconfirmed"
+                ? charts.MaterialPalette.deepOrange.shadeDefault
+                : type == "totalrecovered" || type == "dailyrecovered"
+                    ? charts.MaterialPalette.green.shadeDefault
+                    : charts.MaterialPalette.red.shadeDefault,
+
+        // measureFn also there
+        domainFn: (TimeSeriesNums sales, _) => sales.time,
+        measureFn: (TimeSeriesNums sales, _) => sales.nums,
+        data: list);
+  }
+
+  Widget createChart(String type) {
+    List<charts.Series<TimeSeriesNums, DateTime>> seriesList = [];
+    List<TimeSeriesNums> seriesData = [];
+    for (int i = 0; i < min(list.length, 120); i++) {
+      seriesData.add(TimeSeriesNums(
+          Utils().reformatDate(list[i]['dateymd']), int.parse(list[i][type])));
+    }
+    seriesList.add(createSeries(type, seriesData, type));
+    return charts.TimeSeriesChart(
+      seriesList,
+      animate: false,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+          tickProviderSpec:
+              new charts.BasicNumericTickProviderSpec(desiredTickCount: 10),
+          tickFormatterSpec:
+              new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
+                  new NumberFormat.compact())),
+      domainAxis: new charts.DateTimeAxisSpec(
+          tickProviderSpec: new charts.DayTickProviderSpec(increments: [
+            24
+          ] // that is 24*5 = 120 days means 5 ticks are there
+              ),
+          tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+              day: new charts.TimeFormatterSpec(
+                  format: 'dd MMM', transitionFormat: 'dd MMM'))),
+      behaviors: [
+        charts.LinePointHighlighter(
+            symbolRenderer: CustomCircleSymbolRenderer()),
+        //   charts.SlidingViewport(),
+        //   charts.PanAndZoomBehavior(),
+      ],
+      selectionModels: [
+        charts.SelectionModelConfig(
+            changedListener: (charts.SelectionModel model) {
+          if (model.hasDatumSelection) {
+            CovidStats.pointerValue = model.selectedSeries[0]
+                .measureFn(model.selectedDatum[0].index)
+                .toString();
+            CovidStats.pointerTime = model.selectedDatum[0].datum.time;
+          }
+        })
+      ],
+      defaultRenderer: new charts.LineRendererConfig(),
+      dateTimeFactory: const charts.LocalDateTimeFactory(),
+    );
+  }
+
+  Widget createBarChart(String type) {
+    List<charts.Series<TimeSeriesNums, DateTime>> seriesList = [];
+    List<TimeSeriesNums> seriesData = [];
+    for (int i = 0; i < min(list.length, 120); i++) {
+      seriesData.add(TimeSeriesNums(
+          Utils().reformatDate(list[i]['dateymd']), int.parse(list[i][type])));
+    }
+    seriesList.add(createSeries(type, seriesData, type));
+    return new charts.TimeSeriesChart(
+      seriesList,
+      animate: false,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+          tickProviderSpec:
+              new charts.BasicNumericTickProviderSpec(desiredTickCount: 10),
+          tickFormatterSpec:
+              new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
+                  new NumberFormat.compact())),
+      domainAxis: new charts.DateTimeAxisSpec(
+          tickProviderSpec: new charts.DayTickProviderSpec(increments: [
+            24
+          ] // that is 24*5 = 120 days means 5 ticks are there
+              ),
+          tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+              day: new charts.TimeFormatterSpec(
+                  format: 'dd MMM', transitionFormat: 'dd MMM'))),
+      behaviors: [
+        charts.LinePointHighlighter(
+            symbolRenderer: CustomCircleSymbolRenderer()),
+        //   charts.SlidingViewport(),
+        //   charts.PanAndZoomBehavior(),
+      ],
+      selectionModels: [
+        charts.SelectionModelConfig(
+            changedListener: (charts.SelectionModel model) {
+          if (model.hasDatumSelection) {
+            // model.selectedDatum.forEach((charts.SeriesDatum datumPair) {
+            //     print('${datumPair.datum.time}: ${datumPair.datum.nums}');
+            // });
+            CovidStats.pointerValue = model.selectedSeries[0]
+                .measureFn(model.selectedDatum[0].index)
+                .toString();
+            CovidStats.pointerTime = model.selectedDatum[0].datum.time;
+          }
+        })
+      ],
+      defaultRenderer: new charts.BarRendererConfig<DateTime>(),
+      dateTimeFactory: const charts.LocalDateTimeFactory(),
+    );
+  }
+}
+
+class TimeSeriesNums {
+  final DateTime time;
+  final int nums;
+  TimeSeriesNums(this.time, this.nums);
+}
+
+class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
   @override
-  bool get wantKeepAlive => true;
+  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
+      {List<int> dashPattern,
+      charts.Color fillColor,
+      charts.FillPatternType fillPattern,
+      charts.Color strokeColor,
+      double strokeWidthPx}) {
+    super.paint(canvas, bounds,
+        dashPattern: dashPattern,
+        fillColor: fillColor,
+        fillPattern: fillPattern,
+        strokeColor: strokeColor,
+        strokeWidthPx: strokeWidthPx);
+    // canvas.drawRect(
+    //   Rectangle(bounds.left - 5, bounds.top - 30, bounds.width + 10, bounds.height + 10),
+    //   fill: charts.Color.white
+    // );
+    // print(CovidStats.type);
+    var textStyle = style.TextStyle();
+    if (CovidStats.type == 0)
+      textStyle.color = charts.Color.fromHex(code: '#FF8748');
+    else if (CovidStats.type == 1)
+      textStyle.color = charts.Color.fromHex(code: '#36C12C');
+    else
+      textStyle.color = charts.Color.fromHex(code: '#FF4848');
+
+    textStyle.fontSize = 13;
+    canvas.drawText(
+        textElement.TextElement(
+            'Patients: ' +
+                NumberFormat.compact()
+                    .format(int.parse(CovidStats.pointerValue)),
+            style: textStyle),
+        (5).round(),
+        (-35).round());
+
+    canvas.drawText(
+        textElement.TextElement(
+            'Date: ' +
+                DateFormat.yMMMMd('en_US').format(CovidStats.pointerTime),
+            style: textStyle),
+        (5).round(),
+        (-50).round());
+  }
 }

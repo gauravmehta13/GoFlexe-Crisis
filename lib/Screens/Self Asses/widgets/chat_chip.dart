@@ -1,4 +1,5 @@
 import 'package:crisis/Constants.dart';
+import 'package:crisis/Screens/Self%20Asses/widgets/chat_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,7 +8,7 @@ import 'chat_bubble.dart';
 List allReply = [];
 
 class ChatChip extends StatefulWidget {
-  final List<String> chatChips;
+  final ChatData chatChips;
   final Function isCompletedCallBack;
   final Function problemscallback;
 
@@ -24,6 +25,7 @@ class _ChatChipState extends State<ChatChip> {
   List<bool> _selectedValue;
   bool showNextButton = false;
   List<String> chips;
+  List<String> questions;
   bool showReply = false;
   List<String> replies = [];
   int problems = 0;
@@ -35,7 +37,8 @@ class _ChatChipState extends State<ChatChip> {
   }
 
   initializeChips() {
-    chips = List.from(widget.chatChips, growable: true);
+    chips = List.from(widget.chatChips.options, growable: true);
+    questions = List.from(widget.chatChips.question, growable: true);
     buildNextButton();
     _selectedValue = List.generate(chips.length, (index) => false);
   }
@@ -89,7 +92,7 @@ class _ChatChipState extends State<ChatChip> {
             replies.add(chips[selected]);
           }
         }
-        Map tempMap = {"index": value, "reply": replies};
+        Map tempMap = {"index": questions, "reply": replies};
         allReply.add(tempMap);
         setState(() {});
       } else {
@@ -99,7 +102,7 @@ class _ChatChipState extends State<ChatChip> {
             replies.add(chips[selected]);
           }
         }
-        Map tempMap = {"index": value, "reply": replies};
+        Map tempMap = {"index": questions, "reply": replies};
         allReply.add(tempMap);
         setState(() {});
       }

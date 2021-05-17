@@ -110,7 +110,7 @@
           "The 'Incubation period' means the time between catching the virus and beginning to have symptoms of the disease. Most estimates of the incubation period for COVID-19 range from 1-14 days"},
     {
       "myth":
-          "If you can hold your breath for 10 seconds without discomfort, you don\"t have COVID-19",
+          "If you can hold your breath for 10 seconds without discomfort, you don't have COVID-19",
       "fact":
           "Holding your breath for more than 10 seconds without discomfort doeos not prove whether you are infected or not"},
     {
@@ -139,23 +139,23 @@
     {
       "myth": "Inhaling steam from hot water kills the coronavirus",
       "fact":
-          "No, inhaling steam doesn\"t kill the coronavirus. Repsiratory hygiene, social distancing and washing hands are the effective measures to prevent COVID-19."},
+          "No, inhaling steam doesn't kill the coronavirus. Repsiratory hygiene, social distancing and washing hands are the effective measures to prevent COVID-19."},
     {
       "myth": "Coronavirus gets automatically destoryed in High temperature",
       "fact":
-          "Given its novelty, it hasn\"t been proven yet if it gets destroyed in high temperature or not. Preventive measures must be followed until any further information is confirmed"},
+          "Given its novelty, it hasn't been proven yet if it gets destroyed in high temperature or not. Preventive measures must be followed until any further information is confirmed"},
     {
       "myth": "Drinking alcohol protects one against COVID-19!",
       "fact":
-          "Drinking alcohol doesn\"t protect one from COVID-19 and can be dangerous for one\"s health"},
+          "Drinking alcohol doesn't protect one from COVID-19 and can be dangerous for one's health"},
     {
       "myth": "Mosquito bites get one infected with COVID-19",
       "fact":
-          "COVID-19 doesn\"t spread from mosquite bite but through droplets spread when an infected person sneezes"},
+          "COVID-19 doesn't spread from mosquite bite but through droplets spread when an infected person sneezes"},
     {
       "myth": "Getting the pneumonia vaccine, protects one against the virus",
       "fact":
-          "It helps against pneumonia but doesn\"t have a protective effective against coronavirus"},
+          "It helps against pneumonia but doesn't have a protective effective against coronavirus"},
     {
       "myth": "Having bath with hot water kills the virus",
       "fact":
@@ -163,7 +163,7 @@
     {
       "myth":
           "WHO has advised against eating bakery items as they get infected with virus easily",
-      "fact": "WHO hasn\"t released any advisory regarding the same"},
+      "fact": "WHO hasn't released any advisory regarding the same"},
     {
       "myth":
           "Regularly rinsing the nose with saline help prevent infection with the coronavirus",
@@ -177,7 +177,7 @@
       "myth":
           "Eating food cooked in mustard oil will protect you against coronavirus",
       "fact":
-          "There\"s no such evidence that eating food cooked from mustard oil will protect you against coronavirus"},
+          "There's no such evidence that eating food cooked from mustard oil will protect you against coronavirus"},
     {
       "myth":
           "Spraying alcohol or chlorine all over your body can kill coronavirus",
@@ -192,7 +192,37 @@
       "fact":
           "Viruses cannot travel on radio/mobile networks. COVID-19 is spreading in many countries that do not have 5G mobile networks."}
   ]
+  ,
+  "assesment": [{
+    "question": [
+      "Please note that information from this chat will be used for monitoring & management of the current health crisis and research in the fight against COVID-19.",
+      "Are you experiencing any of the following symptoms?"
+    ],
+    "option": [
+      "Cough",
+      "Fever",
+      "Difficulty in Breathing",
+      "Loss of senses of smell and taste"
+    ]
+  },
+  {
+    "question": ["Have you ever had any of the following?"],
+    "option": [
+      "Diabetes",
+      "Hypertension",
+      "Lung disease",
+      "Heart disease",
+      "Kidney Disorder"
+    ]
+  },
+  {
+    "question": ["Which of the following apply to you?"],
+    "option": [
+      "Traveled internationally in the last 28-45 days",
+      "Recently interacted or lived with COVID-19 patient",
+      "I am a healthcare worker"
+    ]
+  }]
   
-
 }
 

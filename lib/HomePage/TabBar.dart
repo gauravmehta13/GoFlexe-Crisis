@@ -57,7 +57,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
         elevation: 0,
         title: Text(
           "GoFlexe",
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
         // bottom: TabBar(
         //   controller: _controller,

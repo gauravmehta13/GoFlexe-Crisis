@@ -3,6 +3,7 @@ import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/Screens/Disclaimer.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
+import 'package:crisis/Screens/india_helplines.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,54 +38,25 @@ class _MyDrawerState extends State<MyDrawer> {
           child: Column(
             children: <Widget>[
               Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(color: Color(0xFF3f51b5)),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _auth?.currentUser?.phoneNumber != null
-                              ? Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            (_auth?.currentUser?.phoneNumber ??
-                                                ""),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14,
-                                              color: Colors.white,
-                                            )),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                  ],
-                                )
-                              : Container(
-                                  child: Text("GoFlexe Crisis",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )),
+                height: AppBar().preferredSize.height,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: double.maxFinite,
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(color: Color(0xFF3f51b5)),
+                child: _auth?.currentUser?.phoneNumber != null
+                    ? Text((_auth?.currentUser?.phoneNumber ?? ""),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ))
+                    : Text("GoFlexe Crisis",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Colors.white,
+                        )),
+              ),
               ListTile(
                 dense: true, // minLeadingWidth: 25,
                 onTap: () {
@@ -189,6 +161,22 @@ class _MyDrawerState extends State<MyDrawer> {
                 title: Text("Medical Disclaimer"),
                 leading: FaIcon(
                   FontAwesomeIcons.notesMedical,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: IndiaHelplines()),
+                  );
+                },
+                title: Text("Covid-19 Help"),
+                leading: FaIcon(
+                  FontAwesomeIcons.handsHelping,
                   color: Colors.black87,
                   size: 18,
                 ),
