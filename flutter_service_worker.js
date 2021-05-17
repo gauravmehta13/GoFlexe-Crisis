@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "f5dc98c8f037ed8b209093364d33f199",
+  "assets/AssetManifest.json": "49675d273a013188733613e056008bc6",
 "assets/assets/alert.png": "78f1369d46d09567736dcdf88c10bda5",
 "assets/assets/anxiety.png": "b3faed779db63beb1c92601988800482",
 "assets/assets/bed.png": "c7ae24f023cdbcbcba100bb5a5b3f32b",
@@ -17,6 +17,8 @@ const RESOURCES = {
 "assets/assets/fever.png": "2668d41aa5228c103ca4f3b9aa35e901",
 "assets/assets/fight-corona.png": "5c4959c009bcf0c4fb832b86e90ace05",
 "assets/assets/glucometer.png": "352d1781666edfe1f566d72163d8f953",
+"assets/assets/graph.png": "0351d5d07d9db4bac7cdf61fe1e0f95d",
+"assets/assets/help.png": "362d1a545f53ea819a259ee57dd4f0da",
 "assets/assets/holding-phone.png": "90d8a60b21ea30840c8a89f8b6ab500f",
 "assets/assets/homeHospital.png": "c12fad56b1a3ceaf9a20313347f7ea6d",
 "assets/assets/homeTest.png": "a154dcb6a887c64bd69d7a44779e572e",
@@ -66,9 +68,9 @@ const RESOURCES = {
 "icons/icon-256x256.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-384x384.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-512x512.png": "35136776c18ce58fb74f9353d7e978a8",
-"index.html": "c5ae76bb5abd61aff8036ecc0e6bcdcd",
-"/": "c5ae76bb5abd61aff8036ecc0e6bcdcd",
-"main.dart.js": "dd25989f3e3bc513fe5725a6c0eb2ad2",
+"index.html": "c60e2cd05690bba73b97402ffc6821a0",
+"/": "c60e2cd05690bba73b97402ffc6821a0",
+"main.dart.js": "c737a67703755e4c64541a7b8e326f4e",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
 "splash/img/light-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
 "splash/style.css": "abd3b5811afac21066420e2e2459e800",
