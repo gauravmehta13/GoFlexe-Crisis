@@ -81,7 +81,6 @@
             if (registration.waiting) {
               _beginServiceWorkerUpdateFlow(registration);
             }
-
             // detect Service Worker update available and wait for it to install
             registration.addEventListener("updatefound", () => {
               if (registration.installing) {
