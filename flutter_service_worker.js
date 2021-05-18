@@ -68,12 +68,13 @@ const RESOURCES = {
 "icons/icon-256x256.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-384x384.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-512x512.png": "35136776c18ce58fb74f9353d7e978a8",
-"index.html": "43beb3ebe439ccf601554e02ab567ed1",
-"/": "43beb3ebe439ccf601554e02ab567ed1",
-"main.dart.js": "087583bcdc7215c1b64f5be005c71c57",
+"index.html": "c56849dafcae87e669abee27d6cedaa2",
+"/": "c56849dafcae87e669abee27d6cedaa2",
+"main.dart.js": "6aa2d21dd8320c1a433cdd7c3db79233",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
+"splash/img/dark-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
 "splash/img/light-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
-"splash/style.css": "abd3b5811afac21066420e2e2459e800",
+"splash/style.css": "125a85b13a4d513472c10e995bfc3612",
 "version.json": "c237c2309dcdd2a210496344dac05f37"
 };
 
