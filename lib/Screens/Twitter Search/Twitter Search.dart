@@ -1,8 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
-import '../Constants.dart';
-import 'package:csc_picker/csc_picker.dart';
+import '../../Constants.dart';
+import 'package:dart_twitter_api/twitter_api.dart';
+
+import '../../Fade Route.dart';
+import 'Search results.dart';
+
+final twitterApi = TwitterApi(
+  client: TwitterClient(
+    consumerKey: 'CysHavmnRH44KUT8bTj8obvpb',
+    consumerSecret: 'd3fvW10kV5WyjbiUgGVFYzcpuM1i8cYJPxuFhs5dky05M2p2Sf',
+    token: "848460975221198849-zfXLNozb9YcngE62K3xq2hgIlLK622r",
+    secret: "eE4RHDPBDFgWAONyxqv13fYBkstK8aMilsBy3ywVk9SuC",
+  ),
+);
 
 class TwitterScreen extends StatefulWidget {
   @override
@@ -52,10 +65,17 @@ class _TwitterScreenState extends State<TwitterScreen> {
                     onPressed: city.isEmpty
                         ? null
                         : () {
-                            followLink();
-                            FirebaseAnalytics().logEvent(
-                                name: 'Twitter_Resource_Search',
-                                parameters: null);
+                            String query =
+                                "verified+$city+(${beds == true ? "bed+OR+beds+OR" : ""}+${icu == true ? "icu+OR" : ""}+${oxygen == true ? "oxygen+OR" : ""}+${ventilator == true ? "ventilator+OR+ventilators+OR" : ""}+${tests == true ? "test+OR+tests+OR+testing+OR" : ""}+${fabiflu == true ? "fabiflu+OR" : ""}+${favipiravir == true ? "favipiravir+OR" : ""}+${remdesivir == true ? "remdesivir+OR" : ""}+${tocilizumab == true ? "tocilizumab+OR" : ""}+${plasma == true ? "plasma+OR" : ""}+${food == true ? "food+OR+tiffin+OR" : ""}+${ambulance == true ? "ambulance" : ""})+%20-not%20verified%20-unverified%20-needed%20-need%20-needs%20-required%20-require%20-requires%20-requirement%20-requirements";
+                            Navigator.push(
+                              context,
+                              FadeRoute(
+                                  page: TwitterSearchResults(
+                                query: query,
+                                area: city,
+                              )),
+                            );
+                            //followLink();
                           },
                     child: Text(
                       "Find On Twitter",

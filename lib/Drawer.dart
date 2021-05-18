@@ -3,7 +3,7 @@ import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/Screens/Disclaimer.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
-import 'package:crisis/Screens/Twitter%20Search.dart';
+import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/india_helplines.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,7 +75,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 dense: true,
                 onTap: () {
                   Navigator.pop(context);
-                  // displaySnackBar("Coming Soon", context);
+
                   Navigator.push(
                     context,
                     FadeRoute(page: StatsTabBar()),

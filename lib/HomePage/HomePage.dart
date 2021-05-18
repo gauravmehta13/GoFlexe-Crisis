@@ -3,7 +3,7 @@ import 'package:crisis/HomePage/TabBar.dart';
 import 'package:crisis/Screens/Covid%20Stats/Stats%20TabBar.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
-import 'package:crisis/Screens/Twitter%20Search.dart';
+import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/india_helplines.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
