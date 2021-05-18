@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Testing/symptoms.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -45,6 +46,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         scrollToDiagnostic();
       });
     }
+    FirebaseAnalytics().logEvent(name: 'Testing', parameters: null);
   }
 
   scrollToDiagnostic() {

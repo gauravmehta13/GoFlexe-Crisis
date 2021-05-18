@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'animations/typing_message.dart';
@@ -33,6 +34,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
     _selfAssess = SelfAssess();
     _scrollController = ScrollController();
     getAssesmentData();
+    FirebaseAnalytics().logEvent(name: 'Self_Assesment', parameters: null);
   }
 
   scrollToEnd() {

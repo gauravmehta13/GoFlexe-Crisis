@@ -3,6 +3,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:crisis/model/app_state.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,12 @@ class _HospitalBedListState extends State<HospitalBedList> {
   List<dynamic> spList = [];
   List<dynamic> tempList = [];
   var dio = Dio();
+
+  void initState() {
+    super.initState();
+    FirebaseAnalytics()
+        .logEvent(name: 'Hospital_Bed_Centers', parameters: null);
+  }
 
   getSP(items) async {
     print(items);

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 import '../Constants.dart';
@@ -24,6 +25,11 @@ class _TwitterScreenState extends State<TwitterScreen> {
   bool food = false;
   bool ambulance = false;
 
+  void initState() {
+    super.initState();
+    FirebaseAnalytics().logEvent(name: 'Twitter_Resources', parameters: null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +49,14 @@ class _TwitterScreenState extends State<TwitterScreen> {
                       primary: Color(0xFFf9a825), // background
                       onPrimary: Colors.white, // foreground
                     ),
-                    onPressed: city.isEmpty ? null : followLink,
+                    onPressed: city.isEmpty
+                        ? null
+                        : () {
+                            followLink();
+                            FirebaseAnalytics().logEvent(
+                                name: 'Twitter_Resource_Search',
+                                parameters: null);
+                          },
                     child: Text(
                       "Find On Twitter",
                       style: TextStyle(color: Colors.black),

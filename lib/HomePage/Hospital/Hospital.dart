@@ -56,12 +56,8 @@ class _HospitalState extends State<Hospital>
   void initState() {
     _controller = TabController(length: 1, vsync: this);
     super.initState();
-    // place.add(new Place(true, 'Hospital'));
-    // place.add(new Place(false, 'Awareness'));
-    // place.add(new Place(false, 'Home'));
-    // place.add(new Place(false, 'Oxygen'));
-    //getItems('Hospital');
     getStates();
+    FirebaseAnalytics().logEvent(name: 'Hospitalisation', parameters: null);
   }
 
   getItems(tab) async {
@@ -173,11 +169,6 @@ class _HospitalState extends State<Hospital>
                 ? () {
                     FocusScope.of(context).unfocus();
                     if (key.currentState.validate() == true) {
-                      FirebaseAnalytics().logEvent(
-                          name: 'Item Selection Screen',
-                          parameters: {
-                            'Description': 'Went to Item Selection Screen'
-                          });
                       Navigator.push(
                         context,
                         FadeRoute(page: HospitalBedList()),

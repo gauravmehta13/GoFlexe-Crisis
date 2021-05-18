@@ -6,6 +6,7 @@ import 'package:crisis/Widgets/data_text_chart.dart';
 import 'package:crisis/Widgets/info_card.dart';
 import 'package:crisis/model/utils.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -61,6 +62,7 @@ class _CovidStatsState extends State<CovidStats>
   @override
   void initState() {
     super.initState();
+    FirebaseAnalytics().logEvent(name: 'India_Live_Data', parameters: null);
     getStats();
     _tabController = new TabController(length: 3, vsync: this);
     _tabController.addListener(() {

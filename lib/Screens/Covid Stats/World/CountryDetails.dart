@@ -3,6 +3,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/data_text_chart.dart';
 import 'package:crisis/Widgets/info_card.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +30,7 @@ class _CountryDetailsState extends State<CountryDetails> {
   void initState() {
     super.initState();
     // getStats();
+    FirebaseAnalytics().logEvent(name: 'Countries_Live_Data', parameters: null);
   }
 
 // not showing graphs as of now

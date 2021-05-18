@@ -4,6 +4,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/TextFieldSearch.dart';
 import 'package:crisis/model/StateDistrict%20Model.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Fade Route.dart';
@@ -33,6 +34,7 @@ class _VaccinationState extends State<Vaccination> {
   void initState() {
     super.initState();
     getStates();
+    FirebaseAnalytics().logEvent(name: 'Vaccination', parameters: null);
   }
 
   @override

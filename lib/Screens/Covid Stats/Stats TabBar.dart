@@ -1,6 +1,7 @@
 import 'package:crisis/Screens/Covid%20Stats/India/IndiaStats.dart';
 import 'package:crisis/Screens/Covid%20Stats/India/Indian%20States.dart';
 import 'package:crisis/Screens/Covid%20Stats/World/World%20Stats.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import '../../Constants.dart';
@@ -23,6 +24,7 @@ class _StatsTabBarState extends State<StatsTabBar>
     indiaTabController = TabController(length: 2, vsync: this);
     worldTabController = TabController(length: 2, vsync: this);
     super.initState();
+    FirebaseAnalytics().logEvent(name: 'Live_Data', parameters: null);
   }
 
   @override

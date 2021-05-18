@@ -4,6 +4,7 @@ import 'package:crisis/Constants.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class FAQ extends StatefulWidget {
@@ -22,6 +23,7 @@ class _FAQState extends State<FAQ> {
   void initState() {
     super.initState();
     getFaq();
+    FirebaseAnalytics().logEvent(name: 'FAQs', parameters: null);
   }
 
   getFaq() async {

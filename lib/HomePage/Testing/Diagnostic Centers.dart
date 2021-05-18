@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,8 +28,7 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
   void initState() {
     super.initState();
     getCenters();
-    initializeDateFormatting('en', null);
-    initializeDateFormatting('en_US,', null);
+    FirebaseAnalytics().logEvent(name: 'Diagnostic_Centers', parameters: null);
   }
 
   getCenters() async {
@@ -157,8 +157,11 @@ class _DiagnosticCentersState extends State<DiagnosticCenters> {
                                     shrinkWrap: true,
                                     itemCount: filteredData.length,
                                     itemBuilder: (context, index) {
-                                      return GestureDetector(
+                                      return InkWell(
                                         onTap: () {
+                                          FirebaseAnalytics().logEvent(
+                                              name: 'Called_Diagnostic_Center',
+                                              parameters: null);
                                           filteredData[index]["phone"] != null
                                               ? launch('tel:' +
                                                   filteredData[index]["phone"])

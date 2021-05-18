@@ -1,6 +1,7 @@
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Constants.dart';
@@ -27,8 +28,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
   void initState() {
     super.initState();
     getSlot();
-    initializeDateFormatting('en', null);
-    initializeDateFormatting('en_US,', null);
+    FirebaseAnalytics().logEvent(name: 'Vaccination_Centers', parameters: null);
   }
 
   getSlot() async {

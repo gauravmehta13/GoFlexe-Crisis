@@ -3,6 +3,7 @@ import 'package:crisis/Widgets/states_card.dart';
 import 'package:crisis/model/general_data_model.dart';
 import 'package:crisis/model/regex.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +33,7 @@ class _IndianStatesState extends State<IndianStates>
   @override
   void initState() {
     super.initState();
+    FirebaseAnalytics().logEvent(name: 'States_Live_Data', parameters: null);
     getStats();
   }
 

@@ -1,4 +1,5 @@
 import 'package:crisis/Constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,6 +10,11 @@ class IndiaHelplines extends StatefulWidget {
 }
 
 class _IndiaHelplinesState extends State<IndiaHelplines> {
+  void initState() {
+    super.initState();
+    FirebaseAnalytics().logEvent(name: 'HelpLines', parameters: null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

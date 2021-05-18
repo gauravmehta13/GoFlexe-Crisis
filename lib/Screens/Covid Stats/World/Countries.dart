@@ -5,6 +5,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:crisis/model/regex.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +37,9 @@ class _CountriesStatsState extends State<CountriesStats> {
   @override
   void initState() {
     super.initState();
+
     getStats();
+    FirebaseAnalytics().logEvent(name: 'Global_Live_Data', parameters: null);
   }
 
   getStats() async {

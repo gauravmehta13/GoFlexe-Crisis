@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:rating_dialog/rating_dialog.dart';
@@ -37,6 +38,7 @@ sendFeedback(rating, comment) async {
 }
 
 Future<void> giveFeedback(ctx) async {
+  FirebaseAnalytics().logEvent(name: 'Feedback', parameters: null);
   return showDialog(
       context: ctx,
       builder: (ctx) => RatingDialog(
@@ -53,6 +55,8 @@ Future<void> giveFeedback(ctx) async {
             onSubmitted: (response) {
               print('rating: ${response.rating}, comment: ${response.comment}');
               sendFeedback(response.rating, response.comment);
+              FirebaseAnalytics()
+                  .logEvent(name: 'Feedback Completed', parameters: null);
             },
           ));
 }

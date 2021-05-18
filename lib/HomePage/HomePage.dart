@@ -5,6 +5,7 @@ import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
 import 'package:crisis/Screens/Twitter%20Search.dart';
 import 'package:crisis/Screens/india_helplines.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,7 +13,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Drawer.dart';
 import '../Fade Route.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void initState() {
+    super.initState();
+    FirebaseAnalytics().logEvent(name: 'Home_Page', parameters: null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

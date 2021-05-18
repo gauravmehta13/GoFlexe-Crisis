@@ -4,6 +4,7 @@ import 'package:crisis/Constants.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class MythBusters extends StatefulWidget {
@@ -20,6 +21,7 @@ class _MythBustersState extends State<MythBusters> {
   void initState() {
     super.initState();
     getMyths();
+    FirebaseAnalytics().logEvent(name: 'MythBusters', parameters: null);
   }
 
   getMyths() async {

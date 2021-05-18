@@ -3,6 +3,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/TextFieldSearch.dart';
 import 'package:crisis/model/StateDistrict%20Model.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
@@ -57,7 +58,6 @@ class _HomeTreatmentState extends State<HomeTreatment>
     warnings = Warnings.getWarnings();
     isolationTab = IsolationTab.getIsolationTab();
     getStates();
-    print(widget.homeCare);
     if (widget.homeCare == true) {
       print("object");
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -68,6 +68,7 @@ class _HomeTreatmentState extends State<HomeTreatment>
         );
       });
     }
+    FirebaseAnalytics().logEvent(name: 'Home_Treatment', parameters: null);
   }
 
   SliverPersistentHeader makeTabBarHeader() {
@@ -626,6 +627,9 @@ class _HomeTreatmentState extends State<HomeTreatment>
                                 ),
                                 onPressed: () {
                                   displaySnackBar("Coming Soon", context);
+                                  FirebaseAnalytics().logEvent(
+                                      name: 'Home_Care_Center',
+                                      parameters: null);
                                 },
                                 child: Text(
                                   "Find Home Care Center",

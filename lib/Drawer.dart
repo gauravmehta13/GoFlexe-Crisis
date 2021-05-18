@@ -5,6 +5,7 @@ import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
 import 'package:crisis/Screens/Twitter%20Search.dart';
 import 'package:crisis/Screens/india_helplines.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,7 +24,7 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   void initState() {
-    // getUser();
+    FirebaseAnalytics().logEvent(name: 'App_Drawer', parameters: null);
     super.initState();
   }
 
@@ -156,6 +157,8 @@ class _MyDrawerState extends State<MyDrawer> {
               ListTile(
                 dense: true,
                 onTap: () {
+                  FirebaseAnalytics()
+                      .logEvent(name: 'Contact_Us', parameters: null);
                   _sendMail();
                 },
                 title: Text(
@@ -200,6 +203,8 @@ class _MyDrawerState extends State<MyDrawer> {
               ListTile(
                 dense: true,
                 onTap: () {
+                  FirebaseAnalytics()
+                      .logEvent(name: 'Medical_Disclaimer', parameters: null);
                   Navigator.pop(context);
                   Navigator.push(
                     context,
