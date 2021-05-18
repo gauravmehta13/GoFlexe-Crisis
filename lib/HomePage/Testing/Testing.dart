@@ -19,16 +19,16 @@ class Testing extends StatefulWidget {
 class _TestingState extends State<Testing> with TickerProviderStateMixin {
   final symptomKey = new GlobalKey();
   final testKey = new GlobalKey();
-  final resultConfusionKey = new GlobalKey();
   final diagnoseKey = new GlobalKey();
+  final resultConfusionKey = new GlobalKey();
   final sliverListtKey = new GlobalKey();
   ScrollController scrollController;
   TabController _tabController;
   TabController _topTabController;
   double symptomHeight;
   double testHeight;
-  double resultConfusionHeight;
   double diagnoseHeight;
+  double resultConfusionHeight;
   /////////////////
   List<Symptoms> symptoms;
   bool expanded = false;
@@ -51,8 +51,9 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
 
   scrollToDiagnostic() {
     {
-      if (resultConfusionKey.currentContext == null) {
+      if (diagnoseKey.currentContext == null) {
         if (_tabController.previousIndex == 0) {
+          print("object");
           scrollController.position
               .ensureVisible(
             symptomKey.currentContext.findRenderObject(),
@@ -86,7 +87,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 )
                     .then((value) {
                   scrollController.position.ensureVisible(
-                    resultConfusionKey.currentContext.findRenderObject(),
+                    diagnoseKey.currentContext.findRenderObject(),
                     alignment: 0.2,
                     // How far into view the item should be scrolled (between 0 and 1).
                     duration: const Duration(milliseconds: 200),
@@ -96,6 +97,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             });
           });
         } else if (_tabController.previousIndex == 1) {
+          print("object1");
           scrollController.position
               .ensureVisible(
             testKey.currentContext.findRenderObject(),
@@ -105,7 +107,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           )
               .then((value) {
             scrollController.position.ensureVisible(
-              resultConfusionKey.currentContext.findRenderObject(),
+              diagnoseKey.currentContext.findRenderObject(),
               alignment: 0.2,
               // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 200),
@@ -113,12 +115,9 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           });
         }
       } else {
-        scrollController.position.ensureVisible(
-          resultConfusionKey.currentContext.findRenderObject(),
-          alignment: 0.0,
-          // How far into view the item should be scrolled (between 0 and 1).
-          duration: const Duration(milliseconds: 600),
-        );
+        print("object2");
+        scrollController.animateTo(1000,
+            duration: Duration(milliseconds: 500), curve: Curves.ease);
       }
     }
   }
@@ -131,11 +130,11 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
       if (testKey.currentContext != null) {
         testHeight = testKey.currentContext.size.height;
       }
-      if (resultConfusionKey.currentContext != null) {
-        resultConfusionHeight = resultConfusionKey.currentContext.size.height;
-      }
       if (diagnoseKey.currentContext != null) {
         diagnoseHeight = diagnoseKey.currentContext.size.height;
+      }
+      if (resultConfusionKey.currentContext != null) {
+        resultConfusionHeight = resultConfusionKey.currentContext.size.height;
       }
       if (scrollController.offset > symptomHeight &&
           scrollController.offset < testHeight + symptomHeight) {
@@ -149,16 +148,16 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             scrollController.offset < testHeight + symptomHeight) {
           _tabController.animateTo(1);
         } else if (scrollController.offset >
-                testHeight + symptomHeight + resultConfusionHeight - 200 &&
+                testHeight + symptomHeight + diagnoseHeight - 200 &&
             scrollController.offset <=
                 testHeight +
                     symptomHeight +
-                    resultConfusionHeight +
-                    diagnoseHeight) {
+                    diagnoseHeight +
+                    resultConfusionHeight) {
           _tabController.animateTo(3);
         } else if (scrollController.offset > testHeight + symptomHeight &&
             scrollController.offset <
-                testHeight + symptomHeight + resultConfusionHeight) {
+                testHeight + symptomHeight + diagnoseHeight) {
           _tabController.animateTo(2);
         } else {}
       } else if (scrollController.position.userScrollDirection ==
@@ -170,15 +169,15 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           _tabController.animateTo(1);
         } else if (scrollController.offset > testHeight + symptomHeight &&
             scrollController.offset <
-                testHeight + symptomHeight + resultConfusionHeight) {
+                testHeight + symptomHeight + diagnoseHeight) {
           _tabController.animateTo(2);
         } else if (scrollController.offset >
-                testHeight + symptomHeight + resultConfusionHeight &&
+                testHeight + symptomHeight + diagnoseHeight &&
             scrollController.offset <
                 testHeight +
                     symptomHeight +
-                    resultConfusionHeight +
-                    diagnoseHeight) {
+                    diagnoseHeight +
+                    resultConfusionHeight) {
           _tabController.animateTo(3);
         } else {}
       }
@@ -192,7 +191,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           if (symptomKey.currentContext == null) {
             scrollController.position
                 .ensureVisible(
-              resultConfusionKey.currentContext.findRenderObject(),
+              diagnoseKey.currentContext.findRenderObject(),
               alignment:
                   0.0, // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 200),
@@ -200,7 +199,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 .then((value) {
               scrollController.position
                   .ensureVisible(
-                resultConfusionKey.currentContext.findRenderObject(),
+                diagnoseKey.currentContext.findRenderObject(),
                 alignment:
                     0.0, // How far into view the item should be scrolled (between 0 and 1).
                 duration: const Duration(milliseconds: 200),
@@ -264,7 +263,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             } else {
               scrollController.position
                   .ensureVisible(
-                resultConfusionKey.currentContext.findRenderObject(),
+                diagnoseKey.currentContext.findRenderObject(),
                 alignment: 0.5,
                 // How far into view the item should be scrolled (between 0 and 1).
                 duration: const Duration(milliseconds: 200),
@@ -272,7 +271,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                   .then((value) {
                 scrollController.position
                     .ensureVisible(
-                  resultConfusionKey.currentContext.findRenderObject(),
+                  diagnoseKey.currentContext.findRenderObject(),
                   alignment: 0.0,
                   // How far into view the item should be scrolled (between 0 and 1).
                   duration: const Duration(milliseconds: 200),
@@ -308,7 +307,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         break;
       case 2:
         {
-          if (resultConfusionKey.currentContext == null) {
+          if (diagnoseKey.currentContext == null) {
             if (_tabController.previousIndex == 0) {
               scrollController.position
                   .ensureVisible(
@@ -343,7 +342,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                     )
                         .then((value) {
                       scrollController.position.ensureVisible(
-                        resultConfusionKey.currentContext.findRenderObject(),
+                        diagnoseKey.currentContext.findRenderObject(),
                         alignment: 0.2,
                         // How far into view the item should be scrolled (between 0 and 1).
                         duration: const Duration(milliseconds: 200),
@@ -362,7 +361,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
               )
                   .then((value) {
                 scrollController.position.ensureVisible(
-                  resultConfusionKey.currentContext.findRenderObject(),
+                  diagnoseKey.currentContext.findRenderObject(),
                   alignment: 0.2,
                   // How far into view the item should be scrolled (between 0 and 1).
                   duration: const Duration(milliseconds: 200),
@@ -371,7 +370,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             }
           } else {
             scrollController.position.ensureVisible(
-              resultConfusionKey.currentContext.findRenderObject(),
+              diagnoseKey.currentContext.findRenderObject(),
               alignment: 0.0,
               // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 600),
@@ -381,7 +380,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         break;
       case 3:
         {
-          if (diagnoseKey.currentContext == null) {
+          if (resultConfusionKey.currentContext == null) {
             if (_tabController.previousIndex == 0) {
               scrollController.position
                   .ensureVisible(
@@ -417,7 +416,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                         .then((value) {
                       scrollController.position
                           .ensureVisible(
-                        resultConfusionKey.currentContext.findRenderObject(),
+                        diagnoseKey.currentContext.findRenderObject(),
                         alignment:
                             0.0, // How far into view the item should be scrolled (between 0 and 1).
                         duration: const Duration(milliseconds: 200),
@@ -425,14 +424,15 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                           .then((value) {
                         scrollController.position
                             .ensureVisible(
-                          resultConfusionKey.currentContext.findRenderObject(),
+                          diagnoseKey.currentContext.findRenderObject(),
                           alignment:
                               0.5, // How far into view the item should be scrolled (between 0 and 1).
                           duration: const Duration(milliseconds: 200),
                         )
                             .then((value) {
                           scrollController.position.ensureVisible(
-                            diagnoseKey.currentContext.findRenderObject(),
+                            resultConfusionKey.currentContext
+                                .findRenderObject(),
                             alignment:
                                 0.0, // How far into view the item should be scrolled (between 0 and 1).
                             duration: const Duration(milliseconds: 200),
@@ -454,14 +454,14 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                   .then((value) {
                 scrollController.position
                     .ensureVisible(
-                  resultConfusionKey.currentContext.findRenderObject(),
+                  diagnoseKey.currentContext.findRenderObject(),
                   alignment:
                       0.0, // How far into view the item should be scrolled (between 0 and 1).
                   duration: const Duration(milliseconds: 200),
                 )
                     .then((value) {
                   scrollController.position.ensureVisible(
-                    diagnoseKey.currentContext.findRenderObject(),
+                    resultConfusionKey.currentContext.findRenderObject(),
                     alignment:
                         0.0, // How far into view the item should be scrolled (between 0 and 1).
                     duration: const Duration(milliseconds: 200),
@@ -471,7 +471,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             }
           } else {
             scrollController.position.ensureVisible(
-              diagnoseKey.currentContext.findRenderObject(),
+              resultConfusionKey.currentContext.findRenderObject(),
               alignment: 0.0,
               // How far into view the item should be scrolled (between 0 and 1).
               duration: const Duration(milliseconds: 800),
@@ -662,7 +662,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                       ),
                       Card(
                         child: Column(
-                          key: resultConfusionKey,
+                          key: diagnoseKey,
                           children: [
                             SizedBox(
                               height: 20,
@@ -691,7 +691,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                       ),
                       Card(
                         child: Container(
-                          key: diagnoseKey,
+                          key: resultConfusionKey,
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.all(10),
                           child: Column(
