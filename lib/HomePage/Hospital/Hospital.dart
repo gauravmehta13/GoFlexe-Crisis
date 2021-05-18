@@ -11,7 +11,6 @@ import '../../model/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../../redux/actions.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 
 class Place {
   bool isSelected;
