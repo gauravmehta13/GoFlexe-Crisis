@@ -88,22 +88,23 @@ class _MyDrawerState extends State<MyDrawer> {
                   size: 18,
                 ),
               ),
-              ListTile(
-                dense: true,
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    FadeRoute(page: Health()),
-                  );
-                },
-                title: Text("Self Assesment"),
-                leading: FaIcon(
-                  FontAwesomeIcons.personBooth,
-                  color: Colors.black87,
-                  size: 18,
-                ),
-              ),
+              // ListTile(
+              //   dense: true,
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(
+              //       context,
+              //       FadeRoute(page: Health()),
+              //     );
+              //   },
+              //   title: Text("Self Assesment"),
+              //   leading: FaIcon(
+              //     FontAwesomeIcons.personBooth,
+              //     color: Colors.black87,
+              //     size: 18,
+              //   ),
+              // ),
+
               ListTile(
                 dense: true,
                 onTap: () {
