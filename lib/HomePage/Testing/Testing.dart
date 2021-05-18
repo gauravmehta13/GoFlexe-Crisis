@@ -41,11 +41,11 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
     addScrollControllerListener();
 
     symptoms = Symptoms.getSymptoms();
-    if (widget.diagnostic == true) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        scrollToDiagnostic();
-      });
-    }
+    // if (widget.diagnostic == true) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     scrollToDiagnostic();
+    //   });
+    // }
     FirebaseAnalytics().logEvent(name: 'Testing', parameters: null);
   }
 
@@ -116,8 +116,14 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         }
       } else {
         print("object2");
-        scrollController.animateTo(1000,
-            duration: Duration(milliseconds: 500), curve: Curves.ease);
+        // scrollController.animateTo(1000,
+        //     duration: Duration(milliseconds: 500), curve: Curves.ease);
+        scrollController.position.ensureVisible(
+          diagnoseKey.currentContext.findRenderObject(),
+          alignment: 0.0,
+          // How far into view the item should be scrolled (between 0 and 1).
+          duration: const Duration(milliseconds: 600),
+        );
       }
     }
   }
