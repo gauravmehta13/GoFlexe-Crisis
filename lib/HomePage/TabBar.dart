@@ -6,6 +6,7 @@ import 'package:crisis/HomePage/Testing/Testing.dart';
 import 'package:crisis/HomePage/Vaccination/Vaccination.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Constants.dart';
@@ -61,6 +62,23 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
           "GoFlexe",
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
+        actions: <Widget>[
+          GestureDetector(
+            onTap: () {
+              FirebaseAnalytics()
+                  .logEvent(name: 'Shared_Website', parameters: null);
+              Share.share(
+                  '\n https://crisis.goflexe.com/ \n\nYou will help patients and their families by accessing covid related resources such as diagnostic center, home treatment, hospital bed availability and vaccination centres near them.\n\nYou will be able to spread awareness about corona related myths and clarifying frequently asked questions. Goflexe has connected with authentic government and private sources to bring you verified data.Please share with your friends and families. We’ll get through this crisis together. 🙏');
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 15.0),
+              child: Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
       ),
       drawer: MyDrawer(),
       body: Column(
