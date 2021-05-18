@@ -39,7 +39,7 @@ class _CountriesStatsState extends State<CountriesStats> {
     super.initState();
 
     getStats();
-    FirebaseAnalytics().logEvent(name: 'Global_Live_Data', parameters: null);
+    FirebaseAnalytics().logEvent(name: 'Countries_Live_Data', parameters: null);
   }
 
   getStats() async {

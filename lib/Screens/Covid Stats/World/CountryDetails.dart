@@ -30,7 +30,9 @@ class _CountryDetailsState extends State<CountryDetails> {
   void initState() {
     super.initState();
     // getStats();
-    FirebaseAnalytics().logEvent(name: 'Countries_Live_Data', parameters: null);
+    FirebaseAnalytics().logEvent(
+        name: 'Country_Details_Live_Data',
+        parameters: {"country": totalData["country"]});
   }
 
 // not showing graphs as of now

@@ -51,12 +51,20 @@ Future<void> giveFeedback(ctx) async {
             image:
                 SizedBox(height: 100, child: Image.asset("assets/rating.png")),
             submitButton: 'Submit',
-            onCancelled: () => print('cancelled'),
+            onCancelled: () {
+              print('cancelled');
+              FirebaseAnalytics()
+                  .logEvent(name: 'Feedback_Cancelled', parameters: null);
+            },
             onSubmitted: (response) {
               print('rating: ${response.rating}, comment: ${response.comment}');
               sendFeedback(response.rating, response.comment);
-              FirebaseAnalytics()
-                  .logEvent(name: 'Feedback Completed', parameters: null);
+              FirebaseAnalytics().logEvent(
+                  name: 'Feedback_Completed',
+                  parameters: {
+                    "rating": response.rating.toString(),
+                    "comment": response.comment.toString()
+                  });
             },
           ));
 }

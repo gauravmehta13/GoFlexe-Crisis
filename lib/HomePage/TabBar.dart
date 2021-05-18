@@ -4,6 +4,7 @@ import 'package:crisis/HomePage/Home%20Treatment/Home%20treatment.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/HomePage/Testing/Testing.dart';
 import 'package:crisis/HomePage/Vaccination/Vaccination.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +29,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
         TabController(length: 4, vsync: this, initialIndex: widget.index ?? 0);
     super.initState();
     _timer = new Timer(const Duration(minutes: 1), () {
+      FirebaseAnalytics().logEvent(name: 'Feedback_Popup', parameters: null);
       showFeedback();
     });
   }

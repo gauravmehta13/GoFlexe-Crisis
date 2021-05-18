@@ -4,6 +4,7 @@ import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/data_text_chart.dart';
 import 'package:crisis/Widgets/info_card.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,6 +30,7 @@ class _WorldStatsState extends State<WorldStats> {
     super.initState();
     _getTime();
     getStats();
+    FirebaseAnalytics().logEvent(name: 'Global_Live_Data', parameters: null);
   }
 
   void _getTime() {
