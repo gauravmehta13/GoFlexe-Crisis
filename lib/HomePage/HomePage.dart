@@ -12,6 +12,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Drawer.dart';
 import '../Fade Route.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,6 +35,17 @@ class _HomePageState extends State<HomePage> {
           "GoFlexe",
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
+        actions: <Widget>[
+          InkWell(
+            onTap: () {
+              Share.share('check out my website https://example.com');
+            },
+            child: Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

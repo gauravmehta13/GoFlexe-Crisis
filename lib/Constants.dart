@@ -69,6 +69,8 @@ Future<void> giveFeedback(ctx) async {
           ));
 }
 
+List symptomsData = [];
+
 const EdgeInsets padding10 = EdgeInsets.all(10);
 const SizedBox box10 = SizedBox(
   height: 10,

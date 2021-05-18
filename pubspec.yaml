@@ -63,6 +63,7 @@ dependencies:
   charts_flutter: ^0.10.0
   csc_picker: ^0.2.5
   dart_twitter_api: ^0.5.3
+  share_plus: ^2.0.3
 
 dev_dependencies:
   flutter_test:

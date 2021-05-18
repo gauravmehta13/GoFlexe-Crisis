@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dart_twitter_api/api/tweets/data/tweet.dart';
@@ -9,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:http/http.dart' as http;
 import '../../Constants.dart';
 import 'Twitter Search.dart';
 
@@ -29,8 +31,31 @@ class _TwitterSearchResultsState extends State<TwitterSearchResults> {
   void initState() {
     super.initState();
     getTweets();
+
     FirebaseAnalytics().logEvent(
         name: 'Twitter_Search_Results', parameters: {"city": widget.area});
+  }
+
+  getT() async {
+    var consumerKey = 'CysHavmnRH44KUT8bTj8obvpb';
+    var consumerSecret = 'd3fvW10kV5WyjbiUgGVFYzcpuM1i8cYJPxuFhs5dky05M2p2Sf';
+    var token = "848460975221198849-zfXLNozb9YcngE62K3xq2hgIlLK622r";
+    var secret = "eE4RHDPBDFgWAONyxqv13fYBkstK8aMilsBy3ywVk9SuC";
+
+    var bearerToken =
+        "AAAAAAAAAAAAAAAAAAAAAKoMPwEAAAAAssZhrq9AerMdRowRzYiyPc%2Bo5hk%3DKwkbm1MxEmhdTC8d2xTdSzQNNq1ydv3xg6iHCdGKgNO4WmcFpj";
+    final response = await http.get(
+        new Uri.https("api.twitter.com", "/1.1/users/search.json?q=soccer", {
+          "count": "15",
+          "tweet_mode": "extended",
+          "exclude_replies": "false"
+        }),
+        headers: {
+          "Authorization":
+              'oauth_consumer_key="${consumerKey}", oauth_token="${token}"',
+          "Content-Type": "application/json"
+        });
+    print(response.body);
   }
 
   getTweets() async {
@@ -296,3 +321,5 @@ class _TwitterSearchResultsState extends State<TwitterSearchResults> {
                       )));
   }
 }
+
+class Hmac {}

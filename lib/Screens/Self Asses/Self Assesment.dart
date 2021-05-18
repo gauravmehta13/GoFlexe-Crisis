@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crisis/Constants.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -37,6 +38,31 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
     FirebaseAnalytics().logEvent(name: 'Self_Assesment', parameters: null);
   }
 
+  getResult() async {
+    try {
+      var dio = Dio();
+      final response = await dio.post(
+          'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
+          data: {
+            'tenantSet_id': 'CRISIS01',
+            'tenantUsecase': 'CRISIS01',
+            "useCase": "symptoms",
+            "assesmentData": symptomsData
+          });
+      print(response);
+      Map<String, dynamic> map = json.decode(response.toString());
+      print(map["resp"]["allPrices"]);
+
+      setState(() {
+        loading = false;
+      });
+      _chatFlow.removeAt(_chatFlow.length - 1);
+      addAnswer(map["resp"]["allPrices"]);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   scrollToEnd() {
     // minScroll = _scrollController.position.minScrollExtent;
     // _scrollController.jumpTo(minScroll);
@@ -55,17 +81,19 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
 
   addTestScore(CovidTest covidTest) {
     _chatFlow.add(TypingMessage());
-    Future.delayed(const Duration(seconds: 2), () {
-      _chatFlow.removeAt(_chatFlow.length - 1);
-      if (covidTest == CovidTest.OK) {
-        addAnswer(_selfAssess.answerOk);
-      } else if (covidTest == CovidTest.ATRISK) {
-        addAnswer(_selfAssess.answerAtRisk);
-      } else if (covidTest == CovidTest.ATNOMINALRISK) {
-        addAnswer(_selfAssess.answerNominalRisk);
-      }
-      setState(() {});
-    });
+    getResult();
+
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   _chatFlow.removeAt(_chatFlow.length - 1);
+    //   if (covidTest == CovidTest.OK) {
+    //     addAnswer(_selfAssess.answerOk);
+    //   } else if (covidTest == CovidTest.ATRISK) {
+    //     addAnswer(_selfAssess.answerAtRisk);
+    //   } else if (covidTest == CovidTest.ATNOMINALRISK) {
+    //     addAnswer(_selfAssess.answerNominalRisk);
+    //   }
+    //   setState(() {});
+    // });
   }
 
   void addAnswer(List answers) {
@@ -113,7 +141,6 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
               }
             }));
       }
-
       print('Current chat: $currentChat');
       setState(() {});
     });

@@ -5,8 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'chat_bubble.dart';
 
-List allReply = [];
-
 class ChatChip extends StatefulWidget {
   final ChatData chatChips;
   final Function isCompletedCallBack;
@@ -93,7 +91,7 @@ class _ChatChipState extends State<ChatChip> {
           }
         }
         Map tempMap = {"index": questions, "reply": replies};
-        allReply.add(tempMap);
+        symptomsData.add(tempMap);
         setState(() {});
       } else {
         showReply = true;
@@ -103,11 +101,11 @@ class _ChatChipState extends State<ChatChip> {
           }
         }
         Map tempMap = {"index": questions, "reply": replies};
-        allReply.add(tempMap);
+        symptomsData.add(tempMap);
         setState(() {});
       }
       print(replies.toString());
-      print(allReply.toString());
+      print(symptomsData.toString());
     }
   }
 
