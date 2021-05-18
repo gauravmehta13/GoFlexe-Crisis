@@ -113,65 +113,65 @@ class _StatsTabBarState extends State<StatsTabBar>
                     ),
                   ],
                 ),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Center(
-                        child: Text(
-                      "Coming Soon",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    )))
-                // Column(
-                //   children: [
-                //     box20,
-                //     Container(
-                //       alignment: Alignment.bottomCenter,
-                //       height: 45,
-                //       margin: EdgeInsets.symmetric(horizontal: 10),
-                //       padding: EdgeInsets.all(5),
-                //       decoration: BoxDecoration(
-                //         color: Colors.grey[300],
-                //         borderRadius: BorderRadius.circular(
-                //           25.0,
-                //         ),
-                //       ),
-                //       child: TabBar(
-                //         controller: worldTabController,
-                //         indicator: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(
-                //               25.0,
-                //             ),
-                //             color: Color(0xFF3f51b5)),
-                //         labelColor: Colors.white,
-                //         unselectedLabelColor: Colors.black,
-                //         tabs: [
-                //           // first tab [you can add an icon using the icon property]
-                //           Tab(
-                //             child: Text(
-                //               "All Over World",
-                //               style: TextStyle(fontSize: 13),
-                //             ),
-                //           ),
-                //           // second tab [you can add an icon using the icon property]
-                //           Tab(
-                //             child: Text(
-                //               "Country Wise",
-                //               style: TextStyle(fontSize: 13),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //     // tab bar view here
-                //     Expanded(
-                //       child: TabBarView(
-                //         controller: worldTabController,
-                //         children: [WorldStats(), CountriesStats()],
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                // Container(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: MediaQuery.of(context).size.height,
+                //     child: Center(
+                //         child: Text(
+                //       "Coming Soon",
+                //       style:
+                //           TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                //     )))
+                Column(
+                  children: [
+                    box20,
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      height: 45,
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(
+                          25.0,
+                        ),
+                      ),
+                      child: TabBar(
+                        controller: worldTabController,
+                        indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              25.0,
+                            ),
+                            color: Color(0xFF3f51b5)),
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.black,
+                        tabs: [
+                          // first tab [you can add an icon using the icon property]
+                          Tab(
+                            child: Text(
+                              "All Over World",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          // second tab [you can add an icon using the icon property]
+                          Tab(
+                            child: Text(
+                              "Country Wise",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // tab bar view here
+                    Expanded(
+                      child: TabBarView(
+                        controller: worldTabController,
+                        children: [WorldStats(), CountriesStats()],
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
