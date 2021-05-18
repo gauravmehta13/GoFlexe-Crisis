@@ -65,17 +65,21 @@ class _TwitterScreenState extends State<TwitterScreen> {
                     onPressed: city.isEmpty
                         ? null
                         : () {
-                            String query =
-                                "verified+$city+(${beds == true ? "bed+OR+beds+OR" : ""}+${icu == true ? "icu+OR" : ""}+${oxygen == true ? "oxygen+OR" : ""}+${ventilator == true ? "ventilator+OR+ventilators+OR" : ""}+${tests == true ? "test+OR+tests+OR+testing+OR" : ""}+${fabiflu == true ? "fabiflu+OR" : ""}+${favipiravir == true ? "favipiravir+OR" : ""}+${remdesivir == true ? "remdesivir+OR" : ""}+${tocilizumab == true ? "tocilizumab+OR" : ""}+${plasma == true ? "plasma+OR" : ""}+${food == true ? "food+OR+tiffin+OR" : ""}+${ambulance == true ? "ambulance" : ""})+%20-not%20verified%20-unverified%20-needed%20-need%20-needs%20-required%20-require%20-requires%20-requirement%20-requirements";
-                            Navigator.push(
-                              context,
-                              FadeRoute(
-                                  page: TwitterSearchResults(
-                                query: query,
-                                area: city,
-                              )),
-                            );
-                            //followLink();
+                            // String query =
+                            //     "verified+$city+(${beds == true ? "bed+OR+beds+OR" : ""}+${icu == true ? "icu+OR" : ""}+${oxygen == true ? "oxygen+OR" : ""}+${ventilator == true ? "ventilator+OR+ventilators+OR" : ""}+${tests == true ? "test+OR+tests+OR+testing+OR" : ""}+${fabiflu == true ? "fabiflu+OR" : ""}+${favipiravir == true ? "favipiravir+OR" : ""}+${remdesivir == true ? "remdesivir+OR" : ""}+${tocilizumab == true ? "tocilizumab+OR" : ""}+${plasma == true ? "plasma+OR" : ""}+${food == true ? "food+OR+tiffin+OR" : ""}+${ambulance == true ? "ambulance" : ""})+%20-not%20verified%20-unverified%20-needed%20-need%20-needs%20-required%20-require%20-requires%20-requirement%20-requirements";
+                            // Navigator.push(
+                            //   context,
+                            //   FadeRoute(
+                            //       page: TwitterSearchResults(
+                            //     query: query,
+                            //     area: city,
+                            //   )),
+                            // );
+
+                            followLink();
+                            FirebaseAnalytics().logEvent(
+                                name: 'Went_To_Twitter_Website',
+                                parameters: null);
                           },
                     child: Text(
                       "Find On Twitter",
