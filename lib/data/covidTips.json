@@ -1,103 +1,141 @@
 
 {
-    "faq" : [{  
-    "title": "What is a coronavirus?",
-    "description":
-        "Coronaviruses are a large family of viruses which may cause illness in animals or humans.  In humans, several coronaviruses are known to cause respiratory infections ranging from the common cold to more severe diseases such as Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS). The most recently discovered coronavirus causes coronavirus disease COVID-19."
-},
-{  
-    "title": "What is COVID-19?",
-    "description":
-        "COVID-19 is the infectious disease caused by the most recently discovered coronavirus. This new virus and disease were unknown before the outbreak began in Wuhan, China, in December 2019."
-},
-{  
-    "title": "What are the symptoms of COVID-19?",
-    "description":
-        "The most common symptoms of COVID-19 are fever, tiredness, and dry cough. Some patients may have aches and pains, nasal congestion, runny nose, sore throat or diarrhea. These symptoms are usually mild and begin gradually. Some people become infected but don’t develop any symptoms and don't feel unwell. Most people (about 80%) recover from the disease without needing special treatment. Around 1 out of every 6 people who gets COVID-19 becomes seriously ill and develops difficulty breathing. Older people, and those with underlying medical problems like high blood pressure, heart problems or diabetes, are more likely to develop serious illness. People with fever, cough and difficulty breathing should seek medical attention."
-},
-{  
-    "title": "How does COVID-19 spread?",
-    "description":
-        "People can catch COVID-19 from others who have the virus. The disease can spread from person to person through small droplets from the nose or mouth which are spread when a person with COVID-19 coughs or exhales. These droplets land on objects and surfaces around the person. Other people then catch COVID-19 by touching these objects or surfaces, then touching their eyes, nose or mouth. People can also catch COVID-19 if they breathe in droplets from a person with COVID-19 who coughs out or exhales droplets. This is why it is important to stay more than 1 meter (3 feet) away from a person who is sick."},
-{  
-    "title": "Can COVID-19 be transmitted through air?",
-    "description":
-        "Studies to date suggest that the virus that causes COVID-19 is mainly transmitted through contact with respiratory droplets rather than through the air.  See previous answer on “How does COVID-19 spread?”"},
-{  
-    "title": "Can COVID-19 be caught from a person who has no symptoms?",
-    "description":
-        "The main way the disease spreads is through respiratory droplets expelled by someone who is coughing. The risk of catching COVID-19 from someone with no symptoms at all is very low. However, many people with COVID-19 experience only mild symptoms. This is particularly true at the early stages of the disease. It is therefore possible to catch COVID-19 from someone who has, for example, just a mild cough and does not feel ill."},
-{  
-    "title": "Can I catch COVID-19 from the feces of someone with the disease?",
-    "description":
-        "The risk of catching COVID-19 from the feces of an infected person appears to be low. While initial investigations suggest the virus may be present in feces in some cases, spread through this route is not a main feature of the outbreak. WHO is assessing ongoing research on the ways COVID-19 is spread and will continue to share new findings. Because this is a risk, however, it is another reason to clean hands regularly, after using the bathroom and before eating."},
-{  
-    "title": "What can I do to protect myself and prevent the spread of disease?",
-    "description":
-        "Stay aware of the latest information on the COVID-19 outbreak, available on the WHO website and through your national and local public health authority. Many countries around the world have seen cases of COVID-19 and several have seen outbreaks. Authorities in China and some other countries have succeeded in slowing or stopping their outbreaks. However, the situation is unpredictable so check regularly for the latest news. Check 'Prevention' tab on Home for more Information"},
-{  
-    "title": "How likely am I to catch COVID-19?",
-    "description":
-        "The risk depends on where you  are - and more specifically, whether there is a COVID-19 outbreak unfolding there.\nFor most people in most locations the risk of catching COVID-19 is still low. However, there are now places around the world (cities or areas) where the disease is spreading. For people living in, or visiting, these areas the risk of catching COVID-19 is higher. Governments and health authorities are taking vigorous action every time a new case of COVID-19 is identified. Be sure to comply with any local restrictions on travel, movement or large gatherings. Cooperating with disease control efforts will reduce your risk of catching or spreading COVID-19."},
-{  
-    "title": "Should I worry about COVID-19?",
-    "description":
-        "Illness due to COVID-19 infection is generally mild, especially for children and young adults. However, it can cause serious illness: about 1 in every 5 people who catch it need hospital care. It is therefore quite normal for people to worry about how the COVID-19 outbreak will affect them and their loved ones.\nWe can channel our concerns into actions to protect ourselves, our loved ones and our communities. First and foremost among these actions is regular and thorough hand-washing and good respiratory hygiene. Secondly, keep informed and follow the advice of the local health authorities including any restrictions put in place on travel, movement and gatherings."},
-{  
-    "title": "Who is at risk of developing severe illness?",
-    "description":
-        "While we are still learning about how COVID-2019 affects people, older persons and persons with pre-existing medical conditions (such as high blood pressure, heart disease, lung disease, cancer or diabetes)  appear to develop serious illness more often than others."},
-{  
-    "title": "Are antibiotics effective in preventing or treating the COVID-19?",
-    "description":
-        "No. Antibiotics do not work against viruses, they only work on bacterial infections. COVID-19 is caused by a virus, so antibiotics do not work. Antibiotics should not be used as a means of prevention or treatment of COVID-19. They should only be used as directed by a physician to treat a bacterial infection."},
-{  
-    "title":
-        "Are there any medicines or therapies that can prevent or cure COVID-19?",
-    "description":
-        "While some western, traditional or home remedies may provide comfort and alleviate symptoms of COVID-19, there is no evidence that current medicine can prevent or cure the disease. WHO does not recommend self-medication with any medicines, including antibiotics, as a prevention or cure for COVID-19. However, there are several ongoing clinical trials that include both western and traditional medicines."},
-{  
-    "title": "Is there a vaccine, drug or treatment for COVID-19?",
-    "description":
-        "Two vaccines that have been granted emergency use authorization by the Central Drugs Standard Control Organization (CDSCO) in India are Covishield® (AstraZeneca's vaccine manufactured by Serum Institute of India) and Covaxin® (manufactured by Bharat Biotech Limited)."},
-{  
-    "title": "Is COVID-19 the same as SARS?",
-    "description":
-        "No. The virus that causes COVID-19 and the one that caused the outbreak of Severe Acute Respiratory Syndrome (SARS) in 2003 are related to each other genetically, but the diseases they cause are quite different.\nSARS was more deadly but much less infectious than COVID-19. There have been no outbreaks of SARS anywhere in the world since 2003."},
-{  
-    "title": "Should I wear a mask to protect myself?",
-    "description":
-        "Only wear a mask if you are ill with COVID-19 symptoms (especially coughing) or looking after someone who may have COVID-19. Disposable face mask can only be used once. If you are not ill or looking after someone who is ill then you are wasting a mask. There is a world-wide shortage of masks, so WHO urges people to use masks wisely."},
-{  
-    "title": "How long is the incubation period for COVID-19?",
-    "description":
-        "The “incubation period” means the time between catching the virus and beginning to have symptoms of the disease. Most estimates of the incubation period for COVID-19 range from 1-14 days, most commonly around five days. These estimates will be updated as more data become available."},
-{  
-    "title": "Can I catch COVID-19 from my pet?",
-    "description":
-        "There is a possibility for some animals to become infected through close contact with infected humans. Further evidence is needed to understand if animals and pets can spread the disease.\nBased on current evidence, human to human transmission remains the main driver."},
-{  
-    "title": "How long does the virus survive on surfaces?",
-    "description":
-        "It is not certain how long the virus that causes COVID-19 survives on surfaces, but it seems to behave like other coronaviruses. Studies suggest that coronaviruses (including preliminary information on the COVID-19 virus) may persist on surfaces for a few hours or up to several days. This may vary under different conditions (e.g. type of surface, temperature or humidity of the environment)."},
-{  
-    "title":
-        "Is it safe to receive a package from any area where COVID-19 has been reported?",
-    "description":
-        "Yes. The likelihood of an infected person contaminating commercial goods is low and the risk of catching the virus that causes COVID-19 from a package that has been moved, travelled, and exposed to different conditions and temperature is also low."},
-{  
-    "title": "Can COVID-19 be spread through coins and banknotes?",
-    "description":
-        "There is currently no evidence to confirm or disprove that COVID-19 virus can be transmitted through coins or banknotes. However, respiratory droplets expelled from an infected person can contaminate and persist on surfaces. Wash your hands regularly and thoroughly after touching any frequently-touched surface or object, including coins or banknotes. Avoid touching your eyes, mouth and nose, if your hands are not cleaned."},
-{  
-    "title": "How can I grocery shop safely in the time of COVID-19?",
-    "description":
-        "When grocery shopping, keep at least 1-metre distance from others and avoid touching your eyes, mouth and nose. If possible, sanitize the handles of shopping trolleys or baskets before shopping. Once home, wash your hands thoroughly and also after handling and storing your purchased products. There is currently no confirmed case of COVID-19 transmitted through food or food packaging."},
-{  
-    "title": "How to wash fruits and vegetables in the time of COVID-19?",
-    "description":
-        "Fruits and vegetables are essential components of a healthy diet. Wash them the same way you would in any other circumstance. Before handling them, wash your hands with soap and water. Then, wash fruits and vegetables thoroughly with clean water, especially if you eat them raw."
-}],
+
+                  
+    "faq" : [
+        {"category":"Coronavirus Disease Basics",
+          "title": "What is a novel coronavirus?",
+          "description": "On February 11, 2020 the World Health Organization announced an official name for the disease that is causing the 2019 novel coronavirus outbreak, first identified in Wuhan China. The new name of this disease is coronavirus disease 2019, abbreviated as COVID-19. In COVID-19, ‘CO’ stands for ‘corona,’ ‘VI’ for ‘virus,’ and ‘D’ for disease. Formerly, this disease was referred to as “2019 novel coronavirus” or “2019-nCoV”.",
+          "textBottom": "A novel coronavirus is a new coronavirus that has not been previously identified. The virus causing coronavirus disease 20}, is not the same as the coronaviruses that commonly circulate among humans and cause mild illness, like the common cold.",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/index.html"},
+        {"category":"Coronavirus Disease Basics",
+          "title": "Why is the disease being called coronavirus disease 2019, COVID-19?",
+          "textBottom": "",
+          "description": "A novel coronavirus is a new coronavirus that has not been previously identified. The virus causing coronavirus disease 20}, is not the same as the coronaviruses that commonly circulate among humans and cause mild illness, like the common cold.",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/index.html"},
+        {"category":"Coronavirus Disease Basics",
+          "title": "How can people help stop stigma related to COVID-19?",
+          "description": "People can fight stigma and help, not hurt, others by providing social support. Counter stigma by learning and sharing facts. Communicating the facts that viruses do not target specific racial or ethnic groups and how COVID-19 actually spreads can help stop stigma.",
+          "textBottom": "",
+          "url": ""},                  
+        {"category":"How It Spreads" ,
+          "title": "What is the source of the virus?",
+          "description": "Coronaviruses are a large family of viruses. Some cause illness in people, and others, such as canine and feline coronaviruses, only infect animals. Rarely, animal coronaviruses that infect animals have emerged to infect people and can spread between people. This is suspected to have occurred for the virus that causes COVID-19. Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS) are two other examples of coronaviruses that originated from animals and then spread to people. More information about the source and spread of COVID-19 is available on the Situation Summary: Source and Spread of the Virus.",
+          "textBottom": "",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/summary.html"},{"category":"How It Spreads" ,
+          "title": "How does the virus spread?",
+          "description": "This virus was first detected in Wuhan City, Hubei Province, China. The first infections were linked to a live animal market, but the virus is now spreading from person-to-person. It’s important to note that person-to-person spread can happen on a continuum. Some viruses are highly contagious (}, while other viruses are less so.",
+          "textBottom": "The virus that causes COVID-19 seems to be spreading easily and sustainably in the community (“community spread”) in some affected geographic areas. Community spread means people have been infected with the virus in an area, including some who are not sure how or where they became infected.",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/about/transmission.html"},
+        {"category":"How It Spreads" ,
+          "title": "Can someone who has had COVID-19 spread the illness to others?",
+          "description": "The virus that causes COVID-19 is spreading from person-to-person. Someone who is actively sick with COVID-19 can spread the illness to others. That is why CDC recommends that these patients be isolated either in the hospital or at home (depending on how sick they are) until they are better and no longer pose a risk of infecting others.",
+          "textBottom": "How long someone is actively sick can vary so the decision on when to release someone from isolation is made on a case-by-case basis in consultation with doctors, infection prevention and control experts, and public health officials and involves considering specifics of each situation including disease severity, illness signs and symptoms, and results of laboratory testing for that patient.\n\nCurrent CDC guidance for when it is OK to release someone from isolation is made on a case by case basis and includes meeting all of the following requirements:\n\n• The patient is free from fever without the use of fever-reducing medications.\n• The patient is no longer showing symptoms, including cough.\n• The patient has tested negative on at least two consecutive respiratory specimens collected at least 24 hours apart.\n• Someone who has been released from isolation is not considered to pose a risk of infection to others.",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/hcp/disposition-hospitalized-patients.html"},
+        {"category":"How It Spreads" ,
+          "title": "Will warm weather stop the outbreak of COVID-19?",
+          "description": "It is not yet known whether weather and temperature impact the spread of COVID-19. Some other viruses, like the common cold and flu, spread more during cold weather months but that does not mean it is impossible to become sick with these viruses during other months. At this time, it is not known whether the spread of COVID-19 will decrease when weather becomes warmer. There is much more to learn about the transmissibility, severity, and other features associated with COVID-19 and investigations are ongoing.",
+          "textBottom": "",
+          "url": ""},
+        {"category":"How It Spreads" ,
+          "title": "Can the virus that causes COVID-19 be spread through food, including refrigerated or frozen food?",
+          "description": "Coronaviruses are generally thought to be spread from person-to-person through respiratory droplets. Currently there is no evidence to support transmission of COVID-19 associated with food. Before preparing or eating food it is important to always wash your hands with soap and water for 20 seconds for general food safety. Throughout the day wash your hands after blowing your nose, coughing or sneezing, or going to the bathroom.\n\nIt may be possible that a person can get COVID-19 by touching a surface or object that has the virus on it and then touching their own mouth, nose, or possibly their eyes, but this is not thought to be the main way the virus spreads.",
+          "textBottom": "In general, because of poor survivability of these coronaviruses on surfaces, there is likely very low risk of spread from food products or packaging that are shipped over a period of days or weeks at ambient, refrigerated, or frozen temperatures.",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/prepare/transmission.html"},
+        {"category":"How It Spreads" ,
+          "title": "What is community spread?",
+          "description": "Community spread means people have been infected with the virus in an area, including some who are not sure how or where they became infected.",
+          "textBottom": "",
+          "url": ""},
+       
+      
+          
+
+        
+        {"category":"How to Protect Yourself",
+          "title": "What can I do to protect myself and prevent the spread of disease?",
+          "description": "Stay aware of the latest information on the COVID-19 outbreak, available on the WHO website and through your national and local public health authority. Many countries around the world have seen cases of COVID-19 and several have seen outbreaks. Authorities in China and some other countries have succeeded in slowing or stopping their outbreaks. However, the situation is unpredictable so check regularly for the latest news.\n\nYou can reduce your chances of being infected or spreading COVID-19 by taking some simple precautions:",
+          "textBottom": "• Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.\n• Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.\n• Maintain at least 1 metre (3 feet) distance between yourself and anyone who is coughing or sneezing.\n• Avoid touching eyes, nose and mouth.\n• Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.\n• Stay home if you feel unwell. If you have a fever, cough and difficulty breathing, seek medical attention and call in advance. Follow the directions of your local health authority.\n• Keep up to date on the latest COVID-19 hotspots (cities or local areas where COVID-19 is spreading widely). If possible, avoid traveling to places – especially if you are an older person or have diabetes, heart or lung disease.",
+          "url": ""},
+        {"category":"How to Protect Yourself",
+          "title": "What should I do if I had close contact with someone who has COVID-19?",
+          "description": "Household members, intimate partners, and caregivers in a nonhealthcare setting may have close contact2 with a person with symptomatic, laboratory-confirmed COVID-19 or a person under investigation. Close contacts should monitor their health; they should call their healthcare provider right away if they develop symptoms suggestive of COVID-19 (e.g., fever, cough, shortness of breath)\n\nClose contacts should also follow these recommendations:",
+          "textBottom": "• Make sure that you understand and can help the patient follow their healthcare provider’s instructions for medication(s) and care. You should help the patient with basic needs in the home and provide support for getting groceries, prescriptions, and other personal needs.\n• Monitor the patient’s symptoms. If the patient is getting sicker, call his or her healthcare provider and tell them that the patient has laboratory-confirmed COVID-19. This will help the healthcare provider’s office take steps to keep other people in the office or waiting room from getting infected. Ask the healthcare provider to call the local or state health department for additional guidance. If the patient has a medical emergency and you need to call 911, notify the dispatch personnel that the patient has, or is being evaluated for COVID-19.\n• Household members should stay in another room or be separated from the patient as much as possible. Household members should use a separate bedroom and bathroom, if available.\nProhibit visitors who do not have an essential need to be in the home.\n• Household members should care for any pets in the home. Do not handle pets or other animals while sick.Make sure that shared spaces in the home have good air flow, such as by an air conditioner or an opened window, weather permitting.\n• Perform hand hygiene frequently. Wash your hands often with soap and water for at least 20 seconds or use an alcohol-based hand sanitizer that contains 60 to 95% alcohol, covering all surfaces of your hands and rubbing them together until they feel dry. Soap and water should be used preferentially if hands are visibly dirty.\n• Avoid touching your eyes, nose, and mouth with unwashed hands.\n• The patient should wear a facemask when you are around other people. If the patient is not able to wear a facemask (for example, because it causes troub}, you, as the caregiver, should wear a mask when you are in the same room as the patient.\n• Wear a disposable facemask and gloves when you touch or have contact with the patient’s blood, stool, or body fluids, such as saliva, sputum, nasal mucus, vomit, urine.\n• Avoid sharing household items with the patient. You should not share dishes, drinking glasses, cups, eating utensils, towels, bedding, or other items. After the patient uses these items, you should wash them thoroughly (see below “Wash laundry thoroughly”).\n• Clean all “high-touch” surfaces, such as counters, tabletops, doorknobs, bathroom fixtures, toilets, phones, keyboards, tablets, and bedside tables, every day. Also, clean any surfaces that may have blood, stool, or body fluids on them.\n• Wash laundry thoroughly.\n• Place all used disposable gloves, facemasks, and other contaminated items in a lined container before disposing of them with other household waste. Clean your hands (with soap and water or an alcohol-based hand sanitizer) immediately after handling these items. Soap and water should be used preferentially if hands are visibly dirty.\n• Discuss any additional questions with your state or local health department or healthcare provider. Check available hours when contacting your local health department.",
+          "url": ""},
+        {"category":"How to Protect Yourself",
+          "title": "Who is at higher risk for serious illness from COVID-19?",
+          "description": "Older adults and people of any age who have serious underlying medical conditions may be at higher risk for more serious complications from COVID-19. These people who may be at higher risk of getting very sick from this illness, includes:",
+          "textBottom": "• Older adults\n• People who have serious underlying medical conditions like: Heart Disease, Diabetes, Lung disease",
+          "url": ""},
+        {"category":"How to Protect Yourself",
+          "title": "What should people at higher risk of serious illness with COVID-19 do?",
+          "description": "If you are at higher risk of getting very sick from COVID-19, you should: stock up on supplies; take everyday precautions to keep space between yourself and others; when you go out in public, keep away from others who are sick; limit close contact and wash your hands often; and avoid crowds, cruise travel, and non-essential travel. If there is an outbreak in your community, stay home as much as possible. Watch for symptoms and emergency signs. If you get sick, stay home and call your doctor. More information on how to prepare, what to do if you get sick, and how communities and caregivers can support those at higher risk is available on People at Risk for Serious Illness from COVID-19.",
+          "textBottom": "",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/specific-groups/high-risk-complications.html"},
+        {"category":"How to Protect Yourself",
+          "title": "Should I wear a mask to protect myself?",
+          "description": "Only wear a mask if you are ill with COVID-19 symptoms (especially coughing) or looking after someone who may have COVID-19. Disposable face mask can only be used once. If you are not ill or looking after someone who is ill then you are wasting a mask. There is a world-wide shortage of masks, so WHO urges people to use masks wisely.\n\nWHO advises rational use of medical masks to avoid unnecessary wastage of precious resources and mis-use of masks.",
+          "textBottom": "The most effective ways to protect yourself and others against COVID-19 are to frequently clean your hands, cover your cough with the bend of elbow or tissue and maintain a distance of at least 1 meter (3 feet) from people who are coughing or sneezing. See basic protective measures against the new coronavirus for more information.",
+          "url": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/when-and-how-to-use-masks"},
+       
+     
+          
+
+        
+
+        {"category":"Symptoms & Testing",
+          "title": "What are the symptoms of COVID-19?",
+          "description": "The most common symptoms of COVID-19 are fever, tiredness, and dry cough. Some patients may have aches and pains, nasal congestion, runny nose, sore throat or diarrhoea. These symptoms are usually mild and begin gradually. Some people become infected but don’t develop any symptoms and don\"t feel unwell. Most people (about 80%) recover from the disease without needing special treatment. Around 1 out of every 6 people who gets COVID-19 becomes seriously ill and develops difficulty breathing. Older people, and those with underlying medical problems like high blood pressure, heart problems or diabetes, are more likely to develop serious illness. People with fever, cough and difficulty breathing should seek medical attention.",
+          "textBottom": "",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html"},
+        {"category":"Symptoms & Testing",
+          "title": "Should I be tested for COVID-19?",
+          "description": "Not everyone needs to be tested for COVID-19.",
+          "textBottom": "",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/testing.html"},
+        {"category":"Symptoms & Testing",
+          "title": "Where can I get tested for COVID-19?",
+          "description": "The process and locations for testing vary from place to place. Contact your state, local, tribal, or territorial department for more information, or reach out to a medical provider. State and local public health departments have received tests from CDC while medical providers are getting tests developed by commercial manufacturers. While supplies of these tests are increasing, it may still be difficult to find someplace to get tested.",
+          "textBottom": "",
+          "url": ""},
+        {"category":"Symptoms & Testing",
+          "title": "Can a person test negative and later test positive for COVID-19?",
+          "description": "Using the CDC-developed diagnostic test, a negative result means that the virus that causes COVID-19 was not found in the person’s sample. In the early stages of infection, it is possible the virus will not be detected.",
+          "textBottom": "For COVID-19, a negative test result for a sample collected while a person has symptoms likely means that the COVID-19 virus is not causing their current illness.",
+          "url": ""},
+        {"category":"Outbreak in Your Community",
+          "title": "What should I do if there is an outbreak in my community?",
+          "description": "During an outbreak, stay calm and put your preparedness plan to work. Follow the steps below:",
+          "textBottom": "• Stay home if you are sick. Keep away from people who are sick. Limit close contact with others as much as possible (about 6 feet).\n• Stay informed about the local COVID-19 situation.\n• Notify your workplace as soon as possible if your regular work schedule changes.\n• Stay in touch with others by phone or email.",
+          "url": ""},
+        {"category":"Outbreak in Your Community",
+          "title": "How do I prepare my children in case of COVID-19 outbreak in our community?",
+          "description": "Outbreaks can be stressful for adults and children. Talk with your children about the outbreak, try to stay calm, and reassure them that they are safe. If appropriate, explain to them that most illness from COVID-19 seems to be mild.",
+          "textBottom": "",
+          "url": "https://www.cdc.gov/childrenindisasters/helping-children-cope.html"},
+        {"category":"Outbreak in Your Community",
+          "title": "What steps should parents take to protect children during a community outbreak?",
+          "description": "This is a new virus and we are still learning about it, but so far, there does not seem to be a lot of illness in children. Most illness, including serious illness, is happening in adults of working age and older adults. If there cases of COVID-19 that impact your child’s school, the school may dismiss students. Keep track of school dismissals in your community. Read or watch local media sources that report school dismissals. If schools are dismissed temporarily, use alternative childcare arrangements, if needed.",
+          "textBottom": "If your child/children become sick with COVID-19, notify their childcare facility or school. Talk with teachers about classroom assignments and activities they can do from home to keep up with their schoolwork.\n\nDiscourage children and teens from gathering in other public places while school is dismissed to help slow the spread of COVID-19 in the community.",
+          "url": ""},
+        {"category":"Outbreak in Your Community",
+          "title": "Will schools be dismissed if there is an outbreak in my community?",
+          "description": "Depending on the situation, public health officials may recommend community actions to reduce exposures to COVID-19, such as school dismissals. Read or watch local media sources that report school dismissals or and watch for communication from your child’s school. If schools are dismissed temporarily, discourage students and staff from gathering or socializing anywhere, like at a friend’s house, a favorite restaurant, or the local shopping mall.",
+          "textBottom": "",
+          "url": ""},
+        {"category":"Outbreak in Your Community",
+          "title": "Can the virus that causes COVID-19 be spread through food, including refrigerated or frozen food?",
+          "description": "Coronaviruses are generally thought to be spread from person-to-person through respiratory droplets. Currently there is no evidence to support transmission of COVID-19 associated with food. Before preparing or eating food it is important to always wash your hands with soap and water for 20 seconds for general food safety. Throughout the day wash your hands after blowing your nose, coughing or sneezing, or going to the bathroom.",
+          "textBottom": "It may be possible that a person can get COVID-19 by touching a surface or object that has the virus on it and then touching their own mouth, nose, or possibly their eyes, but this is not thought to be the main way the virus spreads.\n\nIn general, because of poor survivability of these coronaviruses on surfaces, there is likely very low risk of spread from food products or packaging that are shipped over a period of days or weeks at ambient, refrigerated, or frozen temperatures.",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/prepare/transmission.html"},
+        {"category":"Outbreak in Your Community",
+          "title": "Should I go to work if there is an outbreak in my community?",
+          "description": "Follow the advice of your local health officials. Stay home if you can. Talk to your employer to discuss working from home, taking leave if you or someone in your household gets sick with COVID-19 symptoms, or if your child’s school is dismissed temporarily. Employers should be aware that more employees may need to stay at home to care for sick children or other sick family members than is usual in case of a community outbreak.",
+          "textBottom": "",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/about/symptoms.html"}
+        ]
+
+,
 "mythbusters":[
     {
       "myth":

@@ -6,6 +6,8 @@ import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FAQ extends StatefulWidget {
   @override
@@ -120,48 +122,123 @@ class _FAQState extends State<FAQ> {
                           box20,
                           filteredFAQ.length == 0
                               ? NoResult()
-                              : ListView.builder(
-                                  shrinkWrap: true,
+                              : GroupedListView<dynamic, String>(
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount: filteredFAQ.length,
-                                  itemBuilder: (context, i) {
+                                  shrinkWrap: true,
+                                  elements: filteredFAQ,
+                                  groupBy: (element) => element["category"],
+                                  // groupComparator: (value1, value2) =>
+                                  //     value2.compareTo(value1),
+                                  // itemComparator: (item1, item2) =>
+                                  //     item2.name.compareTo(item1.name),
+                                  // optional
+                                  useStickyGroupSeparators: true, // optional
+                                  // floatingHeader: true, // optional
+                                  // order: GroupedListOrder.ASC,
+                                  groupSeparatorBuilder: (String value) =>
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 15),
+                                        child: Text(
+                                          value,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                  itemBuilder: (c, element) {
                                     return Card(
-                                      child: ExpansionTile(
-                                        title: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.question_answer,
-                                              color: Color(0xFF9fa8da),
+                                      child: Container(
+                                        // margin: EdgeInsets.only(bottom: 15),
+                                        child: ExpansionTile(
+                                          title: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.question_answer,
+                                                color: Color(0xFF9fa8da),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      element["title"],
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    )),
+                                              ),
+                                            ],
+                                          ),
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 10.0,
+                                                  right: 10,
+                                                  bottom: 20),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Column(
+                                                    children: <Widget>[
+                                                      Text(element[
+                                                          "description"]),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  element["textBottom"] != ''
+                                                      ? Text(
+                                                          element["textBottom"])
+                                                      : Container(),
+                                                  element["url"] != ''
+                                                      ? Column(
+                                                          children: <Widget>[
+                                                            SizedBox(
+                                                                height: 10),
+                                                            Align(
+                                                              alignment: Alignment
+                                                                  .centerRight,
+                                                              child: InkWell(
+                                                                child: Text(
+                                                                    'Know more',
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            primaryColor,
+                                                                        decoration:
+                                                                            TextDecoration.underline)),
+                                                                onTap: () =>
+                                                                    _launchUrl(
+                                                                        element[
+                                                                            "url"]),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : Container(),
+                                                ],
+                                              ),
                                             ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              filteredFAQ[i]["title"],
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600),
-                                            )),
                                           ],
                                         ),
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                15, 5, 15, 15),
-                                            child: Text(
-                                              filteredFAQ[i]["description"],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey[700]),
-                                            ),
-                                          )
-                                        ],
                                       ),
                                     );
                                   }),
                         ],
                       ),
                     ))));
+  }
+}
+
+Future<void> _launchUrl(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
