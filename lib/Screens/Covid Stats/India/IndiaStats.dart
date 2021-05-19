@@ -72,25 +72,6 @@ class _CovidStatsState extends State<CovidStats>
     });
   }
 
-  fetchTestData() async {
-    const url = 'https://api.rootnet.in/covid19-in/stats/testing/latest';
-
-    BaseOptions options = BaseOptions(
-        receiveTimeout: 100000, connectTimeout: 100000, baseUrl: url);
-    _dio = Dio(options);
-    final response = await _dio.get(url);
-    print(response.data);
-    var tempTestData = response.data;
-    setState(() {
-      testData = tempTestData;
-      confirmedData = _generateConfirmedData();
-      activeData = _generateActiveData();
-      recoveredData = _generateRecoveredData();
-      deceasedData = _generateDeceasedData();
-      loading = false;
-    });
-  }
-
   List<double> _generateConfirmedData() {
     List<double> result = <double>[];
     for (int i = chartData1.length - 20; i < chartData1.length; i++) {
@@ -148,8 +129,17 @@ class _CovidStatsState extends State<CovidStats>
       chartData1 = tempData.casesTimeSeries;
       statewise = tempData.statewise[0];
       totalData1 = response.data;
+
+      testData = totalData1["tested"][totalData1["tested"].length - 1]
+          ["totalsamplestested"];
     });
-    fetchTestData();
+    setState(() {
+      confirmedData = _generateConfirmedData();
+      activeData = _generateActiveData();
+      recoveredData = _generateRecoveredData();
+      deceasedData = _generateDeceasedData();
+      loading = false;
+    });
   }
 
   @override
@@ -394,9 +384,9 @@ class _CovidStatsState extends State<CovidStats>
                                   backgroundColor: Color(0xFFE5E3F3),
                                   title: 'Tests Per Million',
                                   description:
-                                      'For every 1 million people in India, ${(((testData['data']['totalSamplesTested']) / 1392031412) * 1000000).toStringAsFixed(0)} people were tested.',
+                                      'For every 1 million people in India, ${((double.parse(testData) / 1392031412) * 1000000).toStringAsFixed(0)} people were tested.',
                                   number:
-                                      '≈ ${(((testData['data']['totalSamplesTested']) / 1392031412) * 1000000).toStringAsFixed(0)}',
+                                      '≈ ${(((double.parse(testData) / 1392031412) * 1000000).toStringAsFixed(0))}',
                                   numberColor: Color(0xFF4655AC),
                                   titleAndDescriptionColor: Color(0xFF7878C2),
                                 ),
