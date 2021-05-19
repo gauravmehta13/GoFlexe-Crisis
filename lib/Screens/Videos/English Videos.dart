@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class HindiVideos extends StatefulWidget {
+class EnglishVideos extends StatefulWidget {
   @override
-  _HindiVideosState createState() => _HindiVideosState();
+  _EnglishVideosState createState() => _EnglishVideosState();
 }
 
-class _HindiVideosState extends State<HindiVideos> {
+class _EnglishVideosState extends State<EnglishVideos> {
   List<YoutubePlayerController> controllers = [];
   List videos = [
-    'bOj_InVF3eQ',
+    'CJzo6JIqhCw',
   ];
   void initState() {
     super.initState();
@@ -52,7 +52,7 @@ class _HindiVideosState extends State<HindiVideos> {
         params: const YoutubePlayerParams(
           showControls: true,
           showFullscreenButton: true,
-          desktopMode: true,
+          desktopMode: false,
           privacyEnhanced: true,
           useHybridComposition: true,
         ),
