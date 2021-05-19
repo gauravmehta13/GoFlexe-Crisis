@@ -6,6 +6,7 @@ import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -59,10 +60,13 @@ class _FAQState extends State<FAQ> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // [AppBar] with 0 size used to set the statusbar background color and
-        // statusbat text/icon color
         appBar: AppBar(
-          title: Text("FAQ's"),
+          brightness: Brightness.light,
+          title: Text(
+            "FAQ's",
+            style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w600, fontSize: 16),
+          ),
         ),
         body: loading == true
             ? Loading()

@@ -1,24 +1,48 @@
 import 'dart:developer';
-import 'package:crisis/Widgets/Loading.dart';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class Videos extends StatefulWidget {
+class HindiVideos extends StatefulWidget {
   @override
-  _VideosState createState() => _VideosState();
+  _HindiVideosState createState() => _HindiVideosState();
 }
 
-class _VideosState extends State<Videos> {
+class _HindiVideosState extends State<HindiVideos> {
   List<YoutubePlayerController> controllers = [];
-  List videos = ['CJzo6JIqhCw', 'OlO8sKRynBY', 'OlO8sKRynBY', 'OlO8sKRynBY'];
-  bool loading = true;
-
-  @override
+  List videos = [
+    'bOj_InVF3eQ',
+  ];
   void initState() {
     super.initState();
     getVideos();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(top: 10),
+        itemCount: controllers.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: YoutubePlayerIFrame(
+                gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                  new Factory<OneSequenceGestureRecognizer>(
+                    () => new TapGestureRecognizer(),
+                  ),
+                ].toSet(),
+                controller: controllers[index],
+                aspectRatio: 16 / 9,
+              ),
+            ),
+          );
+        });
   }
 
   getVideos() {
@@ -44,28 +68,6 @@ class _VideosState extends State<Videos> {
         log('Exited Fullscreen');
       };
     }
-    setState(() {
-      loading = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About Us'),
-      ),
-      body: loading == true
-          ? Loading()
-          : ListView.builder(
-              itemCount: 5,
-              itemBuilder: (BuildContext context, int index) {
-                return YoutubePlayerIFrame(
-                  controller: controllers[index],
-                  aspectRatio: 16 / 9,
-                );
-              }),
-    );
   }
 
   @override

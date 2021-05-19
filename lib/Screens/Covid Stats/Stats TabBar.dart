@@ -3,6 +3,7 @@ import 'package:crisis/Screens/Covid%20Stats/India/Indian%20States.dart';
 import 'package:crisis/Screens/Covid%20Stats/World/World%20Stats.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../Constants.dart';
 import 'World/Countries.dart';
@@ -38,10 +39,11 @@ class _StatsTabBarState extends State<StatsTabBar>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        brightness: Brightness.light,
         title: Text(
-          "Covid Tracking",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          'Covid Tracking',
+          style:
+              GoogleFonts.montserrat(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         bottom: TabBar(
           controller: statsTabController,

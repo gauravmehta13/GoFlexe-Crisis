@@ -8,6 +8,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../Appbar.dart';
 import '../../Constants.dart';
@@ -130,9 +131,14 @@ class _HospitalBedListState extends State<HospitalBedList> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size(double.infinity, 60),
-            child: MyAppBar(curStep: 0)),
+        appBar: AppBar(
+          brightness: Brightness.light,
+          title: Text(
+            "Hospital Beds",
+            style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w600, fontSize: 16),
+          ),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),

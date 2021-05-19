@@ -22,17 +22,17 @@ class GoFlexeTabBar extends StatefulWidget {
 class _GoFlexeTabBarState extends State<GoFlexeTabBar>
     with TickerProviderStateMixin {
   TabController _tabController;
-  Timer _timer;
+  //Timer _timer;
 
   @override
   void initState() {
     _tabController =
         TabController(length: 4, vsync: this, initialIndex: widget.index ?? 0);
     super.initState();
-    _timer = new Timer(const Duration(minutes: 1), () {
-      FirebaseAnalytics().logEvent(name: 'Feedback_Popup', parameters: null);
-      showFeedback();
-    });
+    // _timer = new Timer(const Duration(minutes: 1), () {
+    //   FirebaseAnalytics().logEvent(name: 'Feedback_Popup', parameters: null);
+    //   showFeedback();
+    // });
   }
 
   showFeedback() async {
