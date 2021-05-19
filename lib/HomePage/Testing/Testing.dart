@@ -41,11 +41,36 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
     addScrollControllerListener();
 
     symptoms = Symptoms.getSymptoms();
-    // if (widget.diagnostic == true) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     scrollToDiagnostic();
-    //   });
-    // }
+    if (widget.diagnostic == true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                  title: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Center(
+                      child: SizedBox(
+                          height: 50,
+                          child: Image.asset("assets/diagnose.png")),
+                    ),
+                    box20,
+                    Text(
+                      "Find Diagnostic centre near you",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    ),
+                    box20,
+                    Diagnostic(),
+                  ],
+                ),
+              ));
+            });
+        //scrollToDiagnostic();
+      });
+    }
     FirebaseAnalytics().logEvent(name: 'Testing', parameters: null);
   }
 
@@ -667,32 +692,35 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                         ),
                       ),
                       Card(
-                        child: Column(
-                          key: diagnoseKey,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: SizedBox(
-                                  height: 50,
-                                  child: Image.asset("assets/diagnose.png")),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              "Find Diagnostic centre near you",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 20),
-                              child: Diagnostic(),
-                            ),
-                            box30,
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            key: diagnoseKey,
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: SizedBox(
+                                    height: 50,
+                                    child: Image.asset("assets/diagnose.png")),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Find Diagnostic centre near you",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 20),
+                                child: Diagnostic(),
+                              ),
+                              box30,
+                            ],
+                          ),
                         ),
                       ),
                       Card(

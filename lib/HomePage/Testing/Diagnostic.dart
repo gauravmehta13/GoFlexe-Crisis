@@ -74,48 +74,45 @@ class _DiagnosticState extends State<Diagnostic> {
         : Column(
             children: [
               Container(
-                  padding: EdgeInsets.all(10),
                   child: TextFieldSearch(
-                    minStringLength: 0,
-                    decoration: new InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Color(0xFF2821B5),
-                        ),
-                      ),
-                      border: new OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.grey)),
-                      labelText: 'Search State',
+                minStringLength: 0,
+                decoration: new InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(15),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Color(0xFF2821B5),
                     ),
-                    controller: stateController,
-                    initialList: states.states,
-                    future: () {
-                      return fetchStates();
-                    },
-                    getSelectedValue: (state) {
-                      final FocusScopeNode currentScope =
-                          FocusScope.of(context);
-                      if (!currentScope.hasPrimaryFocus &&
-                          currentScope.hasFocus) {
-                        FocusManager.instance.primaryFocus.unfocus();
-                      }
-                      getDistricts(state.value);
-                      setState(() {
-                        stateName = state.label;
-                      });
-                      setState(() {
-                        districtController.text = "";
-                      });
-                      print(state.label);
-                      print(state
-                          .value); // this prints the selected option which could be an object
-                    },
-                    label: '',
-                  )),
+                  ),
+                  border: new OutlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.grey)),
+                  labelText: 'Search State',
+                ),
+                controller: stateController,
+                initialList: states.states,
+                future: () {
+                  return fetchStates();
+                },
+                getSelectedValue: (state) {
+                  final FocusScopeNode currentScope = FocusScope.of(context);
+                  if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                    FocusManager.instance.primaryFocus.unfocus();
+                  }
+                  getDistricts(state.value);
+                  setState(() {
+                    stateName = state.label;
+                  });
+                  setState(() {
+                    districtController.text = "";
+                  });
+                  print(state.label);
+                  print(state
+                      .value); // this prints the selected option which could be an object
+                },
+                label: '',
+              )),
               box10,
               districtLoading == true
                   ? LinearProgressIndicator(
@@ -125,7 +122,7 @@ class _DiagnosticState extends State<Diagnostic> {
                       ),
                     )
                   : Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.only(top: 10),
                       child: TextFieldSearch(
                           minStringLength: 0,
                           decoration: new InputDecoration(
@@ -166,7 +163,7 @@ class _DiagnosticState extends State<Diagnostic> {
               box30,
               box30,
               Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 20),
                 child: SizedBox(
                   height: 50,
                   width: double.infinity,
