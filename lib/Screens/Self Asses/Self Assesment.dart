@@ -58,6 +58,20 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
       });
       _chatFlow.removeAt(_chatFlow.length - 1);
       addAnswer(map["resp"]["allPrices"]);
+      Future.delayed(const Duration(seconds: 1), () {
+        _chatFlow.add(Container(
+          padding: EdgeInsets.only(top: 20),
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Done")),
+        ));
+      }).then((value) {
+        setState(() {});
+      });
     } catch (e) {
       print(e);
     }

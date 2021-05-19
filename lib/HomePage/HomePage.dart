@@ -3,6 +3,7 @@ import 'package:crisis/HomePage/TabBar.dart';
 import 'package:crisis/Screens/Covid%20Stats/Stats%20TabBar.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
+import 'package:crisis/Screens/Self%20Asses/Self%20Assesment.dart';
 import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/Videos/Videos.dart';
 import 'package:crisis/Screens/india_helplines.dart';
@@ -35,7 +36,12 @@ class _HomePageState extends State<HomePage> {
         label: Text('Self Assess'),
         icon: Icon(FontAwesomeIcons.stethoscope),
         backgroundColor: primaryColor,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            FadeRoute(page: Health()),
+          );
+        },
       ),
       drawer: MyDrawer(),
       appBar: AppBar(

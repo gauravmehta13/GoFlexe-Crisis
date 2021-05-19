@@ -52,13 +52,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
   }
 
   Future<bool> _willPopCallback() async {
-    await showDialog(
-        context: context,
-        builder: (_) {
-          return Container(
-            child: Text("data"),
-          );
-        });
+    await foundWhatNeeded(context);
     return true;
   }
 
