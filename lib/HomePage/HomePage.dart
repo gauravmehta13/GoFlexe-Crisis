@@ -29,6 +29,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: 10,
+        label: Text('Self Assess'),
+        icon: Icon(FontAwesomeIcons.stethoscope),
+        backgroundColor: primaryColor,
+        onPressed: () {},
+      ),
       drawer: MyDrawer(),
       appBar: AppBar(
         elevation: 0,
@@ -915,6 +923,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                       ]),
+                  SizedBox(
+                    height: 100,
+                  )
                 ],
               ),
             ],

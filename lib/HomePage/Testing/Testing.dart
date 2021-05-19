@@ -42,115 +42,40 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
 
     symptoms = Symptoms.getSymptoms();
     if (widget.diagnostic == true) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showDialog(
-            context: context,
-            builder: (_) {
-              return AlertDialog(
-                  title: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Center(
-                      child: SizedBox(
-                          height: 50,
-                          child: Image.asset("assets/diagnose.png")),
-                    ),
-                    box20,
-                    Text(
-                      "Find Diagnostic centre near you",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-                    box20,
-                    Diagnostic(),
-                  ],
-                ),
-              ));
-            });
-        //scrollToDiagnostic();
-      });
-    }
-    FirebaseAnalytics().logEvent(name: 'Testing', parameters: null);
-  }
-
-  scrollToDiagnostic() {
-    {
-      if (diagnoseKey.currentContext == null) {
-        if (_tabController.previousIndex == 0) {
-          print("object");
-          scrollController.position
-              .ensureVisible(
-            symptomKey.currentContext.findRenderObject(),
-            alignment: 0.0,
-            // How far into view the item should be scrolled (between 0 and 1).
-            duration: const Duration(milliseconds: 200),
-          )
-              .then((value) {
-            scrollController.position
-                .ensureVisible(
-              symptomKey.currentContext.findRenderObject(),
-              alignment: 0.5,
-              // How far into view the item should be scrolled (between 0 and 1).
-              duration: const Duration(milliseconds: 200),
-            )
-                .then((value) {
-              scrollController.position
-                  .ensureVisible(
-                testKey.currentContext.findRenderObject(),
-                alignment: 0.0,
-                // How far into view the item should be scrolled (between 0 and 1).
-                duration: const Duration(milliseconds: 200),
-              )
-                  .then((value) {
-                scrollController.position
-                    .ensureVisible(
-                  testKey.currentContext.findRenderObject(),
-                  alignment: 0.5,
-                  // How far into view the item should be scrolled (between 0 and 1).
-                  duration: const Duration(milliseconds: 200),
-                )
-                    .then((value) {
-                  scrollController.position.ensureVisible(
-                    diagnoseKey.currentContext.findRenderObject(),
-                    alignment: 0.2,
-                    // How far into view the item should be scrolled (between 0 and 1).
-                    duration: const Duration(milliseconds: 200),
-                  );
-                });
+      if (diagnosisShown == false) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                    title: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Center(
+                        child: SizedBox(
+                            height: 50,
+                            child: Image.asset("assets/diagnose.png")),
+                      ),
+                      box20,
+                      Text(
+                        "Find Diagnostic centre near you",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600),
+                      ),
+                      box20,
+                      Diagnostic(),
+                    ],
+                  ),
+                ));
               });
-            });
-          });
-        } else if (_tabController.previousIndex == 1) {
-          print("object1");
-          scrollController.position
-              .ensureVisible(
-            testKey.currentContext.findRenderObject(),
-            alignment: 0.5,
-            // How far into view the item should be scrolled (between 0 and 1).
-            duration: const Duration(milliseconds: 200),
-          )
-              .then((value) {
-            scrollController.position.ensureVisible(
-              diagnoseKey.currentContext.findRenderObject(),
-              alignment: 0.2,
-              // How far into view the item should be scrolled (between 0 and 1).
-              duration: const Duration(milliseconds: 200),
-            );
-          });
-        }
-      } else {
-        print("object2");
-        // scrollController.animateTo(1000,
-        //     duration: Duration(milliseconds: 500), curve: Curves.ease);
-        scrollController.position.ensureVisible(
-          diagnoseKey.currentContext.findRenderObject(),
-          alignment: 0.0,
-          // How far into view the item should be scrolled (between 0 and 1).
-          duration: const Duration(milliseconds: 600),
-        );
+        });
+        setState(() {
+          diagnosisShown = true;
+        });
       }
     }
+    FirebaseAnalytics().logEvent(name: 'Testing', parameters: null);
   }
 
   void addScrollControllerListener() {

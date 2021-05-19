@@ -22,17 +22,17 @@ class GoFlexeTabBar extends StatefulWidget {
 class _GoFlexeTabBarState extends State<GoFlexeTabBar>
     with TickerProviderStateMixin {
   TabController _tabController;
-  //Timer _timer;
+  Timer _timer;
 
   @override
   void initState() {
     _tabController =
         TabController(length: 4, vsync: this, initialIndex: widget.index ?? 0);
     super.initState();
-    // _timer = new Timer(const Duration(minutes: 1), () {
-    //   FirebaseAnalytics().logEvent(name: 'Feedback_Popup', parameters: null);
-    //   showFeedback();
-    // });
+    _timer = new Timer(const Duration(minutes: 1), () {
+      FirebaseAnalytics().logEvent(name: 'Feedback_Popup', parameters: null);
+      showFeedback();
+    });
   }
 
   showFeedback() async {
@@ -51,125 +51,139 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
     _tabController.dispose();
   }
 
+  Future<bool> _willPopCallback() async {
+    await showDialog(
+        context: context,
+        builder: (_) {
+          return Container(
+            child: Text("data"),
+          );
+        });
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      key: myGlobals.scaffoldKey,
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          "GoFlexe",
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-        ),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () {
-              FirebaseAnalytics()
-                  .logEvent(name: 'Shared_Website', parameters: null);
-              Share.share(
-                  '\n https://crisis.goflexe.com/ \n\nYou will help patients and their families by accessing covid related resources such as diagnostic center, home treatment, hospital bed availability and vaccination centres near them.\n\nYou will be able to spread awareness about corona related myths and clarifying frequently asked questions. Goflexe has connected with authentic government and private sources to bring you verified data.Please share with your friends and families. We’ll get through this crisis together. 🙏');
-            },
-            child: Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
-            ),
-          )
-        ],
-      ),
-      drawer: MyDrawer(),
-      body: Column(
-        children: [
-          Container(
-            height: 50,
-            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(
-                25.0,
-              ),
-            ),
-            child: TabBar(
-              onTap: (e) {
-                final FocusScopeNode currentScope = FocusScope.of(context);
-                if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-                  FocusManager.instance.primaryFocus.unfocus();
-                }
+    return new WillPopScope(
+      onWillPop: _willPopCallback,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        key: myGlobals.scaffoldKey,
+        appBar: AppBar(
+          elevation: 0,
+          title: Text(
+            "GoFlexe",
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            GestureDetector(
+              onTap: () {
+                FirebaseAnalytics()
+                    .logEvent(name: 'Shared_Website', parameters: null);
+                Share.share(
+                    '\n https://crisis.goflexe.com/ \n\nYou will help patients and their families by accessing covid related resources such as diagnostic center, home treatment, hospital bed availability and vaccination centres near them.\n\nYou will be able to spread awareness about corona related myths and clarifying frequently asked questions. Goflexe has connected with authentic government and private sources to bring you verified data.Please share with your friends and families. We’ll get through this crisis together. 🙏');
               },
-              controller: _tabController,
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    25.0,
-                  ),
-                  color: Color(0xFF3f51b5)),
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
-              isScrollable: true,
-              tabs: [
-                // first tab [you can add an icon using the icon property]
-                Tab(
-                  child: Text(
-                    "Testing",
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
+              child: Padding(
+                padding: EdgeInsets.only(right: 15.0),
+                child: Icon(
+                  Icons.share,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+        drawer: MyDrawer(),
+        body: Column(
+          children: [
+            Container(
+              height: 50,
+              margin: EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(
+                  25.0,
+                ),
+              ),
+              child: TabBar(
+                onTap: (e) {
+                  final FocusScopeNode currentScope = FocusScope.of(context);
+                  if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                    FocusManager.instance.primaryFocus.unfocus();
+                  }
+                },
+                controller: _tabController,
+                indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      25.0,
+                    ),
+                    color: Color(0xFF3f51b5)),
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.black,
+                isScrollable: true,
+                tabs: [
+                  // first tab [you can add an icon using the icon property]
+                  Tab(
+                    child: Text(
+                      "Testing",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    "Home Treatment",
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
+                  Tab(
+                    child: Text(
+                      "Home Treatment",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    "Hospitalisation",
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
+                  Tab(
+                    child: Text(
+                      "Hospitalisation",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-                // second tab [you can add an icon using the icon property]
+                  // second tab [you can add an icon using the icon property]
 
-                Tab(
-                  child: Text(
-                    "Vaccination",
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
+                  Tab(
+                    child: Text(
+                      "Vaccination",
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
 
-          // tab bar view here
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                Testing(
-                  diagnostic: widget.centerIndex == 0 ? true : false,
-                ),
-                HomeTreatment(
-                  homeCare: widget.centerIndex == 1 ? true : false,
-                ),
-                Hospital(),
-                Vaccination()
-              ],
+            // tab bar view here
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  Testing(
+                    diagnostic: widget.centerIndex == 0 ? true : false,
+                  ),
+                  HomeTreatment(
+                    homeCare: widget.centerIndex == 1 ? true : false,
+                  ),
+                  Hospital(),
+                  Vaccination()
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

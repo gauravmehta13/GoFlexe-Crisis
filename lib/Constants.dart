@@ -70,7 +70,7 @@ Future<void> giveFeedback(ctx) async {
 }
 
 List symptomsData = [];
-bool testingShown = false;
+bool diagnosisShown = false;
 
 const EdgeInsets padding10 = EdgeInsets.all(10);
 const SizedBox box10 = SizedBox(

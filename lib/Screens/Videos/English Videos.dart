@@ -55,6 +55,7 @@ class _EnglishVideosState extends State<EnglishVideos> {
           desktopMode: false,
           privacyEnhanced: true,
           useHybridComposition: true,
+          autoPlay: false,
         ),
       ));
       controllers[i].onEnterFullscreen = () {

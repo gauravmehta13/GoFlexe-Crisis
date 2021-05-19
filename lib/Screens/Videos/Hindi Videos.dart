@@ -50,12 +50,12 @@ class _HindiVideosState extends State<HindiVideos> {
       controllers.add(YoutubePlayerController(
         initialVideoId: videos[i],
         params: const YoutubePlayerParams(
-          showControls: true,
-          showFullscreenButton: true,
-          desktopMode: false,
-          privacyEnhanced: true,
-          useHybridComposition: true,
-        ),
+            showControls: true,
+            showFullscreenButton: true,
+            desktopMode: false,
+            privacyEnhanced: true,
+            useHybridComposition: true,
+            autoPlay: false),
       ));
       controllers[i].onEnterFullscreen = () {
         SystemChrome.setPreferredOrientations([
