@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "49675d273a013188733613e056008bc6",
+  "assets/AssetManifest.json": "60935b1e96512c79903cb7b3dc46180c",
 "assets/assets/alert.png": "78f1369d46d09567736dcdf88c10bda5",
 "assets/assets/anxiety.png": "b3faed779db63beb1c92601988800482",
 "assets/assets/bed.png": "c7ae24f023cdbcbcba100bb5a5b3f32b",
@@ -51,6 +51,7 @@ const RESOURCES = {
 "assets/assets/thermometer.png": "9dfb6bd9804876bdc5b95cc33b57091e",
 "assets/assets/twitter.png": "6d15c4b76dddbf664e6f7fd06408f1fd",
 "assets/assets/vaccine.png": "34563ef1c6d23cc8b4a690365c8d5135",
+"assets/assets/video.png": "fd9c9a8ae43865673af7968cf8870368",
 "assets/assets/vitamins.png": "45425ec968a8cbbfe65e0c3e69f801e2",
 "assets/assets/warning.png": "27e28f8d3352a284662ef957558ef77d",
 "assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
@@ -68,9 +69,9 @@ const RESOURCES = {
 "icons/icon-256x256.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-384x384.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-512x512.png": "35136776c18ce58fb74f9353d7e978a8",
-"index.html": "e057a46584902e36a232b473b78719b2",
-"/": "e057a46584902e36a232b473b78719b2",
-"main.dart.js": "9c465f008d0d3946065758d9edc4bb6e",
+"index.html": "981a527c9066a125fca1d3ae50a55018",
+"/": "981a527c9066a125fca1d3ae50a55018",
+"main.dart.js": "e8d9d16c77efe9d31f108baf719c048f",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
 "splash/img/dark-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
 "splash/img/light-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
