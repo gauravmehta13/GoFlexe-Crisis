@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:crisis/Widgets/Loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,59 +11,69 @@ class Videos extends StatefulWidget {
 }
 
 class _VideosState extends State<Videos> {
-  YoutubePlayerController _controller;
+  List<YoutubePlayerController> controllers = [];
+  List videos = ['CJzo6JIqhCw', 'OlO8sKRynBY', 'OlO8sKRynBY', 'OlO8sKRynBY'];
+  bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: 'qEV_GAqOsos',
-      params: const YoutubePlayerParams(
-        startAt: const Duration(minutes: 1, seconds: 36),
-        showControls: true,
-        showFullscreenButton: true,
-        desktopMode: true,
-        privacyEnhanced: true,
-        useHybridComposition: true,
-      ),
-    );
+    getVideos();
+  }
 
-    _controller.onEnterFullscreen = () {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      log('Entered Fullscreen');
-    };
-    _controller.onExitFullscreen = () {
-      log('Exited Fullscreen');
-    };
+  getVideos() {
+    for (var i = 0; i < videos.length; i++) {
+      controllers.add(YoutubePlayerController(
+        initialVideoId: videos[i],
+        params: const YoutubePlayerParams(
+          showControls: true,
+          showFullscreenButton: true,
+          desktopMode: true,
+          privacyEnhanced: true,
+          useHybridComposition: true,
+        ),
+      ));
+      controllers[i].onEnterFullscreen = () {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ]);
+        log('Entered Fullscreen');
+      };
+      controllers[i].onExitFullscreen = () {
+        log('Exited Fullscreen');
+      };
+    }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    const player = YoutubePlayerIFrame();
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('About Us'),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return ListView(
-              children: [
-                YoutubePlayerIFrame(
-                  controller: _controller,
+      appBar: AppBar(
+        title: const Text('About Us'),
+      ),
+      body: loading == true
+          ? Loading()
+          : ListView.builder(
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int index) {
+                return YoutubePlayerIFrame(
+                  controller: controllers[index],
                   aspectRatio: 16 / 9,
-                ),
-              ],
-            );
-          },
-        ));
+                );
+              }),
+    );
   }
 
   @override
   void dispose() {
-    _controller.close();
+    print("dispose");
+    for (var i = 0; i < controllers.length; i++) {
+      controllers[i].close();
+    }
     super.dispose();
   }
 }

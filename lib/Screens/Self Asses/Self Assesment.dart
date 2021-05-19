@@ -210,7 +210,7 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
       body: loading == true
           ? Loading()
           : SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: height * 0.2),
+              padding: EdgeInsets.only(bottom: height * 0.2, top: 20),
               controller: _scrollController,
               // reverse: true,
               child: ConstrainedBox(
