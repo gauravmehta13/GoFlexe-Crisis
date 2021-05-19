@@ -5,7 +5,6 @@ import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
 import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/india_helplines.dart';
-import 'package:crisis/Videos/Videos.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'Fade Route.dart';
 import 'Screens/Covid Stats/Stats TabBar.dart';
 import 'Screens/Self Asses/Self Assesment.dart';
+import 'Screens/Videos/Videos.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
