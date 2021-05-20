@@ -112,148 +112,187 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget registerScreen() {
     final node = FocusScope.of(context);
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: new AppBar(
-          title: Text('Goflexe Crisis'),
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ));
+              },
+              child: Text(
+                "Skip",
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          ],
+          elevation: 0,
         ),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Spacer(),
-                  Text(
-                    "Login First",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    height: 130,
-                    child: Image.asset('assets/holding-phone.png'),
-                  ),
-                  box30,
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 64),
-                    child: Text(
-                      "You'll receive a 4 digit code to verify next.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF818181),
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(25),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: 230,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "Enter your phone",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  TextFormField(
-                                    autofocus: true,
-                                    enabled: !isLoading,
-                                    keyboardType: TextInputType.phone,
-                                    style: TextStyle(fontSize: 14),
-                                    controller: cellnumberController,
-                                    textInputAction: TextInputAction.done,
-                                    maxLength: 10,
-                                    onFieldSubmitted: (_) => node.unfocus(),
-                                    decoration: InputDecoration(
-                                      prefixIconConstraints: BoxConstraints(
-                                          minWidth: 0, minHeight: 0),
-                                      isDense: true,
-                                      prefixIcon: Text("+91 "),
-                                    ),
-                                    validator: (text) {
-                                      if (text == null || text.isEmpty) {
-                                        return 'Please enter a Mobile Number';
-                                      }
-                                      if (10 < text.length ||
-                                          10 > text.length) {
-                                        return 'Please enter Correct Mobile Number';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ],
+        key: _scaffoldKey,
+        body: SafeArea(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      color: primaryColor,
+                      child: Column(
+                        children: <Widget>[
+                          box20,
+                          Image.asset(
+                            'assets/fight-corona.png',
+                            alignment: Alignment.bottomCenter,
+                            height: 150,
+                            fit: BoxFit.fitWidth,
+                          ),
+                          box30,
+                          Text(
+                            "Login to GoFlexe Crisis",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 64),
+                            child: Text(
+                              "You'll receive a 4 digit code to verify next.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
                               ),
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  new ElevatedButton(
-                                    onPressed: () {
-                                      if (!isLoading) {
-                                        if (_formKey.currentState.validate()) {
-                                          // If the form is valid, we want to show a loading Snackbar
-                                          setState(() {
-                                            isRegister = false;
-                                            isOTPScreen = true;
-                                          });
-                                          login();
+                          ),
+                          box20
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                width: 230,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Enter your phone",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    TextFormField(
+                                      autofocus: true,
+                                      enabled: !isLoading,
+                                      keyboardType: TextInputType.phone,
+                                      style: TextStyle(fontSize: 14),
+                                      controller: cellnumberController,
+                                      textInputAction: TextInputAction.send,
+                                      maxLength: 10,
+                                      onEditingComplete: () {
+                                        if (!isLoading) {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            // If the form is valid, we want to show a loading Snackbar
+                                            setState(() {
+                                              isRegister = false;
+                                              isOTPScreen = true;
+                                            });
+                                            login();
+                                          }
                                         }
-                                      }
-                                    },
-                                    child: new Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0,
-                                        horizontal: 15.0,
+                                      },
+                                      decoration: InputDecoration(
+                                        prefixIconConstraints: BoxConstraints(
+                                            minWidth: 0, minHeight: 0),
+                                        isDense: true,
+                                        prefixIcon: Text("+91 "),
                                       ),
-                                      child: new Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          new Expanded(
-                                            child: Text(
-                                              "Continue",
-                                              textAlign: TextAlign.center,
+                                      validator: (text) {
+                                        if (text == null || text.isEmpty) {
+                                          return 'Please enter a Mobile Number';
+                                        }
+                                        if (10 < text.length ||
+                                            10 > text.length) {
+                                          return 'Please enter Correct Mobile Number';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    new ElevatedButton(
+                                      onPressed: () {
+                                        if (!isLoading) {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            // If the form is valid, we want to show a loading Snackbar
+                                            setState(() {
+                                              isRegister = false;
+                                              isOTPScreen = true;
+                                            });
+                                            login();
+                                          }
+                                        }
+                                      },
+                                      child: new Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 15.0,
+                                          horizontal: 15.0,
+                                        ),
+                                        child: new Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            new Expanded(
+                                              child: Text(
+                                                "Continue",
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    box20
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              )),
+                            ],
+                          ),
+                        )),
+                    Spacer(),
+                  ],
+                )),
+          ),
         ));
   }
 
@@ -493,7 +532,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       isLoading = false;
                     }),
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => HomePage(),

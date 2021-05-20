@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
               buttonTheme: ButtonThemeData(
                 buttonColor: primaryColor,
               )),
-          home: !skippedLogin ? HomePage() : RegisterScreen()),
+          home: skippedLogin ? HomePage() : RegisterScreen()),
     );
   }
 }
