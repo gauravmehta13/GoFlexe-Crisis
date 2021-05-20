@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:rating_dialog/rating_dialog.dart';
+
+import 'Widgets/Rating Dialog.dart';
 
 MyGlobals myGlobals = MyGlobals();
 
