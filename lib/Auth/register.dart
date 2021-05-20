@@ -1,4 +1,5 @@
 import 'package:crisis/Constants.dart';
+import 'package:crisis/HomePage/HomePage.dart';
 import 'package:crisis/HomePage/TabBar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -68,17 +69,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget returnLoginCompleted() {
     return Scaffold(
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
+        child: SizedBox(
+          height: 50,
+          child: MaterialButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            color: Color(0xFFf9a825),
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(),
+                  ));
+            },
+            child: Text(
+              "Return to Home Screen",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(),
       body: Container(
+        padding: EdgeInsets.all(40),
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/check.png"),
+            Image.asset(
+              "assets/check.png",
+              height: 100,
+            ),
             box30,
-            Text("Successfull"),
             Text(
-                "You will get an SMS when the Vaccine Slots will become available in your area")
+              "Registration Successful",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            ),
+            box20,
+            Text(
+              "You will get an SMS when the Vaccine Slots will become available in your area.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+            )
           ],
         ),
       ),
@@ -468,7 +504,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   {
                     setState(() {
                       isLoading = false;
-                      isOTPScreen = false;
                       loginCompleted = true;
                     }),
                     // Navigator.push(

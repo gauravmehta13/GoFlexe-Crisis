@@ -4,6 +4,7 @@ import 'package:crisis/HomePage/Home%20Treatment/Home%20treatment.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/HomePage/Testing/Testing.dart';
 import 'package:crisis/HomePage/Vaccination/Vaccination.dart';
+import 'package:crisis/Widgets/Found%20What%20Needed%20Dialog.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -52,7 +53,14 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
   }
 
   Future<bool> _willPopCallback() async {
-    await foundWhatNeeded(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool foundPopup = prefs.getBool('foundPopup');
+    print(foundPopup);
+    if (foundPopup != true) {
+      await showDialog(
+          context: context, builder: (ctx) => FoundWhatNeededDialog());
+      prefs.setBool('foundPopup', true);
+    }
     return true;
   }
 

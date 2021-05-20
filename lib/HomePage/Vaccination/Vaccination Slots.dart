@@ -38,7 +38,9 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
     FirebaseAnalytics().logEvent(name: 'Vaccination_Centers', parameters: null);
   }
 
-  submitVaccinationRequest() {}
+  submitVaccinationRequest() {
+    displaySnackBar("Coming Soon", context);
+  }
 
   getSlot() async {
     try {
