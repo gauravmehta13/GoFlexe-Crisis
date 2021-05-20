@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:crisis/Auth/register.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
@@ -38,8 +40,26 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
     FirebaseAnalytics().logEvent(name: 'Vaccination_Centers', parameters: null);
   }
 
-  submitVaccinationRequest() {
-    displaySnackBar("Coming Soon", context);
+  submitVaccinationRequest() async {
+    try {
+      final response = await dio.post(
+          'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
+          data: {
+            "tenantSet_id": "CRISIS01",
+            "useCase": "register",
+            "tenantUsecase": "register",
+            "phone": _auth.currentUser.phoneNumber,
+            "pincode": widget.pin
+          });
+      print(response);
+      Map<String, dynamic> map = json.decode(response.toString());
+      displayTimedSnackBar(map["resp"]["allProces"], context, 2);
+    } catch (e) {
+      print(e);
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   getSlot() async {

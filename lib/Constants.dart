@@ -111,6 +111,15 @@ displaySnackBar(text, ctx) {
   );
 }
 
+displayTimedSnackBar(text, ctx, seconds) {
+  ScaffoldMessenger.of(ctx).showSnackBar(
+    SnackBar(
+      content: Text(text),
+      duration: Duration(seconds: seconds),
+    ),
+  );
+}
+
 const cities = [
   "Achalpur",
   "Achhnera",
