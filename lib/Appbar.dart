@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import "./ProgressBar.dart";
-import 'package:flutter/foundation.dart';
 
 class MyAppBar extends StatelessWidget {
   final String title;
