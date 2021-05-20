@@ -30,11 +30,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var isOTPScreen = false;
   var verificationCode = '';
 
+  FocusNode inputNode = FocusNode();
+
   //Form controllers
   @override
   void initState() {
     super.initState();
     setSkip();
+    openKeyboard();
     FirebaseAnalytics().logEvent(name: 'Login_Page', parameters: null);
   }
 
@@ -43,14 +46,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await prefs.setBool("skippedLogin", true);
   }
 
-  // @override
-  // void dispose() {
-  //   // Clean up the controller when the Widget is disposed
-  //   nameController.dispose();
-  //   cellnumberController.dispose();
-  //   otpController.dispose();
-  //   super.dispose();
-  // }
+  void openKeyboard() {
+    FocusScope.of(context).requestFocus(inputNode);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,6 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                     ),
                                     TextFormField(
+                                      focusNode: inputNode,
                                       autofocus: true,
                                       enabled: !isLoading,
                                       keyboardType: TextInputType.phone,
