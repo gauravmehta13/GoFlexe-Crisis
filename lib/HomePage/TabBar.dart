@@ -70,7 +70,6 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
       onWillPop: _willPopCallback,
       child: Scaffold(
         backgroundColor: Colors.white,
-        key: myGlobals.scaffoldKey,
         appBar: AppBar(
           elevation: 0,
           title: Text(

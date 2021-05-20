@@ -7,17 +7,7 @@ import 'package:flutter/painting.dart';
 
 import 'Widgets/Rating Dialog.dart';
 
-MyGlobals myGlobals = MyGlobals();
-
-class MyGlobals {
-  GlobalKey _scaffoldKey;
-  MyGlobals() {
-    _scaffoldKey = GlobalKey();
-  }
-  GlobalKey get scaffoldKey => _scaffoldKey;
-}
-
-sendFeedback(rating, comment) async {
+sendFeedback(rating, comment, ctx) async {
   var dio = Dio();
   try {
     final response = await dio.post(
@@ -31,8 +21,7 @@ sendFeedback(rating, comment) async {
         });
     print(response);
     Map<String, dynamic> map = json.decode(response.toString());
-    displaySnackBar(map["resp"]["allPrices"].toString(),
-        myGlobals.scaffoldKey.currentContext);
+    displaySnackBar(map["resp"]["allPrices"].toString(), ctx);
   } catch (e) {
     print(e);
   }
@@ -59,7 +48,7 @@ Future<void> giveFeedback(ctx) async {
             },
             onSubmitted: (response) {
               print('rating: ${response.rating}, comment: ${response.comment}');
-              sendFeedback(response.rating, response.comment);
+              sendFeedback(response.rating, response.comment, ctx);
               FirebaseAnalytics().logEvent(
                   name: 'Feedback_Completed',
                   parameters: {
