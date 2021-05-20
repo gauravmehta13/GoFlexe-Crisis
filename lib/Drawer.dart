@@ -1,4 +1,5 @@
 import 'package:crisis/Constants.dart';
+import 'package:crisis/HomePage/HomePage.dart';
 import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/Screens/Disclaimer.dart';
 import 'package:crisis/Screens/Faq.dart';
@@ -272,7 +273,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
   signOut() {
     _auth.signOut().then((value) => Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => Hospital())));
+        MaterialPageRoute(builder: (BuildContext context) => HomePage())));
   }
 }
 

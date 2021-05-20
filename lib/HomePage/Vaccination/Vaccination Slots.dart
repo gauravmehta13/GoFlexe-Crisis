@@ -1,11 +1,17 @@
+import 'package:crisis/Auth/register.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
+import 'package:crisis/Widgets/error404.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Constants.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
+import '../../Fade Route.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class VaccinationSlots extends StatefulWidget {
   final pin;
@@ -23,6 +29,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
   var data = [];
   var filteredData = [];
   bool loading = true;
+  bool error = false;
   DateTime now = new DateTime.now();
 
   void initState() {
@@ -31,59 +38,67 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
     FirebaseAnalytics().logEvent(name: 'Vaccination_Centers', parameters: null);
   }
 
+  submitVaccinationRequest() {}
+
   getSlot() async {
-    if (widget.district == false) {
-      var resp = await dio.get(
-          "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${widget.pin}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
-      print(resp.data);
-      var tempData = resp.data["centers"];
-      for (var i = 0; i < tempData.length; i++) {
-        int x = 0;
+    try {
+      if (widget.district == false) {
+        var resp = await dio.get(
+            "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${widget.pin}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
+        print(resp.data);
+        var tempData = resp.data["centers"];
+        for (var i = 0; i < tempData.length; i++) {
+          int x = 0;
 
-        for (var j = 0; j < tempData[i]["sessions"].length; j++) {
+          for (var j = 0; j < tempData[i]["sessions"].length; j++) {
+            setState(() {
+              x = x + tempData[i]["sessions"][j]["available_capacity"];
+            });
+          }
           setState(() {
-            x = x + tempData[i]["sessions"][j]["available_capacity"];
+            tempData[i]["slots"] = x;
           });
         }
+
+        tempData.sort(
+            (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
         setState(() {
-          tempData[i]["slots"] = x;
+          data = tempData;
+          filteredData = tempData;
+        });
+      } else {
+        var resp = await dio.get(
+            "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${widget.districtId}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
+        print(resp.data);
+        var tempData = resp.data["centers"];
+        for (var i = 0; i < tempData.length; i++) {
+          int x = 0;
+
+          for (var j = 0; j < tempData[i]["sessions"].length; j++) {
+            setState(() {
+              x = x + tempData[i]["sessions"][j]["available_capacity"];
+            });
+          }
+          setState(() {
+            tempData[i]["slots"] = x;
+          });
+        }
+        tempData.sort(
+            (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
+        setState(() {
+          data = tempData;
+          filteredData = tempData;
         });
       }
-
-      tempData.sort(
-          (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
       setState(() {
-        data = tempData;
-        filteredData = tempData;
+        loading = false;
       });
-    } else {
-      var resp = await dio.get(
-          "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${widget.districtId}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
-      print(resp.data);
-      var tempData = resp.data["centers"];
-      for (var i = 0; i < tempData.length; i++) {
-        int x = 0;
-
-        for (var j = 0; j < tempData[i]["sessions"].length; j++) {
-          setState(() {
-            x = x + tempData[i]["sessions"][j]["available_capacity"];
-          });
-        }
-        setState(() {
-          tempData[i]["slots"] = x;
-        });
-      }
-      tempData.sort(
-          (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
+    } catch (e) {
       setState(() {
-        data = tempData;
-        filteredData = tempData;
+        loading = false;
+        error = true;
       });
     }
-
-    setState(() {
-      loading = false;
-    });
   }
 
   @override
@@ -122,404 +137,423 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
             width: MediaQuery.of(context).size.width,
             child: loading == true
                 ? Loading()
-                : data.length == 0
-                    ? Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                height: 100,
-                                child: Image.asset("assets/anxiety.png")),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Text(
-                              "Sorry!",
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.w600),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              "No slots available at the moment",
-                              style: TextStyle(
-                                  color: Colors.grey[700], fontSize: 18),
-                            ),
-                            box30,
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: SizedBox(
-                                  height: 50,
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFFf9a825), // background
-                                      onPrimary: Colors.white, // foreground
-                                    ),
-                                    onPressed: () async {
-                                      displaySnackBar("Coming Soon", context);
-                                    },
-                                    child: Text(
-                                      "Notify me when slots are available",
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: Column(
-                          children: [
-                            box20,
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: new TextFormField(
-                                textInputAction: TextInputAction.go,
-                                onChanged: (string) {
-                                  setState(() {
-                                    filteredData = (data)
-                                        .where((u) => (u['name']
-                                                .toString()
-                                                .toLowerCase()
-                                                .contains(
-                                                    string.toLowerCase()) ||
-                                            u['address']
-                                                .toString()
-                                                .toLowerCase()
-                                                .contains(
-                                                    string.toLowerCase())))
-                                        .toList();
-                                  });
-                                },
-                                keyboardType: TextInputType.text,
-                                decoration: new InputDecoration(
-                                  isDense: true, // Added this
-                                  contentPadding: EdgeInsets.all(15),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xFF2821B5),
-                                    ),
-                                  ),
-                                  border: new OutlineInputBorder(
-                                      borderSide:
-                                          new BorderSide(color: Colors.grey)),
-                                  suffixIcon: Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Icon(
-                                      Icons.search,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  hintText: "Search..",
+                : error == true
+                    ? Error404()
+                    : data.length == 0
+                        ? Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: 100,
+                                    child: Image.asset("assets/anxiety.png")),
+                                SizedBox(
+                                  height: 40,
                                 ),
-                              ),
+                                Text(
+                                  "Sorry!",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "No slots available at the moment",
+                                  style: TextStyle(
+                                      color: Colors.grey[700], fontSize: 18),
+                                ),
+                                box30,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary:
+                                              Color(0xFFf9a825), // background
+                                          onPrimary: Colors.white, // foreground
+                                        ),
+                                        onPressed: () async {
+                                          if (_auth.currentUser == null) {
+                                            Navigator.push(
+                                              context,
+                                              FadeRoute(
+                                                  page: RegisterScreen(
+                                                screenName: "Vaccination",
+                                                district: widget.distrctName,
+                                                districtCode: widget.districtId,
+                                                pincode: widget.pin,
+                                              )),
+                                            );
+                                          } else {
+                                            submitVaccinationRequest();
+                                          }
+                                        },
+                                        child: Text(
+                                          "Notify me when slots are available",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      )),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Disclaimer : While we have real-time data, slot availability on CoWin changes rapidly. If you see availability, please book on CoWin instantly before the slots are lost.",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.grey[700]),
-                              ),
-                            ),
-                            filteredData.length == 0
-                                ? NoResult()
-                                : ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: filteredData.length,
-                                    itemBuilder: (context, index) {
-                                      return Card(
-                                        elevation: 2,
-                                        shape: new RoundedRectangleBorder(
-                                            side: new BorderSide(
-                                                color: Colors.grey, width: 0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(4.0)),
-                                        child: ExpansionTile(
-                                            tilePadding:
-                                                EdgeInsets.only(right: 5),
-                                            title: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 10,
-                                                            horizontal: 10),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            filteredData[index]
-                                                                    ['name'] ??
-                                                                "",
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600)),
-                                                        SizedBox(
-                                                          height: 7,
-                                                        ),
-                                                        Row(
+                          )
+                        : SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            child: Column(
+                              children: [
+                                box20,
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: new TextFormField(
+                                    textInputAction: TextInputAction.go,
+                                    onChanged: (string) {
+                                      setState(() {
+                                        filteredData = (data)
+                                            .where((u) => (u['name']
+                                                    .toString()
+                                                    .toLowerCase()
+                                                    .contains(
+                                                        string.toLowerCase()) ||
+                                                u['address']
+                                                    .toString()
+                                                    .toLowerCase()
+                                                    .contains(
+                                                        string.toLowerCase())))
+                                            .toList();
+                                      });
+                                    },
+                                    keyboardType: TextInputType.text,
+                                    decoration: new InputDecoration(
+                                      isDense: true, // Added this
+                                      contentPadding: EdgeInsets.all(15),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        borderSide: BorderSide(
+                                          width: 1,
+                                          color: Color(0xFF2821B5),
+                                        ),
+                                      ),
+                                      border: new OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Colors.grey)),
+                                      suffixIcon: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
+                                        child: Icon(
+                                          Icons.search,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      hintText: "Search..",
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Disclaimer : While we have real-time data, slot availability on CoWin changes rapidly. If you see availability, please book on CoWin instantly before the slots are lost.",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey[700]),
+                                  ),
+                                ),
+                                filteredData.length == 0
+                                    ? NoResult()
+                                    : ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: filteredData.length,
+                                        itemBuilder: (context, index) {
+                                          return Card(
+                                            elevation: 2,
+                                            shape: new RoundedRectangleBorder(
+                                                side: new BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 0.5),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: ExpansionTile(
+                                                tilePadding:
+                                                    EdgeInsets.only(right: 5),
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10,
+                                                                horizontal: 10),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .location_pin,
-                                                              size: 12,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                  filteredData[
-                                                                              index]
-                                                                          [
-                                                                          'address'] ??
-                                                                      "",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                            .grey[
-                                                                        700],
+                                                            Text(
+                                                                filteredData[
+                                                                            index]
+                                                                        [
+                                                                        'name'] ??
+                                                                    "",
+                                                                style: TextStyle(
                                                                     fontSize:
-                                                                        11,
-                                                                  )),
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600)),
+                                                            SizedBox(
+                                                              height: 7,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons
+                                                                      .location_pin,
+                                                                  size: 12,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                      filteredData[index]
+                                                                              [
+                                                                              'address'] ??
+                                                                          "",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .grey[700],
+                                                                        fontSize:
+                                                                            11,
+                                                                      )),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        color: filteredData[
-                                                                        index]
-                                                                    ["slots"] !=
-                                                                0
-                                                            ? filteredData[index][
-                                                                        "slots"] >
-                                                                    3
-                                                                ? Colors
-                                                                    .green[200]
-                                                                : Colors.orangeAccent[
-                                                                    200]
-                                                            : Colors.grey[200],
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .grey[300]),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    5))),
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 10,
-                                                            horizontal: 10),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          // "${filteredData[index]["fee_type"]}",
-                                                          "${filteredData[index]["slots"]} Slots",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              color: Colors
-                                                                  .grey[900],
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                          "${filteredData[index]["fee_type"]}",
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              color: Colors
-                                                                  .grey[900],
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            children: <Widget>[
-                                              IgnorePointer(
-                                                child: Container(
-                                                    child: Table(
-                                                        border: TableBorder.all(
-                                                            color: Colors
-                                                                .grey[300]),
-                                                        children: [
-                                                      TableRow(children: [
-                                                        Center(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            child: Text(
-                                                              "Date",
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Center(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            child: Text(
-                                                              "Vaccine",
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Center(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            child: Text(
-                                                              "Available",
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ])
-                                                    ])),
-                                              ),
-                                              IgnorePointer(
-                                                child: ListView.builder(
-                                                    shrinkWrap: true,
-                                                    itemCount:
-                                                        filteredData[index]
-                                                                ["sessions"]
-                                                            .length,
-                                                    itemBuilder: (context, j) {
-                                                      return Container(
+                                                    Expanded(
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: filteredData[index]
+                                                                            [
+                                                                            "slots"] !=
+                                                                        0
+                                                                    ? filteredData[index]["slots"] >
+                                                                            3
+                                                                        ? Colors.green[
+                                                                            200]
+                                                                        : Colors.orangeAccent[
+                                                                            200]
+                                                                    : Colors.grey[
+                                                                        200],
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        300]),
+                                                                borderRadius:
+                                                                    BorderRadius.all(
+                                                                        Radius.circular(
+                                                                            5))),
                                                         padding: EdgeInsets
                                                             .symmetric(
-                                                                horizontal: 0),
+                                                                vertical: 10,
+                                                                horizontal: 10),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              // "${filteredData[index]["fee_type"]}",
+                                                              "${filteredData[index]["slots"]} Slots",
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      900],
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              "${filteredData[index]["fee_type"]}",
+                                                              style: TextStyle(
+                                                                  fontSize: 10,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      900],
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                children: <Widget>[
+                                                  IgnorePointer(
+                                                    child: Container(
                                                         child: Table(
-                                                          border:
-                                                              TableBorder.all(
+                                                            border:
+                                                                TableBorder.all(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        300]),
+                                                            children: [
+                                                          TableRow(children: [
+                                                            Center(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        5.0),
+                                                                child: Text(
+                                                                  "Date",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Center(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        5.0),
+                                                                child: Text(
+                                                                  "Vaccine",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Center(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        5.0),
+                                                                child: Text(
+                                                                  "Available",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ])
+                                                        ])),
+                                                  ),
+                                                  IgnorePointer(
+                                                    child: ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount:
+                                                            filteredData[index]
+                                                                    ["sessions"]
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, j) {
+                                                          return Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        0),
+                                                            child: Table(
+                                                              border: TableBorder.all(
                                                                   color: Colors
                                                                           .grey[
                                                                       300]),
-                                                          children: [
-                                                            TableRow(
-                                                                decoration: new BoxDecoration(
-                                                                    color: filteredData[index]["sessions"][j]["available_capacity"] ==
-                                                                            0
-                                                                        ? Colors.grey[
-                                                                            200]
-                                                                        : Colors
-                                                                            .green[200]),
-                                                                children: [
-                                                                  Center(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              5),
-                                                                      child: Text(
-                                                                          filteredData[index]["sessions"][j]["date"] ??
-                                                                              "",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                12,
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                  Center(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              5),
-                                                                      child: Text(
-                                                                          filteredData[index]["sessions"][j]["vaccine"] ??
-                                                                              "",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                12,
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                  Center(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              5),
-                                                                      child: Text(
-                                                                          filteredData[index]["sessions"][j]["available_capacity"].toString() ??
-                                                                              "",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                12,
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                ])
-                                                          ],
-                                                        ),
-                                                      );
-                                                    }),
-                                              )
-                                            ]),
-                                      );
-                                    }),
-                          ],
-                        ),
-                      )));
+                                                              children: [
+                                                                TableRow(
+                                                                    decoration: new BoxDecoration(
+                                                                        color: filteredData[index]["sessions"][j]["available_capacity"] ==
+                                                                                0
+                                                                            ? Colors.grey[200]
+                                                                            : Colors.green[200]),
+                                                                    children: [
+                                                                      Center(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(5),
+                                                                          child: Text(
+                                                                              filteredData[index]["sessions"][j]["date"] ?? "",
+                                                                              style: TextStyle(
+                                                                                fontSize: 12,
+                                                                              )),
+                                                                        ),
+                                                                      ),
+                                                                      Center(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(5),
+                                                                          child: Text(
+                                                                              filteredData[index]["sessions"][j]["vaccine"] ?? "",
+                                                                              style: TextStyle(
+                                                                                fontSize: 12,
+                                                                              )),
+                                                                        ),
+                                                                      ),
+                                                                      Center(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(5),
+                                                                          child: Text(
+                                                                              filteredData[index]["sessions"][j]["available_capacity"].toString() ?? "",
+                                                                              style: TextStyle(
+                                                                                fontSize: 12,
+                                                                              )),
+                                                                        ),
+                                                                      ),
+                                                                    ])
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }),
+                                                  )
+                                                ]),
+                                          );
+                                        }),
+                              ],
+                            ),
+                          )));
   }
 }

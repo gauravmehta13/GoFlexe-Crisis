@@ -1,3 +1,4 @@
+import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/TabBar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,18 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({Key key}) : super(key: key);
+  final String screenName;
+  final String pincode;
+  final String district;
+  final String districtCode;
+
+  RegisterScreen(
+      {this.districtCode,
+      this.pincode,
+      this.screenName,
+      this.district,
+      Key key})
+      : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -27,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var isResend = false;
   var isRegister = true;
   var isOTPScreen = false;
+  var loginCompleted = false;
   var verificationCode = '';
 
   //Form controllers
@@ -46,7 +59,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isOTPScreen ? returnOTPScreen() : registerScreen();
+    return isOTPScreen
+        ? loginCompleted
+            ? returnLoginCompleted()
+            : returnOTPScreen()
+        : registerScreen();
+  }
+
+  Widget returnLoginCompleted() {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset("assets/check.png"),
+            box30,
+            Text("Successfull"),
+            Text(
+                "You will get an SMS when the Vaccine Slots will become available in your area")
+          ],
+        ),
+      ),
+    );
   }
 
   Widget registerScreen() {
@@ -64,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Spacer(),
                   Text(
-                    "Continue with phone",
+                    "You Need to Login First",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -78,13 +114,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 130,
                     child: Image.asset('assets/holding-phone.png'),
                   ),
+                  box30,
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 14, horizontal: 64),
                     child: Text(
                       "You'll receive a 4 digit code to verify next.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 16,
                         color: Color(0xFF818181),
                       ),
                     ),
@@ -269,6 +306,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                           onCompleted: (v) {
                             print("Completed");
+                            verifyOTP();
                           },
                           onChanged: (value) {
                             print(value);
@@ -318,7 +356,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   isResend = false;
                                   isLoading = true;
                                 });
-                                await signIn();
+                                await login();
                               },
                               child: Text(
                                 "Request again",
@@ -344,85 +382,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 onPrimary: Colors.white, // foreground
                               ),
                               onPressed: () async {
-                                if (_formKeyOTP.currentState.validate()) {
-                                  // If the form is valid, we want to show a loading Snackbar
-                                  // If the form is valid, we want to do firebase signup...
-                                  print("ok1");
-                                  setState(() {
-                                    print("okset");
-
-                                    isResend = false;
-                                    isLoading = true;
-                                  });
-                                  print("ok2");
-                                  print(kIsWeb);
-                                  if (kIsWeb == true) {
-                                    print("web");
-                                    UserCredential userCredential =
-                                        await confirmationResult
-                                            .confirm(otpController.text)
-                                            // ignore: missing_return
-                                            .then((user) {
-                                      if (user != null) {
-                                        setState(() {
-                                          isLoading = false;
-                                          isResend = false;
-                                        });
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                GoFlexeTabBar(),
-                                          ),
-                                        );
-                                      }
-                                      setState(() {
-                                        isLoading = false;
-                                        isResend = false;
-                                      });
-                                    });
-                                  }
-                                  if (kIsWeb == false) {
-                                    print("app");
-                                    try {
-                                      print("appTry");
-                                      await _auth
-                                          .signInWithCredential(
-                                              PhoneAuthProvider.credential(
-                                                  verificationId:
-                                                      verificationCode,
-                                                  smsCode: otpController.text
-                                                      .toString()))
-                                          .then((user) async => {
-                                                if (user != null)
-                                                  {
-                                                    setState(() {
-                                                      isLoading = false;
-                                                      isResend = false;
-                                                    }),
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            GoFlexeTabBar(),
-                                                      ),
-                                                    )
-                                                  }
-                                              })
-                                          .catchError((error) {
-                                        setState(() {
-                                          isLoading = false;
-                                          isResend = false;
-                                        });
-                                      });
-                                    } catch (e) {
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                    }
-                                  }
-                                }
+                                verifyOTP();
                               },
                               child: new Container(
                                 padding: const EdgeInsets.symmetric(
@@ -456,7 +416,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   isResend = false;
                                   isLoading = true;
                                 });
-                                await signIn();
+                                await login();
                               },
                               child: new Container(
                                 padding: const EdgeInsets.symmetric(
@@ -509,18 +469,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       isLoading = false;
                       isOTPScreen = false;
+                      loginCompleted = true;
                     }),
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => GoFlexeTabBar(),
-                      ),
-                    )
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (BuildContext context) => GoFlexeTabBar(),
+                    //   ),
+                    // )
                   }
               });
         },
         verificationFailed: (FirebaseAuthException error) {
-          displaySnackBar('Validation error, please try again later');
+          displaySnackBar('Validation error, please try again later', context);
           setState(() {
             isLoading = false;
           });
@@ -544,108 +505,83 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  Future signIn() async {
-    setState(() {
-      isLoading = true;
-    });
-    if (kIsWeb == true) {
-      confirmationResult = await _auth.signInWithPhoneNumber(
-        '+91 ' + cellnumberController.text.toString(),
-        // RecaptchaVerifier(
-        //   container: 'recaptcha',
-        //   size: RecaptchaVerifierSize.compact,
-        //   theme: RecaptchaVerifierTheme.dark,
-        //   onSuccess: () => print('reCAPTCHA Completed!'),
-        //   onError: (FirebaseAuthException error) => print(error),
-        //   onExpired: () => print('reCAPTCHA Expired!'),
-        // )
-      );
+  verifyOTP() async {
+    if (_formKeyOTP.currentState.validate()) {
+      // If the form is valid, we want to show a loading Snackbar
+      // If the form is valid, we want to do firebase signup...
+      print("ok1");
       setState(() {
-        confirmationResult = confirmationResult;
-        isLoading = false;
-      });
-    } else {
-      setState(() {
+        print("okset");
+
+        isResend = false;
         isLoading = true;
       });
-      debugPrint('test 1');
-      var phoneNumber = '+91 ' + cellnumberController.text.toString();
-      debugPrint('test 2');
-      var verifyPhoneNumber = _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        verificationCompleted: (phoneAuthCredential) async {
-          debugPrint('test 3');
-          //auto code complete (not manually)
-          _auth.signInWithCredential(phoneAuthCredential).then((user) async {
-            try {
-              print("appTry");
-              await _auth
-                  .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: verificationCode,
-                      smsCode: otpController.text.toString()))
-                  .then((user) async => {
-                        if (user != null)
-                          {
-                            setState(() {
-                              isLoading = false;
-                              isResend = false;
-                            }),
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    GoFlexeTabBar(),
-                              ),
-                            )
-                          }
-                      })
-                  .catchError((error) {
-                print(error);
-                setState(() {
-                  isLoading = false;
-                  isResend = false;
-                });
-              });
-            } catch (e) {
-              print(e);
-              setState(() {
-                isLoading = false;
-              });
-            }
+      print("ok2");
+      print(kIsWeb);
+      if (kIsWeb == true) {
+        print("web");
+        UserCredential userCredential =
+            await confirmationResult.confirm(otpController.text)
+                // ignore: missing_return
+                .then((user) {
+          if (user != null) {
+            setState(() {
+              isLoading = false;
+              isResend = false;
+              loginCompleted = true;
+            });
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (BuildContext context) =>
+            //         GoFlexeTabBar(),
+            //   ),
+            // );
+          }
+          setState(() {
+            isLoading = false;
+            isResend = false;
           });
-
-          debugPrint('test 4');
-        },
-        verificationFailed: (FirebaseAuthException error) {
-          debugPrint('test 5' + error.message);
+        });
+      }
+      if (kIsWeb == false) {
+        print("app");
+        try {
+          print("appTry");
+          await _auth
+              .signInWithCredential(PhoneAuthProvider.credential(
+                  verificationId: verificationCode,
+                  smsCode: otpController.text.toString()))
+              .then((user) async => {
+                    if (user != null)
+                      {
+                        setState(() {
+                          isLoading = false;
+                          isResend = false;
+                          loginCompleted = true;
+                        }),
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (BuildContext
+                        //             context) =>
+                        //         GoFlexeTabBar(),
+                        //   ),
+                        // )
+                      }
+                  })
+              .catchError((error) {
+            setState(() {
+              isLoading = false;
+              isResend = false;
+            });
+          });
+        } catch (e) {
           setState(() {
             isLoading = false;
           });
-        },
-        codeSent: (verificationId, [forceResendingToken]) {
-          debugPrint('test 6');
-          setState(() {
-            isLoading = false;
-            verificationCode = verificationId;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          debugPrint('test 7');
-          setState(() {
-            isLoading = false;
-            verificationCode = verificationId;
-          });
-        },
-        timeout: Duration(seconds: 60),
-      );
-      debugPrint('test 7');
-      await verifyPhoneNumber;
-      debugPrint('test 8');
+        }
+      }
     }
-  }
-
-  displaySnackBar(text) {
-    final snackBar = SnackBar(content: Text(text));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

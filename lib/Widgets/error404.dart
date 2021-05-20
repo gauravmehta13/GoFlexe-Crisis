@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NoNetwork extends StatelessWidget {
+class Error404 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,14 +15,14 @@ class NoNetwork extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Image.asset(
-                  'assets/images/error-404.png',
+                  'assets/error-404.png',
                   height: 150,
                 ),
                 SizedBox(
                   height: 40,
                 ),
                 Text(
-                  "You're offline",
+                  "Error",
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold, fontSize: 18),
                 ),
@@ -30,7 +30,7 @@ class NoNetwork extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "No Internet found. Check your connection. It will automatically detect your network.",
+                  "Please Try Again Later",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(fontSize: 14),
                 ),
