@@ -31,6 +31,7 @@ class _VaccinationState extends State<Vaccination> {
   String pinCode = "";
   String districtId = "";
   String districtName = "";
+  var stateName = "";
   var pinController = TextEditingController();
 
   void initState() {
@@ -205,56 +206,71 @@ class _VaccinationState extends State<Vaccination> {
                                 child: Column(
                                   children: [
                                     box20,
-                                    Autocomplete<StateDistrictMapping>(
-                                      displayStringForOption: (option) =>
-                                          option.district,
-                                      fieldViewBuilder: (context,
-                                              textEditingController,
-                                              focusNode,
-                                              onFieldSubmitted) =>
-                                          TextField(
-                                        scrollPadding: const EdgeInsets.only(
-                                            bottom: 150.0),
-                                        controller: textEditingController,
-                                        onTap: () {
-                                          textEditingController.clear();
-                                        },
-                                        focusNode: focusNode,
-                                        // onEditingComplete: onFieldSubmitted,
-                                        decoration: const InputDecoration(
-                                            isDense: true,
-                                            border: OutlineInputBorder(),
-                                            hintText: "Search District"),
-                                      ),
-                                      optionsBuilder: (textEditingValue) {
-                                        if (textEditingValue.text == '') {
-                                          return districtMapping;
-                                        }
-                                        return districtMapping.where((s) {
-                                          return s.district
-                                              .toLowerCase()
-                                              .contains(textEditingValue.text
-                                                  .toLowerCase());
-                                        });
-                                      },
-                                      onSelected:
-                                          (StateDistrictMapping selection) {
-                                        final FocusScopeNode currentScope =
-                                            FocusScope.of(context);
-                                        if (!currentScope.hasPrimaryFocus &&
-                                            currentScope.hasFocus) {
-                                          FocusManager.instance.primaryFocus
-                                              .unfocus();
-                                        }
-                                        print(selection.district);
-                                        print(selection.districtID);
-                                        setState(() {
-                                          districtId =
-                                              selection.districtID.toString();
-                                          districtName =
-                                              selection.district.toString();
-                                        });
-                                      },
+                                    Column(
+                                      children: [
+                                        Autocomplete<StateDistrictMapping>(
+                                          displayStringForOption: (option) =>
+                                              option.district,
+                                          fieldViewBuilder: (context,
+                                                  textEditingController,
+                                                  focusNode,
+                                                  onFieldSubmitted) =>
+                                              TextField(
+                                            scrollPadding:
+                                                const EdgeInsets.only(
+                                                    bottom: 150.0),
+                                            controller: textEditingController,
+                                            onTap: () {
+                                              textEditingController.clear();
+                                              setState(() {
+                                                stateName = "";
+                                              });
+                                            },
+                                            focusNode: focusNode,
+                                            // onEditingComplete: onFieldSubmitted,
+                                            decoration: const InputDecoration(
+                                                isDense: true,
+                                                border: OutlineInputBorder(),
+                                                hintText: "Search District"),
+                                          ),
+                                          optionsBuilder: (textEditingValue) {
+                                            if (textEditingValue.text == '') {
+                                              return districtMapping;
+                                            }
+                                            return districtMapping.where((s) {
+                                              return s.district
+                                                  .toLowerCase()
+                                                  .contains(textEditingValue
+                                                      .text
+                                                      .toLowerCase());
+                                            });
+                                          },
+                                          onSelected:
+                                              (StateDistrictMapping selection) {
+                                            final FocusScopeNode currentScope =
+                                                FocusScope.of(context);
+                                            if (!currentScope.hasPrimaryFocus &&
+                                                currentScope.hasFocus) {
+                                              FocusManager.instance.primaryFocus
+                                                  .unfocus();
+                                            }
+                                            print(selection.district);
+                                            print(selection.districtID);
+                                            setState(() {
+                                              districtId = selection.districtID
+                                                  .toString();
+                                              districtName =
+                                                  selection.district.toString();
+                                              stateName =
+                                                  selection.state.toString();
+                                            });
+                                          },
+                                        ),
+                                        Container(
+                                            padding: EdgeInsets.only(top: 5),
+                                            alignment: Alignment.centerRight,
+                                            child: Text(stateName ?? ""))
+                                      ],
                                     ),
                                     box30,
                                   ],
