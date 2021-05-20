@@ -2,6 +2,7 @@ import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/Vaccination/Vaccination%20Slots.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/TextFieldSearch.dart';
+import 'package:crisis/data/Districts.dart';
 import 'package:crisis/model/StateDistrict%20Model.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -25,6 +26,7 @@ class _VaccinationState extends State<Vaccination> {
 
   States states;
   District districts;
+  List<StateDistrictMapping> districtMapping = [];
 
   String pinCode = "";
   String districtId = "";
@@ -34,6 +36,7 @@ class _VaccinationState extends State<Vaccination> {
   void initState() {
     super.initState();
     getStates();
+    districtMapping = StateDistrictMapping.getDsitricts();
     FirebaseAnalytics().logEvent(name: 'Vaccination', parameters: null);
   }
 
@@ -123,34 +126,6 @@ class _VaccinationState extends State<Vaccination> {
                       SizedBox(
                         height: 20,
                       ),
-                      // Autocomplete<IndiaState>(
-                      //   displayStringForOption: (option) => option.label,
-                      //   fieldViewBuilder: (context, textEditingController,
-                      //           focusNode, onFieldSubmitted) =>
-                      //       TextField(
-                      //     controller: textEditingController,
-                      //     focusNode: focusNode,
-                      //     // onEditingComplete: onFieldSubmitted,
-                      //     decoration: const InputDecoration(
-                      //         isDense: true,
-                      //         border: OutlineInputBorder(),
-                      //         hintText: "Enter State"),
-                      //   ),
-                      //   optionsBuilder: (textEditingValue) {
-                      //     if (textEditingValue.text == '') {
-                      //       return states.states;
-                      //     }
-                      //     return states.states.where((s) {
-                      //       return s.label
-                      //           .toLowerCase()
-                      //           .contains(textEditingValue.text.toLowerCase());
-                      //     });
-                      //   },
-                      //   onSelected: (IndiaState selection) {
-                      //     keyword.value = selection.label;
-                      //     print(selection.value);
-                      //   },
-                      // ),
                       Text("Search for vaccination slots"),
                       box30,
                       Container(
@@ -230,30 +205,40 @@ class _VaccinationState extends State<Vaccination> {
                                 child: Column(
                                   children: [
                                     box20,
-                                    TextFieldSearch(
-                                      minStringLength: 0,
-                                      decoration: new InputDecoration(
-                                        isDense: true,
-                                        contentPadding: EdgeInsets.all(15),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                          borderSide: BorderSide(
-                                            width: 1,
-                                            color: Color(0xFF2821B5),
-                                          ),
-                                        ),
-                                        border: new OutlineInputBorder(
-                                            borderSide: new BorderSide(
-                                                color: Colors.grey)),
-                                        labelText: 'Search State',
+                                    Autocomplete<StateDistrictMapping>(
+                                      displayStringForOption: (option) =>
+                                          option.district,
+                                      fieldViewBuilder: (context,
+                                              textEditingController,
+                                              focusNode,
+                                              onFieldSubmitted) =>
+                                          TextField(
+                                        scrollPadding: const EdgeInsets.only(
+                                            bottom: 150.0),
+                                        controller: textEditingController,
+                                        onTap: () {
+                                          textEditingController.clear();
+                                        },
+                                        focusNode: focusNode,
+                                        // onEditingComplete: onFieldSubmitted,
+                                        decoration: const InputDecoration(
+                                            isDense: true,
+                                            border: OutlineInputBorder(),
+                                            hintText: "Search District"),
                                       ),
-                                      controller: stateController,
-                                      initialList: states?.states ?? [],
-                                      future: () {
-                                        return fetchStates();
+                                      optionsBuilder: (textEditingValue) {
+                                        if (textEditingValue.text == '') {
+                                          return districtMapping;
+                                        }
+                                        return districtMapping.where((s) {
+                                          return s.district
+                                              .toLowerCase()
+                                              .contains(textEditingValue.text
+                                                  .toLowerCase());
+                                        });
                                       },
-                                      getSelectedValue: (state) {
+                                      onSelected:
+                                          (StateDistrictMapping selection) {
                                         final FocusScopeNode currentScope =
                                             FocusScope.of(context);
                                         if (!currentScope.hasPrimaryFocus &&
@@ -261,71 +246,17 @@ class _VaccinationState extends State<Vaccination> {
                                           FocusManager.instance.primaryFocus
                                               .unfocus();
                                         }
-                                        getDistricts(state.value);
+                                        print(selection.district);
+                                        print(selection.districtID);
                                         setState(() {
-                                          districtController.text = "";
+                                          districtId =
+                                              selection.districtID.toString();
+                                          districtName =
+                                              selection.district.toString();
                                         });
-                                        print(state.label);
-                                        print(state
-                                            .value); // this prints the selected option which could be an object
                                       },
-                                      label: '',
                                     ),
                                     box30,
-                                    districtLoading == true
-                                        ? LinearProgressIndicator(
-                                            backgroundColor: Color(0xFF3f51b5),
-                                            valueColor: AlwaysStoppedAnimation(
-                                              Color(0xFFf9a825),
-                                            ),
-                                          )
-                                        : TextFieldSearch(
-                                            minStringLength: 0,
-                                            decoration: new InputDecoration(
-                                              isDense: true,
-                                              contentPadding:
-                                                  EdgeInsets.all(15),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(4)),
-                                                borderSide: BorderSide(
-                                                  width: 1,
-                                                  color: Color(0xFF2821B5),
-                                                ),
-                                              ),
-                                              border: new OutlineInputBorder(
-                                                  borderSide: new BorderSide(
-                                                      color: Colors.grey)),
-                                              labelText: 'Search District',
-                                            ),
-                                            label: 'Enter District',
-                                            controller: districtController,
-                                            initialList:
-                                                districts?.districts ?? [],
-                                            future: () {
-                                              return fetchDistricts();
-                                            },
-                                            getSelectedValue: (district) {
-                                              final FocusScopeNode
-                                                  currentScope =
-                                                  FocusScope.of(context);
-                                              if (!currentScope
-                                                      .hasPrimaryFocus &&
-                                                  currentScope.hasFocus) {
-                                                FocusManager
-                                                    .instance.primaryFocus
-                                                    .unfocus();
-                                              }
-                                              setState(() {
-                                                districtId =
-                                                    district.value.toString();
-                                                districtName =
-                                                    district.label.toString();
-                                              });
-                                              print(district.label);
-                                              print(district
-                                                  .value); // this prints the selected option which could be an object
-                                            }),
                                   ],
                                 ),
                               ),
