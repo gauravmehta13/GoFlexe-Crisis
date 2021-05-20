@@ -1,5 +1,6 @@
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/HomePage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     super.initState();
     setSkip();
+    FirebaseAnalytics().logEvent(name: 'Login_Page', parameters: null);
   }
 
   setSkip() async {
@@ -110,13 +112,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget registerScreen() {
-    final node = FocusScope.of(context);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           actions: <Widget>[
             TextButton(
               onPressed: () {
+                FirebaseAnalytics()
+                    .logEvent(name: 'Skipped_Login', parameters: null);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
