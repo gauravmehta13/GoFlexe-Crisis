@@ -1,28 +1,15 @@
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/HomePage.dart';
-import 'package:crisis/HomePage/TabBar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RegisterScreen extends StatefulWidget {
-  final String screenName;
-  final String pincode;
-  final String district;
-  final String districtCode;
-
-  RegisterScreen(
-      {this.districtCode,
-      this.pincode,
-      this.screenName,
-      this.district,
-      Key key})
-      : super(key: key);
-
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -40,13 +27,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var isResend = false;
   var isRegister = true;
   var isOTPScreen = false;
-  var loginCompleted = false;
   var verificationCode = '';
 
   //Form controllers
   @override
   void initState() {
     super.initState();
+    setSkip();
+  }
+
+  setSkip() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("skippedLogin", true);
   }
 
   // @override
@@ -60,11 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isOTPScreen
-        ? loginCompleted
-            ? returnLoginCompleted()
-            : returnOTPScreen()
-        : registerScreen();
+    return isOTPScreen ? returnOTPScreen() : registerScreen();
   }
 
   Widget returnLoginCompleted() {
@@ -126,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: new AppBar(
-          title: Text('Goflexe'),
+          title: Text('Goflexe Crisis'),
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -136,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Spacer(),
                   Text(
-                    "You Need to Login First",
+                    "Login First",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -504,14 +492,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   {
                     setState(() {
                       isLoading = false;
-                      loginCompleted = true;
                     }),
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (BuildContext context) => GoFlexeTabBar(),
-                    //   ),
-                    // )
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => HomePage(),
+                      ),
+                    )
                   }
               });
         },
@@ -563,15 +550,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             setState(() {
               isLoading = false;
               isResend = false;
-              loginCompleted = true;
             });
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (BuildContext context) =>
-            //         GoFlexeTabBar(),
-            //   ),
-            // );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+            );
           }
           setState(() {
             isLoading = false;
@@ -593,16 +576,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         setState(() {
                           isLoading = false;
                           isResend = false;
-                          loginCompleted = true;
                         }),
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (BuildContext
-                        //             context) =>
-                        //         GoFlexeTabBar(),
-                        //   ),
-                        // )
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HomePage()),
+                        )
                       }
                   })
               .catchError((error) {

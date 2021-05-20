@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                                           FaIcon(
                                             FontAwesomeIcons.bookMedical,
                                             color: Color(0xFFc14098),
-                                            size: 18,
+                                            size: 25,
                                           ),
                                           Text(
                                             "Diagnostic",
@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                                           FaIcon(
                                             FontAwesomeIcons.temperatureHigh,
                                             color: Color(0xFFea9b88),
-                                            size: 18,
+                                            size: 25,
                                           ),
                                           Text(
                                             "Home Care",
@@ -349,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                                           FaIcon(
                                             FontAwesomeIcons.hospital,
                                             color: Color(0xFF22b27f),
-                                            size: 18,
+                                            size: 25,
                                           ),
                                           Text(
                                             "Hospitals",
@@ -387,7 +387,7 @@ class _HomePageState extends State<HomePage> {
                                           FaIcon(
                                             FontAwesomeIcons.syringe,
                                             color: Color(0xFF63afcb),
-                                            size: 18,
+                                            size: 25,
                                           ),
                                           Text(
                                             "Vaccine",
