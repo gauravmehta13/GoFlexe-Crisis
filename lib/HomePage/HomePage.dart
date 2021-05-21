@@ -7,6 +7,7 @@ import 'package:crisis/Screens/Self%20Asses/Self%20Assesment.dart';
 import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/Videos/Videos.dart';
 import 'package:crisis/Screens/india_helplines.dart';
+import 'package:crisis/Widgets/Carousel%20Wdiget.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -770,164 +771,23 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                       ),
                       items: [
-                        Card(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                FadeRoute(page: Videos()),
-                              );
-                            },
-                            child: Container(
-                                padding: EdgeInsets.all(10),
-                                // decoration:
-                                //     BoxDecoration(color: Colors.lightBlue[50]),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/video.png",
-                                        width: 100,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text("Informative Videos",
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight:
-                                                        FontWeight.w800)),
-                                            box10,
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 15),
-                                              child: Text(
-                                                'Watch Informative Videos\non Covid',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.grey[700],
-                                                    fontSize: 13),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ),
-                        Card(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                FadeRoute(page: IndiaHelplines()),
-                              );
-                            },
-                            child: Container(
-                                padding: EdgeInsets.all(10),
-                                // decoration:
-                                //     BoxDecoration(color: Colors.lightBlue[50]),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/help.png",
-                                        width: 100,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text("Covid-19 Help Lines",
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight:
-                                                        FontWeight.w800)),
-                                            box10,
-                                            Text(
-                                              '#IndiaFightsCorona',
-                                              style: TextStyle(
-                                                  color: Colors.grey[700],
-                                                  fontSize: 13),
-                                            ),
-                                            SizedBox(height: 5),
-                                            Text(
-                                              'Lets Fight Together!!!',
-                                              style: TextStyle(
-                                                  color: Colors.grey[700],
-                                                  fontSize: 13),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ),
-                        Card(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                FadeRoute(page: StatsTabBar()),
-                              );
-                            },
-                            child: Container(
-                                padding: EdgeInsets.all(10),
-                                // decoration:
-                                //     BoxDecoration(color: Colors.lightBlue[50]),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/graph.png",
-                                        width: 100,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text("Track Live Data",
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight:
-                                                        FontWeight.w800)),
-                                            box10,
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 20),
-                                              child: Text(
-                                                "See Live Covid Cases of India and it's States",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.grey[700],
-                                                    fontSize: 13),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        )
+                        CarouselWidget(
+                            imgUrl: "assets/video.png",
+                            page: Videos(),
+                            heading: "Informative Videos",
+                            subHeading: 'Watch Informative Videos\non Covid'),
+                        CarouselWidget(
+                            imgUrl: "assets/help.png",
+                            page: IndiaHelplines(),
+                            heading: "Covid-19 Help Lines",
+                            subHeading:
+                                '#IndiaFightsCorona\n\nLets Fight Together!!!'),
+                        CarouselWidget(
+                            imgUrl: "assets/graph.png",
+                            page: StatsTabBar(),
+                            heading: "Track Live Data",
+                            subHeading:
+                                "See Live Covid Cases of India and it's States"),
                       ]),
                   SizedBox(
                     height: 100,
