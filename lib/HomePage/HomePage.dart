@@ -377,7 +377,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  box10,
+                  box5,
                   Container(
                     color: Colors.transparent,
                     height: 100,
@@ -513,7 +513,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  box10,
+                  box5,
                   Container(
                     color: Colors.transparent,
                     height: 100,
@@ -606,7 +606,7 @@ class _HomePageState extends State<HomePage> {
                   box10,
                   CarouselSlider(
                       options: CarouselOptions(
-                        height: 180,
+                        height: 170,
                         aspectRatio: 16 / 9,
                         viewportFraction: 0.8,
                         initialPage: 0,

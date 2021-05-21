@@ -66,6 +66,9 @@ const EdgeInsets padding10 = EdgeInsets.all(10);
 const SizedBox box10 = SizedBox(
   height: 10,
 );
+const SizedBox box5 = SizedBox(
+  height: 5,
+);
 const SizedBox box20 = SizedBox(
   height: 20,
 );
