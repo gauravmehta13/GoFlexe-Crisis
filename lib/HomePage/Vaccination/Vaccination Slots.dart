@@ -17,7 +17,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class VaccinationSlots extends StatefulWidget {
   final pin;
-  bool district;
+  final bool district;
   final districtId;
   final distrctName;
   VaccinationSlots(

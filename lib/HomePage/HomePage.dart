@@ -2,7 +2,9 @@ import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/TabBar.dart';
 import 'package:crisis/Screens/Covid%20Stats/Stats%20TabBar.dart';
 import 'package:crisis/Screens/Faq.dart';
+import 'package:crisis/Screens/Join%20As%20Volunteer.dart';
 import 'package:crisis/Screens/MythBusters.dart';
+import 'package:crisis/Screens/Raise%20help%20request.dart';
 import 'package:crisis/Screens/Self%20Asses/Self%20Assesment.dart';
 import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/Videos/Videos.dart';
@@ -99,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                       context,
                                       FadeRoute(
@@ -130,7 +131,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: GoFlexeTabBar(index: 1)),
@@ -158,7 +158,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: GoFlexeTabBar(index: 2)),
@@ -188,7 +187,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: GoFlexeTabBar(index: 3)),
@@ -221,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     color: Colors.transparent,
-                    height: 200,
+                    height: 150,
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -237,15 +235,14 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Text(
-                                "Find centres near you",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
-                              ),
+                            box10,
+                            Text(
+                              "Find centres near you",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                             ),
+                            Divider(),
                             Expanded(
                               child: Row(
                                 mainAxisAlignment:
@@ -254,7 +251,6 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                     child: InkWell(
                                       onTap: () {
-                                        print("tapped");
                                         Navigator.push(
                                           context,
                                           FadeRoute(
@@ -279,14 +275,6 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          // Divider(),
-                                          // Text(
-                                          //   "Find centres near you",
-                                          //   textAlign: TextAlign.center,
-                                          //   style: TextStyle(
-                                          //       fontSize: 11,
-                                          //       fontWeight: FontWeight.w600),
-                                          // )
                                         ],
                                       ),
                                     ),
@@ -295,7 +283,6 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                     child: InkWell(
                                       onTap: () {
-                                        print("tapped");
                                         Navigator.push(
                                           context,
                                           FadeRoute(
@@ -320,14 +307,6 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          // Divider(),
-                                          // Text(
-                                          //   "Find centres near you",
-                                          //   textAlign: TextAlign.center,
-                                          //   style: TextStyle(
-                                          //       fontSize: 11,
-                                          //       fontWeight: FontWeight.w600),
-                                          // )
                                         ],
                                       ),
                                     ),
@@ -336,7 +315,6 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                     child: InkWell(
                                       onTap: () {
-                                        print("tapped");
                                         Navigator.push(
                                           context,
                                           FadeRoute(
@@ -358,14 +336,6 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          // Divider(),
-                                          // Text(
-                                          //   "Find centres near you",
-                                          //   textAlign: TextAlign.center,
-                                          //   style: TextStyle(
-                                          //       fontSize: 11,
-                                          //       fontWeight: FontWeight.w600),
-                                          // )
                                         ],
                                       ),
                                     ),
@@ -374,7 +344,6 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                     child: InkWell(
                                       onTap: () {
-                                        print("tapped");
                                         Navigator.push(
                                           context,
                                           FadeRoute(
@@ -396,14 +365,6 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          // Divider(),
-                                          // Text(
-                                          //   "Find centres near you",
-                                          //   textAlign: TextAlign.center,
-                                          //   style: TextStyle(
-                                          //       fontSize: 11,
-                                          //       fontWeight: FontWeight.w600),
-                                          // )
                                         ],
                                       ),
                                     ),
@@ -419,7 +380,7 @@ class _HomePageState extends State<HomePage> {
                   box10,
                   Container(
                     color: Colors.transparent,
-                    height: 150,
+                    height: 100,
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -439,7 +400,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: StatsTabBar()),
@@ -468,7 +428,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: FAQ()),
@@ -497,7 +456,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: MythBusters()),
@@ -526,7 +484,6 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  print("tapped");
                                   Navigator.push(
                                     context,
                                     FadeRoute(page: TwitterScreen()),
@@ -556,206 +513,97 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  //box10,
-                  // Container(
-                  //   color: Colors.transparent,
-                  //   margin: EdgeInsets.symmetric(horizontal: 10),
-                  //   height: 200,
-                  //   child: Card(
-                  //     shape: RoundedRectangleBorder(
-                  //       side: BorderSide(
-                  //         color: Colors.grey[300],
-                  //         width: 0.5,
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(5.0),
-                  //     ),
-                  //     shadowColor: Colors.black,
-                  //     color: Colors.white,
-                  //     child: Container(
-                  //       padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  //       child: Column(
-                  //         children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.symmetric(vertical: 20),
-                  //             child: Text(
-                  //               "Realtime Covid Data",
-                  //               textAlign: TextAlign.center,
-                  //               style: TextStyle(
-                  //                   fontSize: 17, fontWeight: FontWeight.w600),
-                  //             ),
-                  //           ),
-                  //           Expanded(
-                  //             child: Row(
-                  //               mainAxisAlignment:
-                  //                   MainAxisAlignment.spaceEvenly,
-                  //               children: [
-                  //                 Expanded(
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       print("tapped");
-                  //                       Navigator.push(
-                  //                         context,
-                  //                         FadeRoute(
-                  //                             page: GoFlexeTabBar(index: 0)),
-                  //                       );
-                  //                     },
-                  //                     child: Column(
-                  //                       mainAxisAlignment:
-                  //                           MainAxisAlignment.spaceEvenly,
-                  //                       children: [
-                  //                         FaIcon(
-                  //                           Icons.all_out,
-                  //                           color: Color(0xFFc14098),
-                  //                           size: 18,
-                  //                         ),
-                  //                         Column(
-                  //                           children: [
-                  //                             Text(
-                  //                               "All Over India",
-                  //                               style: TextStyle(
-                  //                                   fontSize: 11,
-                  //                                   fontWeight:
-                  //                                       FontWeight.w600),
-                  //                             ),
-                  //                             // SizedBox(
-                  //                             //   height: 5,
-                  //                             // ),
-                  //                             // Text(
-                  //                             //   "See Covid Cases All over india",
-                  //                             //   textAlign: TextAlign.center,
-                  //                             //   style: TextStyle(
-                  //                             //     fontSize: 10,
-                  //                             //   ),
-                  //                             // )
-                  //                           ],
-                  //                         ),
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //                 RotatedBox(quarterTurns: 1, child: Divider()),
-                  //                 Expanded(
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       print("tapped");
-                  //                       Navigator.push(
-                  //                         context,
-                  //                         FadeRoute(
-                  //                             page: GoFlexeTabBar(index: 1)),
-                  //                       );
-                  //                     },
-                  //                     child: Column(
-                  //                       mainAxisAlignment:
-                  //                           MainAxisAlignment.spaceEvenly,
-                  //                       children: [
-                  //                         FaIcon(
-                  //                           FontAwesomeIcons.temperatureHigh,
-                  //                           color: Color(0xFFea9b88),
-                  //                           size: 18,
-                  //                         ),
-                  //                         Text(
-                  //                           "State Wise",
-                  //                           style: TextStyle(
-                  //                               fontSize: 11,
-                  //                               fontWeight: FontWeight.w600),
-                  //                         ),
-                  //                         // Divider(),
-                  //                         // Text(
-                  //                         //   "Find centres near you",
-                  //                         //   textAlign: TextAlign.center,
-                  //                         //   style: TextStyle(
-                  //                         //       fontSize: 11,
-                  //                         //       fontWeight: FontWeight.w600),
-                  //                         // )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //                 RotatedBox(quarterTurns: 1, child: Divider()),
-                  //                 Expanded(
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       print("tapped");
-                  //                       Navigator.push(
-                  //                         context,
-                  //                         FadeRoute(
-                  //                             page: GoFlexeTabBar(index: 2)),
-                  //                       );
-                  //                     },
-                  //                     child: Column(
-                  //                       mainAxisAlignment:
-                  //                           MainAxisAlignment.spaceEvenly,
-                  //                       children: [
-                  //                         FaIcon(
-                  //                           FontAwesomeIcons.hospital,
-                  //                           color: Color(0xFF22b27f),
-                  //                           size: 18,
-                  //                         ),
-                  //                         Text(
-                  //                           "Global",
-                  //                           style: TextStyle(
-                  //                               fontSize: 11,
-                  //                               fontWeight: FontWeight.w600),
-                  //                         ),
-                  //                         // Divider(),
-                  //                         // Text(
-                  //                         //   "Find centres near you",
-                  //                         //   textAlign: TextAlign.center,
-                  //                         //   style: TextStyle(
-                  //                         //       fontSize: 11,
-                  //                         //       fontWeight: FontWeight.w600),
-                  //                         // )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //                 RotatedBox(quarterTurns: 1, child: Divider()),
-                  //                 Expanded(
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       print("tapped");
-                  //                       Navigator.push(
-                  //                         context,
-                  //                         FadeRoute(
-                  //                             page: GoFlexeTabBar(index: 3)),
-                  //                       );
-                  //                     },
-                  //                     child: Column(
-                  //                       mainAxisAlignment:
-                  //                           MainAxisAlignment.spaceEvenly,
-                  //                       children: [
-                  //                         FaIcon(
-                  //                           FontAwesomeIcons.syringe,
-                  //                           color: Color(0xFF63afcb),
-                  //                           size: 18,
-                  //                         ),
-                  //                         Text(
-                  //                           "Country Wise",
-                  //                           style: TextStyle(
-                  //                               fontSize: 11,
-                  //                               fontWeight: FontWeight.w600),
-                  //                         ),
-                  //                         // Divider(),
-                  //                         // Text(
-                  //                         //   "Find centres near you",
-                  //                         //   textAlign: TextAlign.center,
-                  //                         //   style: TextStyle(
-                  //                         //       fontSize: 11,
-                  //                         //       fontWeight: FontWeight.w600),
-                  //                         // )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 )
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  box20,
+                  box10,
+                  Container(
+                    color: Colors.transparent,
+                    height: 100,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey[300],
+                          width: 0.5,
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      shadowColor: Colors.black,
+                      color: Colors.white,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.green[100],
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    FadeRoute(page: VolunteerJoin()),
+                                  );
+                                },
+                                child: ClipPath(
+                                    clipper: SkewCut(),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.red[100],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                      padding: EdgeInsets.only(right: 40),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "Offer Your Help",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Image.asset(
+                                            "assets/volunteer.png",
+                                            height: 40,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    FadeRoute(page: RaiseHelpRequest()),
+                                  );
+                                },
+                                child: Container(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Image.asset(
+                                        "assets/helpRequest.png",
+                                        height: 40,
+                                      ),
+                                      Text(
+                                        "Raise Help Request",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  box10,
                   CarouselSlider(
                       options: CarouselOptions(
                         height: 180,
@@ -790,7 +638,7 @@ class _HomePageState extends State<HomePage> {
                                 "See Live Covid Cases of India and it's States"),
                         CarouselWidget(
                             imgUrl: "assets/charity.png",
-                            page: StatsTabBar(),
+                            page: VolunteerJoin(),
                             heading: "Join as Volunteer",
                             subHeading:
                                 "Help us to help others by joining as a Volunteer."),
@@ -811,4 +659,20 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class SkewCut extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width - 40, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(SkewCut oldClipper) => false;
 }
