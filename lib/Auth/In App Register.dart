@@ -9,13 +9,13 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class RegisterForVaccine extends StatefulWidget {
+class InAppRegister extends StatefulWidget {
   final String screenName;
   final String pincode;
   final String district;
   final String districtCode;
 
-  RegisterForVaccine(
+  InAppRegister(
       {this.districtCode,
       this.pincode,
       this.screenName,
@@ -24,10 +24,10 @@ class RegisterForVaccine extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RegisterForVaccineState createState() => _RegisterForVaccineState();
+  _InAppRegisterState createState() => _InAppRegisterState();
 }
 
-class _RegisterForVaccineState extends State<RegisterForVaccine> {
+class _InAppRegisterState extends State<InAppRegister> {
   ConfirmationResult confirmationResult;
   final _formKey = GlobalKey<FormState>();
   final _formKeyOTP = GlobalKey<FormState>();

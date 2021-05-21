@@ -788,6 +788,17 @@ class _HomePageState extends State<HomePage> {
                             heading: "Track Live Data",
                             subHeading:
                                 "See Live Covid Cases of India and it's States"),
+                        CarouselWidget(
+                            imgUrl: "assets/charity.png",
+                            page: StatsTabBar(),
+                            heading: "Join as Volunteer",
+                            subHeading:
+                                "Help us to help others by joining as a Volunteer."),
+                        // CarouselWidget(
+                        //     imgUrl: "assets/ngo.png",
+                        //     page: StatsTabBar(),
+                        //     heading: "Find NGO's",
+                        //     subHeading: "Find NGO's from All Over India"),
                       ]),
                   SizedBox(
                     height: 100,

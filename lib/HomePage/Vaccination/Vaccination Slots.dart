@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:crisis/Auth/Register%20For%20Vaccine.dart';
+import 'package:crisis/Auth/In%20App%20Register.dart';
 import 'package:crisis/Widgets/Loading.dart';
 import 'package:crisis/Widgets/No%20Results%20Found.dart';
 import 'package:crisis/Widgets/error404.dart';
@@ -206,7 +206,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                             Navigator.push(
                                               context,
                                               FadeRoute(
-                                                  page: RegisterForVaccine(
+                                                  page: InAppRegister(
                                                 screenName: "Vaccination",
                                                 district: widget.distrctName,
                                                 districtCode: widget.districtId,
