@@ -70,7 +70,9 @@ class _HealthState extends State<Health> with TickerProviderStateMixin {
               child: Text("Done")),
         ));
       }).then((value) {
-        setState(() {});
+        setState(() {
+          symptomsData = [];
+        });
       });
     } catch (e) {
       print(e);
