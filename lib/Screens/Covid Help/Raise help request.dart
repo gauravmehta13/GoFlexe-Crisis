@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:crisis/Constants.dart';
 import 'package:crisis/data/Districts.dart';
 import 'package:dio/dio.dart';
