@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:crisis/Constants.dart';
+import 'package:crisis/Fade%20Route.dart';
 import 'package:crisis/HomePage/HomePage.dart';
 import 'package:crisis/HomePage/TabBar.dart';
+import 'package:crisis/Screens/Covid%20Help/Join%20As%20Volunteer.dart';
+import 'package:crisis/Screens/Covid%20Help/Raise%20help%20request.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,7 +46,7 @@ class _InAppRegisterState extends State<InAppRegister> {
   var isResend = false;
   var isRegister = true;
   var isOTPScreen = false;
-  var loginCompleted = false;
+  var vaccineRegistrationCompleted = false;
   var verificationCode = '';
 
   //Form controllers
@@ -61,13 +67,13 @@ class _InAppRegisterState extends State<InAppRegister> {
   @override
   Widget build(BuildContext context) {
     return isOTPScreen
-        ? loginCompleted
-            ? returnLoginCompleted()
+        ? vaccineRegistrationCompleted
+            ? returnregistrationCompleted()
             : returnOTPScreen()
         : registerScreen();
   }
 
-  Widget returnLoginCompleted() {
+  Widget returnregistrationCompleted() {
     return Scaffold(
       bottomNavigationBar: Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
@@ -502,16 +508,25 @@ class _InAppRegisterState extends State<InAppRegister> {
           _auth.signInWithCredential(phoneAuthCredential).then((user) async => {
                 if (user != null)
                   {
+                    if (widget.screenName == "Vaccination")
+                      {await submitVaccinationRequest()}
+                    else if (widget.screenName == "Volunteer")
+                      {
+                        Navigator.pushReplacement(
+                          context,
+                          FadeRoute(page: VolunteerJoin()),
+                        )
+                      }
+                    else if (widget.screenName == "Help")
+                      {
+                        Navigator.pushReplacement(
+                          context,
+                          FadeRoute(page: RaiseHelpRequest()),
+                        )
+                      },
                     setState(() {
                       isLoading = false;
-                      loginCompleted = true;
                     }),
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (BuildContext context) => GoFlexeTabBar(),
-                    //   ),
-                    // )
                   }
               });
         },
@@ -558,20 +573,25 @@ class _InAppRegisterState extends State<InAppRegister> {
         UserCredential userCredential =
             await confirmationResult.confirm(otpController.text)
                 // ignore: missing_return
-                .then((user) {
+                .then((user) async {
           if (user != null) {
+            if (widget.screenName == "Vaccination") {
+              await submitVaccinationRequest();
+            } else if (widget.screenName == "Volunteer") {
+              Navigator.pushReplacement(
+                context,
+                FadeRoute(page: VolunteerJoin()),
+              );
+            } else if (widget.screenName == "Help") {
+              Navigator.pushReplacement(
+                context,
+                FadeRoute(page: RaiseHelpRequest()),
+              );
+            }
             setState(() {
               isLoading = false;
               isResend = false;
-              loginCompleted = true;
             });
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (BuildContext context) =>
-            //         GoFlexeTabBar(),
-            //   ),
-            // );
           }
           setState(() {
             isLoading = false;
@@ -590,19 +610,26 @@ class _InAppRegisterState extends State<InAppRegister> {
               .then((user) async => {
                     if (user != null)
                       {
+                        if (widget.screenName == "Vaccination")
+                          {await submitVaccinationRequest()}
+                        else if (widget.screenName == "Volunteer")
+                          {
+                            Navigator.pushReplacement(
+                              context,
+                              FadeRoute(page: VolunteerJoin()),
+                            )
+                          }
+                        else if (widget.screenName == "Help")
+                          {
+                            Navigator.pushReplacement(
+                              context,
+                              FadeRoute(page: RaiseHelpRequest()),
+                            )
+                          },
                         setState(() {
                           isLoading = false;
                           isResend = false;
-                          loginCompleted = true;
                         }),
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (BuildContext
-                        //             context) =>
-                        //         GoFlexeTabBar(),
-                        //   ),
-                        // )
                       }
                   })
               .catchError((error) {
@@ -617,6 +644,29 @@ class _InAppRegisterState extends State<InAppRegister> {
           });
         }
       }
+    }
+  }
+
+  submitVaccinationRequest() async {
+    var dio = Dio();
+    try {
+      final response = await dio.post(
+          'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
+          data: {
+            "tenantSet_id": "CRISIS01",
+            "useCase": "register",
+            "tenantUsecase": "register",
+            "phone": _auth.currentUser.phoneNumber,
+            "pincode": widget.pincode
+          });
+      print(response);
+      Map<String, dynamic> map = json.decode(response.toString());
+      displayTimedSnackBar(map["resp"]["allProces"], context, 2);
+    } catch (e) {
+      print(e);
+      setState(() {
+        vaccineRegistrationCompleted = true;
+      });
     }
   }
 }

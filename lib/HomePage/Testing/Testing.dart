@@ -4,7 +4,8 @@ import 'package:crisis/HomePage/Testing/symptoms.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'package:animated_text/animated_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'Diagnostic.dart';
 
 //https://mahmoudabdellatief-88944.medium.com/flutter-pinned-tabbar-with-triggered-scrolling-and-page-anchors-slivers-c81a19f221a6
@@ -511,6 +512,53 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
               physics: BouncingScrollPhysics(),
               controller: scrollController,
               slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      InkWell(
+                        onTap: () {
+                          launch("https://youtu.be/6wVppYNJLN4");
+                        },
+                        child: Container(
+                          height: 200,
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.all(10),
+                          color: Color(0xFF2a2a2a),
+                          child: Column(
+                            children: [
+                              Text("Now Get Tested for COVID-19",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold)),
+                              box10,
+                              Expanded(
+                                child: AnimatedText(
+                                    alignment: Alignment.center,
+                                    speed: Duration(seconds: 2),
+                                    controller: AnimatedTextController.loop,
+                                    displayTime: Duration(seconds: 3),
+                                    wordList: [
+                                      'At Your Home',
+                                      'In 20 Minutes',
+                                      'Without Hassle'
+                                    ],
+                                    textStyle: TextStyle(
+                                        color: Color(0xFFf17f21),
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              Image.asset(
+                                "assets/coviself.png",
+                                height: 170,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 makeTabBarHeader(),
                 SliverList(
                   delegate: SliverChildListDelegate(

@@ -1,13 +1,17 @@
 import 'dart:convert';
 
+import 'package:crisis/Auth/In%20App%20Register.dart';
 import 'package:crisis/Constants.dart';
 import 'package:crisis/data/Districts.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../Fade Route.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -27,6 +31,18 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
   bool panIndia = false;
   void initState() {
     super.initState();
+    if (_auth.currentUser == null) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          FadeRoute(
+              page: InAppRegister(
+            screenName: "Volunteer",
+          )),
+        );
+      });
+    }
+
     districtMapping = StateDistrictMapping.getDsitricts();
     if (_auth.currentUser != null) {
       phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);

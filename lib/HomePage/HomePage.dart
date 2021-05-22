@@ -1,3 +1,4 @@
+import 'package:animated_text/animated_text.dart';
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/TabBar.dart';
 import 'package:crisis/Screens/Covid%20Stats/Stats%20TabBar.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../Drawer.dart';
 import '../Fade Route.dart';
 import 'package:share_plus/share_plus.dart';
@@ -642,6 +644,49 @@ class _HomePageState extends State<HomePage> {
                             heading: "Join as Volunteer",
                             subHeading:
                                 "Help us to help others by joining as a Volunteer."),
+                        InkWell(
+                          onTap: () {
+                            launch("https://youtu.be/6wVppYNJLN4");
+                          },
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Container(
+                              height: 200,
+                              padding: EdgeInsets.all(10),
+                              color: Color(0xFF2a2a2a),
+                              child: Column(
+                                children: [
+                                  Text("Now Get Tested for COVID-19",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
+                                  box5,
+                                  Expanded(
+                                    child: AnimatedText(
+                                        alignment: Alignment.center,
+                                        speed: Duration(seconds: 2),
+                                        controller: AnimatedTextController.loop,
+                                        displayTime: Duration(seconds: 3),
+                                        wordList: [
+                                          'At Your Home',
+                                          'In 20 Minutes',
+                                          'Without Hassle'
+                                        ],
+                                        textStyle: TextStyle(
+                                            color: Color(0xFFf17f21),
+                                            fontSize: 40,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Image.asset(
+                                    "assets/coviself.png",
+                                    height: 170,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         // CarouselWidget(
                         //     imgUrl: "assets/ngo.png",
                         //     page: StatsTabBar(),
