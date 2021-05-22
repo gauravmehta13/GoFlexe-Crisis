@@ -668,7 +668,10 @@ class _InAppRegisterState extends State<InAppRegister> {
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
-      displayTimedSnackBar(map["resp"]["allProces"], context, 2);
+      displayTimedSnackBar("Registration Successful", context, 2);
+      setState(() {
+        vaccineRegistrationCompleted = true;
+      });
     } catch (e) {
       print(e);
       setState(() {
