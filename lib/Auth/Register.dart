@@ -33,20 +33,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var verificationCode = '';
 
   FocusNode inputNode = FocusNode();
-  Timer timer;
 
   //Form controllers
   @override
   void initState() {
     super.initState();
-    setSkip();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (inputNode.hasFocus == false) {
-          FocusScope.of(context).requestFocus(inputNode);
-        }
-        print("object");
+      Future.delayed(const Duration(seconds: 1), () {
+        FocusScope.of(context).requestFocus(inputNode);
       });
     });
     FirebaseAnalytics().logEvent(name: 'Login_Page', parameters: null);
@@ -54,7 +49,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
   }
 
@@ -75,6 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
+                setSkip();
                 FirebaseAnalytics()
                     .logEvent(name: 'Skipped_Login', parameters: null);
                 Navigator.pushReplacement(
@@ -164,7 +159,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       TextFormField(
                                         focusNode: inputNode,
-                                        autofocus: true,
                                         enabled: !isLoading,
                                         keyboardType: TextInputType.phone,
                                         style: TextStyle(fontSize: 14),
@@ -216,11 +210,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               // If the form is valid, we want to show a loading Snackbar
-                                              await timer?.cancel();
+
                                               setState(() {
                                                 isRegister = false;
                                                 isOTPScreen = true;
                                               });
+                                              setSkip();
                                               login();
                                             }
                                           }
