@@ -62,6 +62,23 @@ Future<void> giveFeedback(ctx) async {
 List symptomsData = [];
 bool diagnosisShown = false;
 
+textfieldDecoration(label, IconData icon) {
+  return InputDecoration(
+      prefixIcon: Icon(icon),
+      isDense: true, // Added this
+      contentPadding: EdgeInsets.all(15),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xFF2821B5),
+        ),
+      ),
+      border: new OutlineInputBorder(
+          borderSide: new BorderSide(color: Colors.grey[200])),
+      labelText: label);
+}
+
 const EdgeInsets padding10 = EdgeInsets.all(10);
 const SizedBox box10 = SizedBox(
   height: 10,

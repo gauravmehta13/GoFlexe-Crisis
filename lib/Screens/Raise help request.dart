@@ -21,6 +21,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
   List<StateDistrictMapping> districtMapping = [];
   var nameController = TextEditingController();
   var phoneController = TextEditingController();
+  var helpController = TextEditingController();
 
   String districtName = "";
   String stateName = "";
@@ -31,7 +32,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
     if (_auth.currentUser != null) {
       phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
     }
-    FirebaseAnalytics().logEvent(name: 'Join_As_Volunteer', parameters: null);
+    FirebaseAnalytics().logEvent(name: 'Help_Request_Form', parameters: null);
   }
 
   scrollToTop() {
@@ -88,7 +89,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
       ),
       appBar: AppBar(
         title: Text(
-          "Covid Help - Volunteer Form",
+          "Covid Help - Request Form",
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w600, fontSize: 16),
         ),
@@ -104,17 +105,13 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
               SizedBox(
                 height: 10,
               ),
-              SizedBox(height: 80, child: Image.asset("assets/charity.png")),
+              SizedBox(
+                  height: 80, child: Image.asset("assets/helpRequest.png")),
               SizedBox(
                 height: 10,
               ),
               Text(
-                "Join the war against COVID-19",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-              ),
-              box10,
-              Text(
-                "Register as Volunteer",
+                "Help Request Form",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
               ),
               box10,
@@ -127,7 +124,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                   ),
                   child: Center(
                     child: Text(
-                      "As per need, you will be contacted via SMS",
+                      "We will share your requirements with our volunteers, You will be notified if we find something useful.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF2f7769),
@@ -141,23 +138,11 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
               new TextFormField(
                 controller: nameController,
                 textInputAction: TextInputAction.next,
-                decoration: new InputDecoration(
-                    prefixIcon: Icon(FontAwesomeIcons.addressCard),
-                    isDense: true, // Added this
-                    contentPadding: EdgeInsets.all(15),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: Color(0xFF2821B5),
-                      ),
-                    ),
-                    border: new OutlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.grey[200])),
-                    labelText: "Full Name*"),
+                decoration: textfieldDecoration(
+                    "Full Name", FontAwesomeIcons.addressCard),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+                    return 'Required';
                   }
                   return null;
                 },
@@ -166,23 +151,10 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
               new TextFormField(
                 textInputAction: TextInputAction.next,
                 controller: phoneController,
-                decoration: new InputDecoration(
-                    prefixIcon: Icon(Icons.phone),
-                    isDense: true, // Added this
-                    contentPadding: EdgeInsets.all(15),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: Color(0xFF2821B5),
-                      ),
-                    ),
-                    border: new OutlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.grey[200])),
-                    labelText: "Mobile Number"),
+                decoration: textfieldDecoration("Contact Number", Icons.phone),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+                    return 'Required';
                   }
                   return null;
                 },
@@ -197,32 +169,18 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                         fieldViewBuilder: (context, textEditingController,
                                 focusNode, onFieldSubmitted) =>
                             TextField(
-                          scrollPadding: const EdgeInsets.only(bottom: 150.0),
-                          controller: textEditingController,
-                          onTap: () {
-                            textEditingController.clear();
-                            setState(() {
-                              stateName = "";
-                            });
-                          },
-                          focusNode: focusNode,
-                          decoration: new InputDecoration(
-                              prefixIcon: Icon(FontAwesomeIcons.city),
-                              isDense: true, // Added this
-                              contentPadding: EdgeInsets.all(15),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xFF2821B5),
-                                ),
-                              ),
-                              border: new OutlineInputBorder(
-                                  borderSide:
-                                      new BorderSide(color: Colors.grey[200])),
-                              labelText: "Select City"),
-                        ),
+                                scrollPadding:
+                                    const EdgeInsets.only(bottom: 150.0),
+                                controller: textEditingController,
+                                onTap: () {
+                                  textEditingController.clear();
+                                  setState(() {
+                                    stateName = "";
+                                  });
+                                },
+                                focusNode: focusNode,
+                                decoration: textfieldDecoration(
+                                    "Select City", FontAwesomeIcons.city)),
                         optionsBuilder: (textEditingValue) {
                           if (textEditingValue.text == '') {
                             return districtMapping;
@@ -249,29 +207,28 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                           scrollToTop();
                         },
                       ),
-                      Container(
-                          padding: EdgeInsets.only(top: 5),
-                          alignment: Alignment.centerRight,
-                          child: Text(stateName ?? ""))
+                      if (stateName.isNotEmpty)
+                        Container(
+                            padding: EdgeInsets.only(top: 5),
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              stateName ?? "",
+                              style: TextStyle(fontSize: 12),
+                            ))
                     ],
                   ),
                   box20,
-                  CheckboxListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.all(0),
-                    title: const Text(
-                      'I am ready to help PAN India',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
-                    ),
-                    activeColor: Color(0xFF3f51b5),
-                    checkColor: Colors.white,
-                    selected: panIndia,
-                    value: panIndia,
-                    onChanged: (bool value) {
-                      setState(() {
-                        panIndia = value;
-                      });
+                  new TextFormField(
+                    textInputAction: TextInputAction.next,
+                    controller: helpController,
+                    decoration:
+                        textfieldDecoration("Help Required", Icons.live_help),
+                    maxLines: 4,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Required';
+                      }
+                      return null;
                     },
                   ),
                 ],

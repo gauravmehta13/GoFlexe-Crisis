@@ -45,6 +45,13 @@ class _MyAppState extends State<MyApp> {
               textTheme: GoogleFonts.montserratTextTheme(
                 Theme.of(context).textTheme,
               ),
+              textButtonTheme: TextButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  primary: primaryColor, // background
+                  onPrimary: Colors.white, // foreground
+                ),
+              ),
+              fixTextFieldOutlineLabel: true,
               selectedRowColor: primaryColor,
               primaryColor: primaryColor,
               accentColor: primaryColor,
