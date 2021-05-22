@@ -3,14 +3,16 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "d420209add668d47643408f0fd5414b9",
+  "assets/AssetManifest.json": "2a223e09d15c7b0ca33e3ab78c443e23",
 "assets/assets/alert.png": "78f1369d46d09567736dcdf88c10bda5",
 "assets/assets/anxiety.png": "b3faed779db63beb1c92601988800482",
 "assets/assets/bed.png": "c7ae24f023cdbcbcba100bb5a5b3f32b",
 "assets/assets/bloodPressure.png": "efa324ad543078aa7afe9336f1eac3c8",
+"assets/assets/charity.png": "46743cc91028b473fd9f672a09c370da",
 "assets/assets/check.png": "447226438e108f375b385edef59124eb",
 "assets/assets/confusion.png": "df22ea1155f0a9d0f9fe541735c8efbf",
 "assets/assets/covidsymptom.png": "913c33f2e1cd367ff14d5e3e6b1329fa",
+"assets/assets/coviself.png": "57ecbc5651ef17d7e280c2b833a9eb96",
 "assets/assets/device.png": "f835a3489e9489a3610c789f1fb81b1a",
 "assets/assets/diagnose.png": "ae18295560ebf9536c6c68c5587912fb",
 "assets/assets/diet.png": "161d1a272074a1b2bb1a4244639f45f9",
@@ -22,6 +24,7 @@ const RESOURCES = {
 "assets/assets/glucometer.png": "352d1781666edfe1f566d72163d8f953",
 "assets/assets/graph.png": "0351d5d07d9db4bac7cdf61fe1e0f95d",
 "assets/assets/help.png": "362d1a545f53ea819a259ee57dd4f0da",
+"assets/assets/helpRequest.png": "05ecf4f78b5c947f58749a645824c4ed",
 "assets/assets/holding-phone.png": "90d8a60b21ea30840c8a89f8b6ab500f",
 "assets/assets/homeHospital.png": "c12fad56b1a3ceaf9a20313347f7ea6d",
 "assets/assets/homeTest.png": "a154dcb6a887c64bd69d7a44779e572e",
@@ -36,6 +39,7 @@ const RESOURCES = {
 "assets/assets/medical-record.png": "50fb82526fc4eccaec4ac2b2b200c139",
 "assets/assets/medication.png": "2364c187a068e27dce3b22039e5bc8f5",
 "assets/assets/medicine.png": "2267a9bf252fb548c48808fc5ea562e4",
+"assets/assets/ngo.png": "25db12ab27729e7fda265642bbf40cd2",
 "assets/assets/o2level.png": "b3aaaf8c7e685024bf3c5140370ac884",
 "assets/assets/oximeter.png": "231a51ddddb376e3def419aa9d2f1809",
 "assets/assets/pulseOximeter.png": "4d5cdce92506e5769c00506e1f9ff1ee",
@@ -56,10 +60,11 @@ const RESOURCES = {
 "assets/assets/vaccine.png": "34563ef1c6d23cc8b4a690365c8d5135",
 "assets/assets/video.png": "fd9c9a8ae43865673af7968cf8870368",
 "assets/assets/vitamins.png": "45425ec968a8cbbfe65e0c3e69f801e2",
+"assets/assets/volunteer.png": "2ad02a1eedc31aef2b8ced109384bfb1",
 "assets/assets/warning.png": "27e28f8d3352a284662ef957558ef77d",
 "assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
-"assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
-"assets/NOTICES": "f72ec41f38bcdf2ce825a57f8da386fa",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
+"assets/NOTICES": "6e7608bc3cc584d4e3e977ec0d725814",
 "assets/packages/csc_picker/lib/assets/country.json": "11b8187fd184a2d648d6b5be8c5e9908",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/flutter_inappwebview/t_rex_runner/t-rex.css": "5a8d0222407e388155d7d1395a75d5b9",
@@ -72,9 +77,9 @@ const RESOURCES = {
 "icons/icon-256x256.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-384x384.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-512x512.png": "35136776c18ce58fb74f9353d7e978a8",
-"index.html": "33fe6e4dc15ef84bc41dd599fb016dd8",
-"/": "33fe6e4dc15ef84bc41dd599fb016dd8",
-"main.dart.js": "fd4c868f5e1ffb7223577a657193fe58",
+"index.html": "8d42602d14116c7e8dc17e38427c6400",
+"/": "8d42602d14116c7e8dc17e38427c6400",
+"main.dart.js": "f86c7667caedaa6565a6d61c57da8fb0",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
 "splash/img/dark-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
 "splash/img/light-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
@@ -97,7 +102,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });
