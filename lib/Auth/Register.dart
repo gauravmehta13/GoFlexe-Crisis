@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/HomePage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -31,6 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var verificationCode = '';
 
   FocusNode inputNode = FocusNode();
+  Timer timer;
 
   //Form controllers
   @override
@@ -39,18 +42,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setSkip();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      openKeyboard();
+      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (inputNode.hasFocus == false) {
+          FocusScope.of(context).requestFocus(inputNode);
+        }
+        print("object");
+      });
     });
     FirebaseAnalytics().logEvent(name: 'Login_Page', parameters: null);
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   setSkip() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool("skippedLogin", true);
-  }
-
-  void openKeyboard() {
-    FocusScope.of(context).requestFocus(inputNode);
   }
 
   @override
@@ -201,11 +211,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Column(
                                     children: [
                                       new ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (!isLoading) {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               // If the form is valid, we want to show a loading Snackbar
+                                              await timer?.cancel();
                                               setState(() {
                                                 isRegister = false;
                                                 isOTPScreen = true;
