@@ -58,10 +58,12 @@ class _HindiVideosState extends State<HindiVideos> {
             autoPlay: false),
       ));
       controllers[i].onEnterFullscreen = () {
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.landscapeLeft,
-          DeviceOrientation.landscapeRight,
-        ]);
+        if (kIsWeb == false) {
+          SystemChrome.setPreferredOrientations([
+            DeviceOrientation.landscapeLeft,
+            DeviceOrientation.landscapeRight,
+          ]);
+        }
         log('Entered Fullscreen');
       };
       controllers[i].onExitFullscreen = () {

@@ -61,13 +61,13 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
           'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
           data: {
             "tenantSet_id": "CRISIS01",
-            "useCase": "register",
+            "useCase": "help",
             "tenantUsecase": "register",
             "phone": phoneController.text,
             "name": nameController.text,
-            "state": stateName,
             "city": districtName,
-            "panIndia": helpController.text
+            "state":stateName,
+            "help": helpController.text
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
