@@ -46,14 +46,15 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
           'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
           data: {
             "tenantSet_id": "CRISIS01",
-            "useCase": "register",
+            "useCase": "registerVaccine",
             "tenantUsecase": "register",
             "phone": _auth.currentUser.phoneNumber,
-            "pincode": widget.pin
+            "pincode": widget.pin,
+            "district": widget.distrctName
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
-      displayTimedSnackBar(map["resp"]["allProces"], context, 2);
+      displayTimedSnackBar(map["resp"]["allPrices"], context, 2);
     } catch (e) {
       print(e);
       setState(() {

@@ -54,7 +54,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
         duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
   }
 
-  registerVolunteer() async {
+  raisehelp() async {
     var dio = Dio();
     try {
       final response = await dio.post(
@@ -63,12 +63,11 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
             "tenantSet_id": "CRISIS01",
             "useCase": "register",
             "tenantUsecase": "register",
-            "phone": _auth.currentUser.phoneNumber,
-            "email": "",
+            "phone": phoneController.text,
             "name": nameController.text,
             "state": stateName,
             "city": districtName,
-            "panIndia": panIndia.toString()
+            "panIndia": helpController.text
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
@@ -93,7 +92,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                 onPrimary: Colors.white, // foreground
               ),
               onPressed: () async {
-                registerVolunteer();
+                raisehelp();
               },
               child: Text(
                 "Submit",

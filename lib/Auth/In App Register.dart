@@ -654,10 +654,11 @@ class _InAppRegisterState extends State<InAppRegister> {
           'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
           data: {
             "tenantSet_id": "CRISIS01",
-            "useCase": "register",
+            "useCase": "registerVaccine",
             "tenantUsecase": "register",
             "phone": _auth.currentUser.phoneNumber,
-            "pincode": widget.pincode
+            "pincode": widget.pincode,
+            "district": widget.district
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
