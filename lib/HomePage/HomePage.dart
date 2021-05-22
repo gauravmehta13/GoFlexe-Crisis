@@ -20,7 +20,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../Drawer.dart';
 import '../Fade Route.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:avatar_glow/avatar_glow.dart';
 
 class HomePage extends StatefulWidget {
   @override

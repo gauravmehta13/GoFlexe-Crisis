@@ -52,6 +52,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  clearCaptcha() {
+    print("Clearing Captcha");
+    RecaptchaVerifier().clear();
+  }
+
   setSkip() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool("skippedLogin", true);
@@ -469,9 +474,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
     if (kIsWeb == true) {
       confirmationResult = await _auth.signInWithPhoneNumber(
-        '+91 ' + cellnumberController.text.toString(),
-        // RecaptchaVerifier()
-      );
+          '+91 ' + cellnumberController.text.toString(), RecaptchaVerifier());
       setState(() {
         confirmationResult = confirmationResult;
         isLoading = false;
@@ -524,6 +527,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   verifyOTP() async {
+    clearCaptcha();
     if (_formKeyOTP.currentState.validate()) {
       // If the form is valid, we want to show a loading Snackbar
       // If the form is valid, we want to do firebase signup...

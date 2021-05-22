@@ -556,6 +556,7 @@ class _InAppRegisterState extends State<InAppRegister> {
   }
 
   verifyOTP() async {
+    clearCaptcha();
     if (_formKeyOTP.currentState.validate()) {
       // If the form is valid, we want to show a loading Snackbar
       // If the form is valid, we want to do firebase signup...
@@ -645,6 +646,11 @@ class _InAppRegisterState extends State<InAppRegister> {
         }
       }
     }
+  }
+
+  clearCaptcha() {
+    print("Clearing Captcha");
+    RecaptchaVerifier().clear();
   }
 
   submitVaccinationRequest() async {
