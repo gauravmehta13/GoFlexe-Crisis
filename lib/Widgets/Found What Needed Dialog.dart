@@ -1,6 +1,9 @@
 import 'package:crisis/Constants.dart';
+import 'package:crisis/Screens/Covid%20Help/Raise%20help%20request.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../Fade Route.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -89,9 +92,10 @@ class _FoundWhatNeededDialogState extends State<FoundWhatNeededDialog> {
                                     )),
                                 ElevatedButton(
                                     onPressed: () {
-                                      setState(() {
-                                        notFound = true;
-                                      });
+                                      Navigator.push(
+                                        context,
+                                        FadeRoute(page: RaiseHelpRequest()),
+                                      );
                                     },
                                     child: Text(
                                       "No",
