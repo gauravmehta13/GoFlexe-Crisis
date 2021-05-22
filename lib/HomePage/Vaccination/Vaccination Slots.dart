@@ -32,6 +32,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
   var filteredData = [];
   bool loading = true;
   bool error = false;
+  int totalSlots = 0;
   DateTime now = new DateTime.now();
 
   void initState() {
@@ -80,8 +81,10 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
           }
           setState(() {
             tempData[i]["slots"] = x;
+            totalSlots = totalSlots + x;
           });
         }
+        print(totalSlots);
 
         tempData.sort(
             (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
@@ -104,8 +107,11 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
           }
           setState(() {
             tempData[i]["slots"] = x;
+            totalSlots = totalSlots + x;
           });
         }
+        print(totalSlots);
+
         tempData.sort(
             (b, a) => a["slots"].toString().compareTo(b["slots"].toString()));
         setState(() {
@@ -132,23 +138,54 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                 height: 0,
               )
             : Container(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 20),
-                child: SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFf9a825), // background
-                        onPrimary: Colors.white, // foreground
-                      ),
-                      onPressed: () async {
-                        await launch("https://selfregistration.cowin.gov.in/");
-                      },
-                      child: Text(
-                        "Book on CoWin",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    )),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
+                child: totalSlots == 0
+                    ? SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFf9a825), // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () async {
+                            if (_auth.currentUser == null) {
+                              Navigator.push(
+                                context,
+                                FadeRoute(
+                                    page: InAppRegister(
+                                  screenName: "Vaccination",
+                                  district: widget.distrctName,
+                                  districtCode: widget.districtId,
+                                  pincode: widget.pin,
+                                )),
+                              );
+                            } else {
+                              submitVaccinationRequest();
+                            }
+                          },
+                          child: Text(
+                            "Notify me when slots are available",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ))
+                    : SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFf9a825), // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () async {
+                            await launch(
+                                "https://selfregistration.cowin.gov.in/");
+                          },
+                          child: Text(
+                            "Book on CoWin",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        )),
               ),
         appBar: AppBar(
           title:

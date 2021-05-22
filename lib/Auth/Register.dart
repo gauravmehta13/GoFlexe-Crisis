@@ -53,8 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   clearCaptcha() {
-    print("Clearing Captcha");
-    RecaptchaVerifier().clear();
+    if (kIsWeb) {
+      print("Clearing Captcha");
+      RecaptchaVerifier().clear();
+    }
   }
 
   setSkip() async {

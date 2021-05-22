@@ -647,8 +647,10 @@ class _InAppRegisterState extends State<InAppRegister> {
   }
 
   clearCaptcha() {
-    print("Clearing Captcha");
-    RecaptchaVerifier().clear();
+    if (kIsWeb) {
+      print("Clearing Captcha");
+      RecaptchaVerifier().clear();
+    }
   }
 
   submitVaccinationRequest() async {
