@@ -491,9 +491,7 @@ class _InAppRegisterState extends State<InAppRegister> {
     });
     if (kIsWeb == true) {
       confirmationResult = await _auth.signInWithPhoneNumber(
-        '+91 ' + cellnumberController.text.toString(),
-        // RecaptchaVerifier()
-      );
+          '+91 ' + cellnumberController.text.toString(), RecaptchaVerifier());
       setState(() {
         confirmationResult = confirmationResult;
         isLoading = false;
