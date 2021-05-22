@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crisis/Auth/In%20App%20Register.dart';
 import 'package:crisis/Constants.dart';
+import 'package:crisis/HomePage/HomePage.dart';
 import 'package:crisis/data/Districts.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -25,7 +26,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
   var nameController = TextEditingController();
   var phoneController = TextEditingController();
   var helpController = TextEditingController();
-
+  bool requestSubmitted = false;
   String districtName = "";
   String stateName = "";
   bool panIndia = false;
@@ -66,12 +67,15 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
             "phone": phoneController.text,
             "name": nameController.text,
             "city": districtName,
-            "state":stateName,
+            "state": stateName,
             "help": helpController.text
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
-      displayTimedSnackBar("Registration Successful", context, 2);
+      setState(() {
+        requestSubmitted = true;
+      });
+      displayTimedSnackBar("Request Submitted Successfully", context, 2);
     } catch (e) {
       displayTimedSnackBar("Error, Please try again later..!!", context, 2);
       print(e);
@@ -86,19 +90,36 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
         child: SizedBox(
             height: 50,
             width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFFf9a825), // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () async {
-                raisehelp();
-              },
-              child: Text(
-                "Submit",
-                style: TextStyle(color: Colors.black),
-              ),
-            )),
+            child: requestSubmitted
+                ? MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    color: Color(0xFFf9a825),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ));
+                    },
+                    child: Text(
+                      "Return to Home Screen",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  )
+                : ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFf9a825), // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                    onPressed: () async {
+                      raisehelp();
+                    },
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  )),
       ),
       appBar: AppBar(
         title: Text(

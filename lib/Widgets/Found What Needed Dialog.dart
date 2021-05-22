@@ -92,7 +92,7 @@ class _FoundWhatNeededDialogState extends State<FoundWhatNeededDialog> {
                                     )),
                                 ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                         context,
                                         FadeRoute(page: RaiseHelpRequest()),
                                       );
