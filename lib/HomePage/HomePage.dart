@@ -608,6 +608,8 @@ class _HomePageState extends State<HomePage> {
                   box10,
                   CarouselSlider(
                       options: CarouselOptions(
+                        pauseAutoPlayOnTouch: true,
+                        pauseAutoPlayOnManualNavigate: true,
                         height: 170,
                         aspectRatio: 16 / 9,
                         viewportFraction: 0.8,
@@ -621,29 +623,6 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                       ),
                       items: [
-                        CarouselWidget(
-                            imgUrl: "assets/video.png",
-                            page: Videos(),
-                            heading: "Informative Videos",
-                            subHeading: 'Watch Informative Videos\non Covid'),
-                        CarouselWidget(
-                            imgUrl: "assets/help.png",
-                            page: IndiaHelplines(),
-                            heading: "Covid-19 Help Lines",
-                            subHeading:
-                                '#IndiaFightsCorona\n\nLets Fight Together!!!'),
-                        CarouselWidget(
-                            imgUrl: "assets/graph.png",
-                            page: StatsTabBar(),
-                            heading: "Track Live Data",
-                            subHeading:
-                                "See Live Covid Cases of India and it's States"),
-                        CarouselWidget(
-                            imgUrl: "assets/charity.png",
-                            page: VolunteerJoin(),
-                            heading: "Join as Volunteer",
-                            subHeading:
-                                "Help us to help others by joining as a Volunteer."),
                         InkWell(
                           onTap: () {
                             launch("https://youtu.be/6wVppYNJLN4");
@@ -687,6 +666,30 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
+                        CarouselWidget(
+                            imgUrl: "assets/video.png",
+                            page: Videos(),
+                            heading: "Informative Videos",
+                            subHeading: 'Watch Informative Videos\non Covid'),
+                        CarouselWidget(
+                            imgUrl: "assets/help.png",
+                            page: IndiaHelplines(),
+                            heading: "Covid-19 Help Lines",
+                            subHeading:
+                                '#IndiaFightsCorona\n\nLets Fight Together!!!'),
+                        CarouselWidget(
+                            imgUrl: "assets/graph.png",
+                            page: StatsTabBar(),
+                            heading: "Track Live Data",
+                            subHeading:
+                                "See Live Covid Cases of India and it's States"),
+                        CarouselWidget(
+                            imgUrl: "assets/charity.png",
+                            page: VolunteerJoin(),
+                            heading: "Join as Volunteer",
+                            subHeading:
+                                "Help us to help others by joining as a Volunteer."),
+
                         // CarouselWidget(
                         //     imgUrl: "assets/ngo.png",
                         //     page: StatsTabBar(),
