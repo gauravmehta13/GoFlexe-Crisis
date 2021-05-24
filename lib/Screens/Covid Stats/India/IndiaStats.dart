@@ -130,7 +130,7 @@ class _CovidStatsState extends State<CovidStats>
       statewise = tempData.statewise[0];
       totalData1 = response.data;
 
-      testData = totalData1["tested"][totalData1["tested"].length - 1]
+      testData = totalData1["tested"][totalData1["tested"].length - 2]
           ["totalsamplestested"];
     });
     setState(() {
