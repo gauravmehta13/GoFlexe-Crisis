@@ -28,7 +28,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
   var nameController = TextEditingController();
   var phoneController = TextEditingController();
   bool registrationDone = false;
-
+  List<String> cityNames = [];
   String districtName = "";
   String stateName = "";
   bool panIndia = false;
@@ -69,8 +69,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
             "tenantUsecase": "register",
             "phone": phoneController.text,
             "name": nameController.text,
-            "state": stateName,
-            "city": districtName,
+            "city": cityNames,
             "panIndia": panIndia.toString()
           });
       print(response);
@@ -267,6 +266,38 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                           return null;
                         },
                       ),
+                      box10,
+                      if (cityNames.length != 0)
+                        new GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              new SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 3 / 1, crossAxisCount: 3),
+                          itemCount: cityNames.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                              onTap: () {
+                                cityNames.removeAt(index);
+                                setState(() {});
+                              },
+                              child: new Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  side: BorderSide(
+                                    color: primaryColor,
+                                    width: 0.5,
+                                  ),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  cityNames[index],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 13),
+                                )),
+                              ),
+                            );
+                          },
+                        ),
                       box20,
                       Column(
                         children: [
@@ -280,8 +311,8 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                                         focusNode,
                                         onFieldSubmitted) =>
                                     TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  // autovalidateMode:
+                                  //     AutovalidateMode.onUserInteraction,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Required';
@@ -289,7 +320,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                                     return null;
                                   },
                                   scrollPadding:
-                                      const EdgeInsets.only(bottom: 150.0),
+                                      const EdgeInsets.only(bottom: 200.0),
                                   controller: textEditingController,
                                   onTap: () {
                                     textEditingController.clear();
@@ -313,7 +344,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                                       border: new OutlineInputBorder(
                                           borderSide: new BorderSide(
                                               color: Colors.grey[200])),
-                                      labelText: "Select City"),
+                                      labelText: "Select Cities"),
                                 ),
                                 optionsBuilder: (textEditingValue) {
                                   if (textEditingValue.text == '') {
@@ -332,6 +363,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                                     FocusManager.instance.primaryFocus
                                         .unfocus();
                                   }
+                                  cityNames.add(selection.district);
                                   print(selection.district);
                                   print(selection.districtID);
                                   setState(() {

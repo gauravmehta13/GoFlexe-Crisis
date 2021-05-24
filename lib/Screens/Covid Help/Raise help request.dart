@@ -31,6 +31,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
   String districtName = "";
   String stateName = "";
   bool panIndia = false;
+
   void initState() {
     super.initState();
     if (_auth.currentUser == null) {
@@ -57,6 +58,10 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
   }
 
   raisehelp() async {
+    final FocusScopeNode currentScope = FocusScope.of(context);
+    if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+      FocusManager.instance.primaryFocus.unfocus();
+    }
     var dio = Dio();
     try {
       final response = await dio.post(
@@ -251,6 +256,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                             }
                             print(selection.district);
                             print(selection.districtID);
+
                             setState(() {
                               districtName = selection.district.toString();
                               stateName = selection.state.toString();
