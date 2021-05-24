@@ -21,6 +21,7 @@ class RaiseHelpRequest extends StatefulWidget {
 }
 
 class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
+  final helpRequestKey = GlobalKey<FormState>();
   final ScrollController scrollController = ScrollController();
   List<StateDistrictMapping> districtMapping = [];
   var nameController = TextEditingController();
@@ -113,7 +114,9 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () async {
-                      raisehelp();
+                      if (helpRequestKey.currentState.validate()) {
+                        raisehelp();
+                      }
                     },
                     child: Text(
                       "Submit",
@@ -128,146 +131,162 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
               GoogleFonts.montserrat(fontWeight: FontWeight.w600, fontSize: 16),
         ),
       ),
-      body: SingleChildScrollView(
-        controller: scrollController,
-        padding: EdgeInsets.all(20),
-        physics: BouncingScrollPhysics(),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                  height: 80, child: Image.asset("assets/helpRequest.png")),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Help Request Form",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-              ),
-              box10,
-              Container(
-                  width: double.maxFinite,
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFc1f0dc),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "We will share your requirements with our volunteers, You will be notified if we find something useful.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF2f7769),
-                        fontSize: 12,
-                      ),
+      body: Form(
+        key: helpRequestKey,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          padding: EdgeInsets.all(20),
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                    height: 80, child: Image.asset("assets/helpRequest.png")),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Help Request Form",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                ),
+                box10,
+                Container(
+                    width: double.maxFinite,
+                    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFc1f0dc),
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                  )),
-              SizedBox(
-                height: 30,
-              ),
-              new TextFormField(
-                controller: nameController,
-                textInputAction: TextInputAction.next,
-                decoration: textfieldDecoration(
-                    "Full Name", FontAwesomeIcons.addressCard),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Required';
-                  }
-                  return null;
-                },
-              ),
-              box20,
-              new TextFormField(
-                textInputAction: TextInputAction.next,
-                controller: phoneController,
-                decoration: textfieldDecoration("Contact Number", Icons.phone),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Required';
-                  }
-                  return null;
-                },
-              ),
-              box20,
-              Column(
-                children: [
-                  Column(
-                    children: [
-                      Autocomplete<StateDistrictMapping>(
-                        displayStringForOption: (option) => option.district,
-                        fieldViewBuilder: (context, textEditingController,
-                                focusNode, onFieldSubmitted) =>
-                            TextField(
-                                scrollPadding:
-                                    const EdgeInsets.only(bottom: 150.0),
-                                controller: textEditingController,
-                                onTap: () {
-                                  textEditingController.clear();
-                                  setState(() {
-                                    stateName = "";
-                                  });
-                                },
-                                focusNode: focusNode,
-                                decoration: textfieldDecoration(
-                                    "Select City", FontAwesomeIcons.city)),
-                        optionsBuilder: (textEditingValue) {
-                          if (textEditingValue.text == '') {
-                            return districtMapping;
-                          }
-                          return districtMapping.where((s) {
-                            return s.district
-                                .toLowerCase()
-                                .contains(textEditingValue.text.toLowerCase());
-                          });
-                        },
-                        onSelected: (StateDistrictMapping selection) {
-                          final FocusScopeNode currentScope =
-                              FocusScope.of(context);
-                          if (!currentScope.hasPrimaryFocus &&
-                              currentScope.hasFocus) {
-                            FocusManager.instance.primaryFocus.unfocus();
-                          }
-                          print(selection.district);
-                          print(selection.districtID);
-                          setState(() {
-                            districtName = selection.district.toString();
-                            stateName = selection.state.toString();
-                          });
-                          scrollToTop();
-                        },
+                    child: Center(
+                      child: Text(
+                        "We will share your requirements with our volunteers, You will be notified if we find something useful.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF2f7769),
+                          fontSize: 12,
+                        ),
                       ),
-                      if (stateName.isNotEmpty)
-                        Container(
-                            padding: EdgeInsets.only(top: 5),
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              stateName ?? "",
-                              style: TextStyle(fontSize: 12),
-                            ))
-                    ],
-                  ),
-                  box20,
-                  new TextFormField(
-                    textInputAction: TextInputAction.next,
-                    controller: helpController,
-                    decoration:
-                        textfieldDecoration("Help Required", Icons.live_help),
-                    maxLines: 4,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Required';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
-              ),
-            ],
+                    )),
+                SizedBox(
+                  height: 30,
+                ),
+                new TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: nameController,
+                  textInputAction: TextInputAction.next,
+                  decoration: textfieldDecoration(
+                      "Full Name", FontAwesomeIcons.addressCard),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Required';
+                    }
+                    return null;
+                  },
+                ),
+                box20,
+                new TextFormField(
+                  enabled: _auth.currentUser != null ? false : true,
+                  style: TextStyle(color: Colors.grey),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  textInputAction: TextInputAction.next,
+                  controller: phoneController,
+                  decoration:
+                      textfieldDecoration("Contact Number", Icons.phone),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Required';
+                    }
+                    return null;
+                  },
+                ),
+                box20,
+                Column(
+                  children: [
+                    Column(
+                      children: [
+                        Autocomplete<StateDistrictMapping>(
+                          displayStringForOption: (option) => option.district,
+                          fieldViewBuilder: (context, textEditingController,
+                                  focusNode, onFieldSubmitted) =>
+                              TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Required';
+                                    }
+                                    return null;
+                                  },
+                                  scrollPadding:
+                                      const EdgeInsets.only(bottom: 150.0),
+                                  controller: textEditingController,
+                                  onTap: () {
+                                    textEditingController.clear();
+                                    setState(() {
+                                      stateName = "";
+                                    });
+                                  },
+                                  focusNode: focusNode,
+                                  decoration: textfieldDecoration(
+                                      "Select City", FontAwesomeIcons.city)),
+                          optionsBuilder: (textEditingValue) {
+                            if (textEditingValue.text == '') {
+                              return districtMapping;
+                            }
+                            return districtMapping.where((s) {
+                              return s.district.toLowerCase().contains(
+                                  textEditingValue.text.toLowerCase());
+                            });
+                          },
+                          onSelected: (StateDistrictMapping selection) {
+                            final FocusScopeNode currentScope =
+                                FocusScope.of(context);
+                            if (!currentScope.hasPrimaryFocus &&
+                                currentScope.hasFocus) {
+                              FocusManager.instance.primaryFocus.unfocus();
+                            }
+                            print(selection.district);
+                            print(selection.districtID);
+                            setState(() {
+                              districtName = selection.district.toString();
+                              stateName = selection.state.toString();
+                            });
+                            scrollToTop();
+                          },
+                        ),
+                        if (stateName.isNotEmpty)
+                          Container(
+                              padding: EdgeInsets.only(top: 5),
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                stateName ?? "",
+                                style: TextStyle(fontSize: 12),
+                              ))
+                      ],
+                    ),
+                    box20,
+                    new TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      textInputAction: TextInputAction.next,
+                      controller: helpController,
+                      decoration:
+                          textfieldDecoration("Help Required", Icons.live_help),
+                      maxLines: 4,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Required';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

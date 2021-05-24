@@ -10,16 +10,12 @@ import 'package:redux/redux.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'redux/reducers.dart';
 
-bool skippedLogin;
 Future<void> main() async {
   final _initialState = AppState();
   final Store<AppState> _store =
       Store<AppState>(reducer, initialState: _initialState);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  skippedLogin = prefs.getBool("skippedLogin");
-  print('Skipped Login $skippedLogin');
   runApp(MyApp(store: _store));
 }
 
@@ -65,7 +61,7 @@ class _MyAppState extends State<MyApp> {
               buttonTheme: ButtonThemeData(
                 buttonColor: primaryColor,
               )),
-          home: skippedLogin == true ? HomePage() : RegisterScreen()),
+          home: HomePage()),
     );
   }
 }

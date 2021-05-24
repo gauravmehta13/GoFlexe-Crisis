@@ -532,7 +532,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.green[100],
+                            color: Colors.red[100],
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -543,14 +543,14 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    FadeRoute(page: VolunteerJoin()),
+                                    FadeRoute(page: RaiseHelpRequest()),
                                   );
                                 },
                                 child: ClipPath(
                                     clipper: SkewCut(),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: Colors.red[100],
+                                          color: Colors.green[100],
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
                                       padding: EdgeInsets.only(right: 40),
@@ -559,12 +559,12 @@ class _HomePageState extends State<HomePage> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
-                                            "Offer Your Help",
+                                            "Need Help?",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           Image.asset(
-                                            "assets/volunteer.png",
+                                            "assets/helpRequest.png",
                                             height: 40,
                                           ),
                                         ],
@@ -578,7 +578,7 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    FadeRoute(page: RaiseHelpRequest()),
+                                    FadeRoute(page: VolunteerJoin()),
                                   );
                                 },
                                 child: Container(
@@ -587,11 +587,11 @@ class _HomePageState extends State<HomePage> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
-                                        "assets/helpRequest.png",
+                                        "assets/volunteer.png",
                                         height: 40,
                                       ),
                                       Text(
-                                        "Raise Help Request",
+                                        "Register as Volunteer",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600),
                                       )

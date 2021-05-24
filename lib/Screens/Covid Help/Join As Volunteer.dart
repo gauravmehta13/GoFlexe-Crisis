@@ -22,6 +22,7 @@ class VolunteerJoin extends StatefulWidget {
 }
 
 class _VolunteerJoinState extends State<VolunteerJoin> {
+  final volunteerKey = GlobalKey<FormState>();
   final ScrollController scrollController = ScrollController();
   List<StateDistrictMapping> districtMapping = [];
   var nameController = TextEditingController();
@@ -114,7 +115,9 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () async {
-                      registerVolunteer();
+                      if (volunteerKey.currentState.validate()) {
+                        registerVolunteer();
+                      }
                     },
                     child: Text(
                       "Submit",
@@ -129,225 +132,246 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
               GoogleFonts.montserrat(fontWeight: FontWeight.w600, fontSize: 16),
         ),
       ),
-      body: SingleChildScrollView(
-        controller: scrollController,
-        padding: EdgeInsets.all(20),
-        physics: BouncingScrollPhysics(),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: double.maxFinite,
-          child: registrationDone
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Spacer(),
-                    Image.asset(
-                      "assets/check.png",
-                      height: 100,
-                    ),
-                    box30,
-                    Text(
-                      "Registration Successful",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                    box20,
-                    Text(
-                      "You will get an SMS when patients from your city\nwill need any help.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.w600),
-                    ),
-                    Spacer(
-                      flex: 3,
-                    )
-                  ],
-                )
-              : Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: 80, child: Image.asset("assets/charity.png")),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Join the war against COVID-19",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                    ),
-                    box10,
-                    Text(
-                      "Register as Volunteer",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                    ),
-                    box10,
-                    Container(
-                        width: double.maxFinite,
-                        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFc1f0dc),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "As per need, you will be contacted via SMS",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF2f7769),
-                              fontSize: 12,
-                            ),
+      body: Form(
+        key: volunteerKey,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          padding: EdgeInsets.all(20),
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: double.maxFinite,
+            child: registrationDone
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      Image.asset(
+                        "assets/check.png",
+                        height: 100,
+                      ),
+                      box30,
+                      Text(
+                        "Registration Successful",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      box20,
+                      Text(
+                        "You will get an SMS when patients from your city\nwill need any help.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.w600),
+                      ),
+                      Spacer(
+                        flex: 3,
+                      )
+                    ],
+                  )
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                          height: 80, child: Image.asset("assets/charity.png")),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Join the war against COVID-19",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 20),
+                      ),
+                      box10,
+                      Text(
+                        "Register as Volunteer",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 20),
+                      ),
+                      box10,
+                      Container(
+                          width: double.maxFinite,
+                          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFc1f0dc),
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                        )),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    new TextFormField(
-                      controller: nameController,
-                      textInputAction: TextInputAction.next,
-                      decoration: new InputDecoration(
-                          prefixIcon: Icon(FontAwesomeIcons.addressCard),
-                          isDense: true, // Added this
-                          contentPadding: EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xFF2821B5),
+                          child: Center(
+                            child: Text(
+                              "As per need, you will be contacted via SMS",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFF2f7769),
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                          border: new OutlineInputBorder(
-                              borderSide:
-                                  new BorderSide(color: Colors.grey[200])),
-                          labelText: "Full Name*"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
-                    box20,
-                    new TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: phoneController,
-                      decoration: new InputDecoration(
-                          prefixIcon: Icon(Icons.phone),
-                          isDense: true, // Added this
-                          contentPadding: EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xFF2821B5),
+                          )),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      new TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: nameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: new InputDecoration(
+                            prefixIcon: Icon(FontAwesomeIcons.addressCard),
+                            isDense: true, // Added this
+                            contentPadding: EdgeInsets.all(15),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(
+                                width: 1,
+                                color: Color(0xFF2821B5),
+                              ),
                             ),
-                          ),
-                          border: new OutlineInputBorder(
-                              borderSide:
-                                  new BorderSide(color: Colors.grey[200])),
-                          labelText: "Mobile Number"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
-                    box20,
-                    Column(
-                      children: [
-                        Column(
-                          children: [
-                            Autocomplete<StateDistrictMapping>(
-                              displayStringForOption: (option) =>
-                                  option.district,
-                              fieldViewBuilder: (context, textEditingController,
-                                      focusNode, onFieldSubmitted) =>
-                                  TextField(
-                                scrollPadding:
-                                    const EdgeInsets.only(bottom: 150.0),
-                                controller: textEditingController,
-                                onTap: () {
-                                  textEditingController.clear();
-                                  setState(() {
-                                    stateName = "";
+                            border: new OutlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.grey[200])),
+                            labelText: "Full Name*"),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required';
+                          }
+                          return null;
+                        },
+                      ),
+                      box20,
+                      new TextFormField(
+                        enabled: _auth.currentUser != null ? false : true,
+                        style: TextStyle(color: Colors.grey),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textInputAction: TextInputAction.next,
+                        controller: phoneController,
+                        decoration: new InputDecoration(
+                            prefixIcon: Icon(Icons.phone),
+                            isDense: true, // Added this
+                            contentPadding: EdgeInsets.all(15),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(
+                                width: 1,
+                                color: Color(0xFF2821B5),
+                              ),
+                            ),
+                            border: new OutlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.grey[200])),
+                            labelText: "Mobile Number"),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required';
+                          }
+                          return null;
+                        },
+                      ),
+                      box20,
+                      Column(
+                        children: [
+                          Column(
+                            children: [
+                              Autocomplete<StateDistrictMapping>(
+                                displayStringForOption: (option) =>
+                                    option.district,
+                                fieldViewBuilder: (context,
+                                        textEditingController,
+                                        focusNode,
+                                        onFieldSubmitted) =>
+                                    TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Required';
+                                    }
+                                    return null;
+                                  },
+                                  scrollPadding:
+                                      const EdgeInsets.only(bottom: 150.0),
+                                  controller: textEditingController,
+                                  onTap: () {
+                                    textEditingController.clear();
+                                    setState(() {
+                                      stateName = "";
+                                    });
+                                  },
+                                  focusNode: focusNode,
+                                  decoration: new InputDecoration(
+                                      prefixIcon: Icon(FontAwesomeIcons.city),
+                                      isDense: true, // Added this
+                                      contentPadding: EdgeInsets.all(15),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(4)),
+                                        borderSide: BorderSide(
+                                          width: 1,
+                                          color: Color(0xFF2821B5),
+                                        ),
+                                      ),
+                                      border: new OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Colors.grey[200])),
+                                      labelText: "Select City"),
+                                ),
+                                optionsBuilder: (textEditingValue) {
+                                  if (textEditingValue.text == '') {
+                                    return districtMapping;
+                                  }
+                                  return districtMapping.where((s) {
+                                    return s.district.toLowerCase().contains(
+                                        textEditingValue.text.toLowerCase());
                                   });
                                 },
-                                focusNode: focusNode,
-                                decoration: new InputDecoration(
-                                    prefixIcon: Icon(FontAwesomeIcons.city),
-                                    isDense: true, // Added this
-                                    contentPadding: EdgeInsets.all(15),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(4)),
-                                      borderSide: BorderSide(
-                                        width: 1,
-                                        color: Color(0xFF2821B5),
-                                      ),
-                                    ),
-                                    border: new OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                            color: Colors.grey[200])),
-                                    labelText: "Select City"),
+                                onSelected: (StateDistrictMapping selection) {
+                                  final FocusScopeNode currentScope =
+                                      FocusScope.of(context);
+                                  if (!currentScope.hasPrimaryFocus &&
+                                      currentScope.hasFocus) {
+                                    FocusManager.instance.primaryFocus
+                                        .unfocus();
+                                  }
+                                  print(selection.district);
+                                  print(selection.districtID);
+                                  setState(() {
+                                    districtName =
+                                        selection.district.toString();
+                                    stateName = selection.state.toString();
+                                  });
+                                  scrollToTop();
+                                },
                               ),
-                              optionsBuilder: (textEditingValue) {
-                                if (textEditingValue.text == '') {
-                                  return districtMapping;
-                                }
-                                return districtMapping.where((s) {
-                                  return s.district.toLowerCase().contains(
-                                      textEditingValue.text.toLowerCase());
-                                });
-                              },
-                              onSelected: (StateDistrictMapping selection) {
-                                final FocusScopeNode currentScope =
-                                    FocusScope.of(context);
-                                if (!currentScope.hasPrimaryFocus &&
-                                    currentScope.hasFocus) {
-                                  FocusManager.instance.primaryFocus.unfocus();
-                                }
-                                print(selection.district);
-                                print(selection.districtID);
-                                setState(() {
-                                  districtName = selection.district.toString();
-                                  stateName = selection.state.toString();
-                                });
-                                scrollToTop();
-                              },
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(top: 5),
-                                alignment: Alignment.centerRight,
-                                child: Text(stateName ?? ""))
-                          ],
-                        ),
-                        box20,
-                        CheckboxListTile(
-                          dense: true,
-                          contentPadding: EdgeInsets.all(0),
-                          title: const Text(
-                            'I am ready to help PAN India',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15),
+                              Container(
+                                  padding: EdgeInsets.only(top: 5),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(stateName ?? ""))
+                            ],
                           ),
-                          activeColor: Color(0xFF3f51b5),
-                          checkColor: Colors.white,
-                          selected: panIndia,
-                          value: panIndia,
-                          onChanged: (bool value) {
-                            setState(() {
-                              panIndia = value;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                          box20,
+                          CheckboxListTile(
+                            dense: true,
+                            contentPadding: EdgeInsets.all(0),
+                            title: const Text(
+                              'I am ready to help PAN India',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 15),
+                            ),
+                            activeColor: Color(0xFF3f51b5),
+                            checkColor: Colors.white,
+                            selected: panIndia,
+                            value: panIndia,
+                            onChanged: (bool value) {
+                              setState(() {
+                                panIndia = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+          ),
         ),
       ),
     );
