@@ -271,7 +271,7 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                     box20,
                     new TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       controller: helpController,
                       decoration:
                           textfieldDecoration("Help Required", Icons.live_help),
