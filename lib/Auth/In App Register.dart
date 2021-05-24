@@ -662,7 +662,7 @@ class _InAppRegisterState extends State<InAppRegister> {
             "tenantSet_id": "CRISIS01",
             "useCase": "registerVaccine",
             "tenantUsecase": "register",
-            "phone": _auth.currentUser.phoneNumber,
+            "phone": _auth.currentUser.phoneNumber.substring(3, 13),
             "pincode": widget.pincode,
             "district": widget.districtCode
           });
