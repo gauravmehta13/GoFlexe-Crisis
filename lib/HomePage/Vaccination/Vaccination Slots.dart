@@ -51,7 +51,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
             "tenantUsecase": "register",
             "phone": _auth.currentUser.phoneNumber,
             "pincode": widget.pin,
-            "district": widget.distrctName
+            "district": widget.districtId
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());

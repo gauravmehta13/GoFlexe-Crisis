@@ -664,7 +664,7 @@ class _InAppRegisterState extends State<InAppRegister> {
             "tenantUsecase": "register",
             "phone": _auth.currentUser.phoneNumber,
             "pincode": widget.pincode,
-            "district": widget.district
+            "district": widget.districtCode
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
