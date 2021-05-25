@@ -30,7 +30,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
   bool registrationDone = false;
   List<String> cityNames = [];
   String districtName = "";
-
+  String stateName = "";
   bool panIndia = false;
   void initState() {
     super.initState();
@@ -70,6 +70,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
             "phone": phoneController.text,
             "name": nameController.text,
             "city": cityNames,
+            "state": stateName,
             "panIndia": panIndia.toString()
           });
       print(response);
@@ -357,6 +358,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                           print(selection.districtID);
                           setState(() {
                             districtName = selection.district.toString();
+                            stateName = selection.state.toString();
                           });
                           scrollToTop();
                         },

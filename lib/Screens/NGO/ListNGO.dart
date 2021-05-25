@@ -189,7 +189,7 @@ class _NgoListState extends State<NgoList> {
                                                 Column(
                                                   children: [
                                                     Image.asset(
-                                                      "assets/examination.png",
+                                                      "assets/NGObadge.png",
                                                       width: 50,
                                                     )
                                                   ],
