@@ -30,7 +30,7 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
   bool registrationDone = false;
   List<String> cityNames = [];
   String districtName = "";
-  String stateName = "";
+
   bool panIndia = false;
   void initState() {
     super.initState();
@@ -299,107 +299,86 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
                           },
                         ),
                       box20,
-                      Column(
-                        children: [
-                          Column(
-                            children: [
-                              Autocomplete<StateDistrictMapping>(
-                                displayStringForOption: (option) =>
-                                    option.district,
-                                fieldViewBuilder: (context,
-                                        textEditingController,
-                                        focusNode,
-                                        onFieldSubmitted) =>
-                                    TextFormField(
-                                  // autovalidateMode:
-                                  //     AutovalidateMode.onUserInteraction,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Required';
-                                    }
-                                    return null;
-                                  },
-                                  scrollPadding:
-                                      const EdgeInsets.only(bottom: 200.0),
-                                  controller: textEditingController,
-                                  onTap: () {
-                                    textEditingController.clear();
-                                    setState(() {
-                                      stateName = "";
-                                    });
-                                  },
-                                  focusNode: focusNode,
-                                  decoration: new InputDecoration(
-                                      prefixIcon: Icon(FontAwesomeIcons.city),
-                                      isDense: true, // Added this
-                                      contentPadding: EdgeInsets.all(15),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)),
-                                        borderSide: BorderSide(
-                                          width: 1,
-                                          color: Color(0xFF2821B5),
-                                        ),
-                                      ),
-                                      border: new OutlineInputBorder(
-                                          borderSide: new BorderSide(
-                                              color: Colors.grey[200])),
-                                      labelText: "Select Cities"),
+                      Autocomplete<StateDistrictMapping>(
+                        displayStringForOption: (option) => option.district,
+                        fieldViewBuilder: (context, textEditingController,
+                                focusNode, onFieldSubmitted) =>
+                            TextFormField(
+                          // autovalidateMode:
+                          //     AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Required';
+                            }
+                            return null;
+                          },
+                          scrollPadding: const EdgeInsets.only(bottom: 200.0),
+                          controller: textEditingController,
+                          onTap: () {
+                            textEditingController.clear();
+                          },
+                          focusNode: focusNode,
+                          decoration: new InputDecoration(
+                              prefixIcon: Icon(FontAwesomeIcons.city),
+                              isDense: true, // Added this
+                              contentPadding: EdgeInsets.all(15),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4)),
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xFF2821B5),
                                 ),
-                                optionsBuilder: (textEditingValue) {
-                                  if (textEditingValue.text == '') {
-                                    return districtMapping;
-                                  }
-                                  return districtMapping.where((s) {
-                                    return s.district.toLowerCase().contains(
-                                        textEditingValue.text.toLowerCase());
-                                  });
-                                },
-                                onSelected: (StateDistrictMapping selection) {
-                                  final FocusScopeNode currentScope =
-                                      FocusScope.of(context);
-                                  if (!currentScope.hasPrimaryFocus &&
-                                      currentScope.hasFocus) {
-                                    FocusManager.instance.primaryFocus
-                                        .unfocus();
-                                  }
-                                  cityNames.add(selection.district);
-                                  print(selection.district);
-                                  print(selection.districtID);
-                                  setState(() {
-                                    districtName =
-                                        selection.district.toString();
-                                    stateName = selection.state.toString();
-                                  });
-                                  scrollToTop();
-                                },
                               ),
-                              Container(
-                                  padding: EdgeInsets.only(top: 5),
-                                  alignment: Alignment.centerRight,
-                                  child: Text(stateName ?? ""))
-                            ],
-                          ),
-                          box20,
-                          CheckboxListTile(
-                            dense: true,
-                            contentPadding: EdgeInsets.all(0),
-                            title: const Text(
-                              'I am ready to help PAN India',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 15),
-                            ),
-                            activeColor: Color(0xFF3f51b5),
-                            checkColor: Colors.white,
-                            selected: panIndia,
-                            value: panIndia,
-                            onChanged: (bool value) {
-                              setState(() {
-                                panIndia = value;
-                              });
-                            },
-                          ),
-                        ],
+                              border: new OutlineInputBorder(
+                                  borderSide:
+                                      new BorderSide(color: Colors.grey[200])),
+                              labelText: "Select Cities"),
+                        ),
+                        optionsBuilder: (textEditingValue) {
+                          if (textEditingValue.text == '') {
+                            return districtMapping;
+                          }
+                          return districtMapping.where((s) {
+                            return s.district
+                                .toLowerCase()
+                                .contains(textEditingValue.text.toLowerCase());
+                          });
+                        },
+                        onSelected: (StateDistrictMapping selection) {
+                          final FocusScopeNode currentScope =
+                              FocusScope.of(context);
+                          if (!currentScope.hasPrimaryFocus &&
+                              currentScope.hasFocus) {
+                            FocusManager.instance.primaryFocus.unfocus();
+                          }
+                          cityNames.add(selection.district);
+                          print(selection.district);
+                          print(selection.districtID);
+                          setState(() {
+                            districtName = selection.district.toString();
+                          });
+                          scrollToTop();
+                        },
+                      ),
+                      box20,
+                      CheckboxListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.all(0),
+                        title: const Text(
+                          'I am ready to help PAN India',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 15),
+                        ),
+                        activeColor: Color(0xFF3f51b5),
+                        checkColor: Colors.white,
+                        selected: panIndia,
+                        value: panIndia,
+                        onChanged: (bool value) {
+                          setState(() {
+                            panIndia = value;
+                          });
+                        },
                       ),
                     ],
                   ),

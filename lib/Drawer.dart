@@ -4,6 +4,7 @@ import 'package:crisis/HomePage/Hospital/Hospital.dart';
 import 'package:crisis/Screens/Disclaimer.dart';
 import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/MythBusters.dart';
+import 'package:crisis/Screens/NGO/FindNGO.dart';
 import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/india_helplines.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -166,6 +167,22 @@ class _MyDrawerState extends State<MyDrawer> {
                 title: Text("Twitter Resources"),
                 leading: FaIcon(
                   FontAwesomeIcons.twitter,
+                  color: Colors.black87,
+                  size: 18,
+                ),
+              ),
+              ListTile(
+                dense: true,
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    FadeRoute(page: NGO()),
+                  );
+                },
+                title: Text("Find NGO's"),
+                leading: FaIcon(
+                  FontAwesomeIcons.building,
                   color: Colors.black87,
                   size: 18,
                 ),

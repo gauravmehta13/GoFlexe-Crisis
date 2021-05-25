@@ -6,6 +6,8 @@ import 'package:crisis/Screens/Faq.dart';
 import 'package:crisis/Screens/Covid%20Help/Join%20As%20Volunteer.dart';
 import 'package:crisis/Screens/MythBusters.dart';
 import 'package:crisis/Screens/Covid%20Help/Raise%20help%20request.dart';
+import 'package:crisis/Screens/NGO/FindNGO.dart';
+
 import 'package:crisis/Screens/Self%20Asses/Self%20Assesment.dart';
 import 'package:crisis/Screens/Twitter%20Search/Twitter%20Search.dart';
 import 'package:crisis/Screens/Videos/Videos.dart';
@@ -623,9 +625,14 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                       ),
                       items: [
+                        CarouselWidget(
+                            imgUrl: "assets/ngo.png",
+                            page: NGO(),
+                            heading: "Find NGO's",
+                            subHeading: "Find NGO's from All Over India"),
                         InkWell(
                           onTap: () {
-                            launch("https://youtu.be/6wVppYNJLN4");
+                            launch("https://youtu.be/eYv0jfxGZis");
                           },
                           child: Card(
                             clipBehavior: Clip.antiAlias,
@@ -689,12 +696,6 @@ class _HomePageState extends State<HomePage> {
                             heading: "Join as Volunteer",
                             subHeading:
                                 "Help us to help others by joining as a Volunteer."),
-
-                        // CarouselWidget(
-                        //     imgUrl: "assets/ngo.png",
-                        //     page: StatsTabBar(),
-                        //     heading: "Find NGO's",
-                        //     subHeading: "Find NGO's from All Over India"),
                       ]),
                   SizedBox(
                     height: 100,

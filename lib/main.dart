@@ -1,4 +1,3 @@
-import 'package:crisis/Auth/Register.dart';
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/HomePage.dart';
 import 'package:flutter/material.dart';
