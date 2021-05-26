@@ -158,9 +158,9 @@ class _NgoListState extends State<NgoList> {
                                           FirebaseAnalytics().logEvent(
                                               name: 'Called_NGO',
                                               parameters: null);
-                                          filteredData[index]["phone"] != null
+                                          filteredData[index]["phn"] != null
                                               ? launch('tel:' +
-                                                  filteredData[index]["phone"])
+                                                  filteredData[index]["phn"])
                                               : displaySnackBar(
                                                   "Contact No. Unavailable",
                                                   context);
