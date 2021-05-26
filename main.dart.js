@@ -50676,7 +50676,7 @@ $0:function(){var s,r
 E.cz().bO(0,"Called_NGO",null)
 s=this.a
 r=this.b
-if(J.k(J.k(s.f,r),"phone")!=null)T.hK(C.c.U("tel:",J.k(J.k(s.f,r),"phone")),null,!1)
+if(J.k(J.k(s.f,r),"phn")!=null)T.hK(C.c.U("tel:",J.k(J.k(s.f,r),"phn")),null,!1)
 else Y.aFp("Contact No. Unavailable",this.c)},
 $S:1}
 R.axb.prototype={
