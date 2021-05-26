@@ -241,9 +241,9 @@ class _NgoListState extends State<NgoList> {
                                                                   width: 5,
                                                                 ),
                                                                 Text(
-                                                                    filteredData[index]["phone"] !=
+                                                                    filteredData[index]["phn"] !=
                                                                             null
-                                                                        ? filteredData[index]["phone"].replaceAll(
+                                                                        ? filteredData[index]["phn"].replaceAll(
                                                                             new RegExp(
                                                                                 r"\s+\b|\b\s"),
                                                                             "")
