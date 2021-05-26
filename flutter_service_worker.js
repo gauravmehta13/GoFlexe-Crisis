@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "2a223e09d15c7b0ca33e3ab78c443e23",
+  "assets/AssetManifest.json": "c5dd8d51b9a4494c4ac6b4a3db9c6877",
 "assets/assets/alert.png": "78f1369d46d09567736dcdf88c10bda5",
 "assets/assets/anxiety.png": "b3faed779db63beb1c92601988800482",
 "assets/assets/bed.png": "c7ae24f023cdbcbcba100bb5a5b3f32b",
@@ -40,6 +40,7 @@ const RESOURCES = {
 "assets/assets/medication.png": "2364c187a068e27dce3b22039e5bc8f5",
 "assets/assets/medicine.png": "2267a9bf252fb548c48808fc5ea562e4",
 "assets/assets/ngo.png": "25db12ab27729e7fda265642bbf40cd2",
+"assets/assets/NGObadge.png": "3672e487a7703b6d9dc263daf82b409d",
 "assets/assets/o2level.png": "b3aaaf8c7e685024bf3c5140370ac884",
 "assets/assets/oximeter.png": "231a51ddddb376e3def419aa9d2f1809",
 "assets/assets/pulseOximeter.png": "4d5cdce92506e5769c00506e1f9ff1ee",
@@ -77,9 +78,9 @@ const RESOURCES = {
 "icons/icon-256x256.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-384x384.png": "35136776c18ce58fb74f9353d7e978a8",
 "icons/icon-512x512.png": "35136776c18ce58fb74f9353d7e978a8",
-"index.html": "3d89d24114641db7d614cd02ffdbf2ed",
-"/": "3d89d24114641db7d614cd02ffdbf2ed",
-"main.dart.js": "629d852c9ad264e58de9e3ad7d2cda75",
+"index.html": "b98abb53781f38685d9290b0a916adc8",
+"/": "b98abb53781f38685d9290b0a916adc8",
+"main.dart.js": "d3178ea17e9a48ecb21194506f997b4e",
 "manifest.json": "60320ba02c37509221c1002ecc6c9f23",
 "splash/img/dark-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
 "splash/img/light-background.png": "370018dcec6a9dcbc1d72d844b4f4203",
