@@ -442,12 +442,12 @@ class _HomePageState extends State<HomePage> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     FaIcon(
-                                      FontAwesomeIcons.question,
+                                      FontAwesomeIcons.handsHelping,
                                       color: Color(0xFF1eae98),
                                       size: 28,
                                     ),
                                     Text(
-                                      "FAQ's",
+                                      "NGO's",
                                       style: TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w600),
@@ -534,13 +534,11 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.red[100],
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                              flex: 5,
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -548,34 +546,32 @@ class _HomePageState extends State<HomePage> {
                                     FadeRoute(page: RaiseHelpRequest()),
                                   );
                                 },
-                                child: ClipPath(
-                                    clipper: SkewCut(),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.green[100],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5))),
-                                      padding: EdgeInsets.only(right: 40),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            "Need Help?",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Image.asset(
-                                            "assets/helpRequest.png",
-                                            height: 40,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
+                                child: Card(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.green[100],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          "Need Help?",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Image.asset(
+                                          "assets/helpRequest.png",
+                                          height: 40,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             Expanded(
-                              flex: 4,
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -583,21 +579,27 @@ class _HomePageState extends State<HomePage> {
                                     FadeRoute(page: VolunteerJoin()),
                                   );
                                 },
-                                child: Container(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                        "assets/volunteer.png",
-                                        height: 40,
-                                      ),
-                                      Text(
-                                        "Register as Volunteer",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                      )
-                                    ],
+                                child: Card(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.red[100],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset(
+                                          "assets/volunteer.png",
+                                          height: 40,
+                                        ),
+                                        Text(
+                                          "Register as Volunteer",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
