@@ -44,21 +44,6 @@ class _NGOState extends State<NGO> {
     print(states.states[0].label);
   }
 
-  getDistricts(id) async {
-    setState(() {
-      districtLoading = true;
-    });
-    var resp = await dio
-        .get("https://cdn-api.co-vin.in/api/v2/admin/location/districts/$id");
-
-    setState(() {
-      districts = District.fromJson(resp.data);
-      districtLoading = false;
-    });
-    print(districts.toString());
-    print(districts.districts[0].label);
-  }
-
   Future<List> fetchStates() async {
     return states?.states ?? [];
   }
@@ -116,7 +101,7 @@ class _NGOState extends State<NGO> {
                         ),
                         border: new OutlineInputBorder(
                             borderSide: new BorderSide(color: Colors.grey)),
-                        labelText: 'Search State',
+                        labelText: 'Select State',
                       ),
                       controller: stateController,
                       initialList: states.states,
@@ -130,13 +115,11 @@ class _NGOState extends State<NGO> {
                             currentScope.hasFocus) {
                           FocusManager.instance.primaryFocus.unfocus();
                         }
-                        getDistricts(state.value);
+
                         setState(() {
                           stateName = state.label;
                         });
-                        setState(() {
-                          districtController.text = "";
-                        });
+
                         print(state.label);
                         print(state
                             .value); // this prints the selected option which could be an object
@@ -144,55 +127,6 @@ class _NGOState extends State<NGO> {
                       label: '',
                     )),
                     box10,
-                    districtLoading == true
-                        ? LinearProgressIndicator(
-                            backgroundColor: Color(0xFF3f51b5),
-                            valueColor: AlwaysStoppedAnimation(
-                              Color(0xFFf9a825),
-                            ),
-                          )
-                        : Container(
-                            padding: EdgeInsets.only(top: 10),
-                            child: TextFieldSearch(
-                                minStringLength: 0,
-                                decoration: new InputDecoration(
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.all(15),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xFF2821B5),
-                                    ),
-                                  ),
-                                  border: new OutlineInputBorder(
-                                      borderSide:
-                                          new BorderSide(color: Colors.grey)),
-                                  labelText: 'Search District',
-                                ),
-                                label: 'Enter District',
-                                controller: districtController,
-                                initialList: districts?.districts ?? [],
-                                future: () {
-                                  return fetchDistricts();
-                                },
-                                getSelectedValue: (state) {
-                                  final FocusScopeNode currentScope =
-                                      FocusScope.of(context);
-                                  if (!currentScope.hasPrimaryFocus &&
-                                      currentScope.hasFocus) {
-                                    FocusManager.instance.primaryFocus
-                                        .unfocus();
-                                  }
-                                  setState(() {
-                                    districtName = state.label;
-                                  });
-                                  print(state.label);
-                                  print(state
-                                      .value); // this prints the selected option which could be an object
-                                })),
-                    box30,
                     box30,
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 5, 0, 20),
@@ -204,7 +138,7 @@ class _NGOState extends State<NGO> {
                             primary: Color(0xFFf9a825), // background
                             onPrimary: Colors.white, // foreground
                           ),
-                          onPressed: districtName.isEmpty
+                          onPressed: stateName.isEmpty
                               ? null
                               : () {
                                   Navigator.push(
@@ -212,7 +146,6 @@ class _NGOState extends State<NGO> {
                                     FadeRoute(
                                         page: NgoList(
                                       stateName: stateName,
-                                      distrctName: districtName,
                                     )),
                                   );
                                 },

@@ -10,9 +10,8 @@ import '../../Constants.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class NgoList extends StatefulWidget {
-  final distrctName;
   final stateName;
-  NgoList({this.distrctName, this.stateName});
+  NgoList({this.stateName});
   @override
   _NgoListState createState() => _NgoListState();
 }
@@ -35,15 +34,14 @@ class _NgoListState extends State<NgoList> {
         'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
         data: {
           'tenantSet_id': 'CRISIS01',
-          'tenantUsecase': 'CRISIS01',
+          'tenantUsecase': 'crisis',
           'useCase': 'ngo',
-          'state': widget.stateName,
-          'district': widget.distrctName
+          'state': widget.stateName.toString().toLowerCase()
         });
     print(resp);
     Map<String, dynamic> map = json.decode(resp.toString());
     setState(() {
-      data = map['resp']['allPrices'];
+      data = map['resp']['allPrices']['res'];
       filteredData = data;
       loading = false;
     });
@@ -108,7 +106,7 @@ class _NgoListState extends State<NgoList> {
                                 onChanged: (string) {
                                   setState(() {
                                     filteredData = (data)
-                                        .where((u) => (u["centre"]
+                                        .where((u) => (u["nameOfNGO"]
                                                 .toString()
                                                 .toLowerCase()
                                                 .contains(
@@ -151,7 +149,6 @@ class _NgoListState extends State<NgoList> {
                             filteredData.length == 0
                                 ? NoResult()
                                 : ListView.builder(
-                                    reverse: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: filteredData.length,
@@ -176,134 +173,178 @@ class _NgoListState extends State<NgoList> {
                                                   width: 0.5),
                                               borderRadius:
                                                   BorderRadius.circular(4.0)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Image.asset(
-                                                      "assets/NGObadge.png",
-                                                      width: 50,
-                                                    )
-                                                  ],
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 5,
-                                                            horizontal: 10),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Column(
                                                       children: [
-                                                        Row(
+                                                        Image.asset(
+                                                          "assets/NGObadge.png",
+                                                          width: 50,
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 0,
+                                                                horizontal: 10),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
-                                                            SizedBox(
-                                                              width: 5,
+                                                            Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                      filteredData[index]
+                                                                              [
+                                                                              "nameOfNGO"] ??
+                                                                          "",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight:
+                                                                              FontWeight.w600)),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                  filteredData[
-                                                                              index]
-                                                                          [
-                                                                          "centre"] ??
-                                                                      "",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600)),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        box10,
-                                                        Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Icon(
-                                                              Icons.phone,
-                                                              size: 15,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Text(
-                                                                filteredData[index]
-                                                                            [
-                                                                            "phone"] !=
-                                                                        null
-                                                                    ? filteredData[index]
-                                                                            [
-                                                                            "phone"]
-                                                                        .replaceAll(
+                                                            box10,
+                                                            Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Icon(
+                                                                  Icons.phone,
+                                                                  size: 15,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Text(
+                                                                    filteredData[index]["phone"] !=
+                                                                            null
+                                                                        ? filteredData[index]["phone"].replaceAll(
                                                                             new RegExp(
                                                                                 r"\s+\b|\b\s"),
                                                                             "")
-                                                                    : "NA",
-                                                                style:
-                                                                    TextStyle(
+                                                                        : "NA",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          700],
+                                                                      fontSize:
+                                                                          12,
+                                                                    )),
+                                                              ],
+                                                            ),
+                                                            box10,
+                                                            Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Icon(
+                                                                  Icons
+                                                                      .location_pin,
+                                                                  size: 15,
                                                                   color: Colors
-                                                                          .grey[
-                                                                      700],
-                                                                  fontSize: 12,
-                                                                )),
-                                                          ],
-                                                        ),
-                                                        box10,
-                                                        Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .location_pin,
-                                                              size: 15,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                  filteredData[
-                                                                              index]
-                                                                          [
-                                                                          'address'] ??
-                                                                      "",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                            .grey[
-                                                                        700],
-                                                                    fontSize:
-                                                                        11,
-                                                                  )),
+                                                                      .grey,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                      filteredData[index]
+                                                                              [
+                                                                              'address'] ??
+                                                                          "",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .grey[700],
+                                                                        fontSize:
+                                                                            11,
+                                                                      )),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),
-                                                      ],
+                                                      ),
                                                     ),
+                                                  ],
+                                                ),
+                                              ),
+                                              if (filteredData[index]["sector"]
+                                                      .length !=
+                                                  0)
+                                                Container(
+                                                  height: 30,
+                                                  child: ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    shrinkWrap: true,
+                                                    itemCount:
+                                                        filteredData[index]
+                                                                ["sector"]
+                                                            .length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int i) {
+                                                      return new Card(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20.0),
+                                                          side: BorderSide(
+                                                            color: primaryColor,
+                                                            width: 0.5,
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(5.0),
+                                                          child: Center(
+                                                              child: Text(
+                                                            filteredData[index]
+                                                                ["sector"][i],
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 10),
+                                                          )),
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              box5
+                                            ],
                                           ),
                                         ),
                                       );
