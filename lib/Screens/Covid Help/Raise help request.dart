@@ -34,7 +34,22 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
 
   void initState() {
     super.initState();
-    if (_auth.currentUser == null) {
+    if (_auth.currentUser != null) {
+      if (_auth.currentUser.phoneNumber == null) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushReplacement(
+            context,
+            FadeRoute(
+                page: InAppRegister(
+              screenName: "Help",
+            )),
+          );
+        });
+      }
+      if (_auth.currentUser.phoneNumber != null) {
+        phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
+      }
+    } else {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
@@ -45,10 +60,9 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
         );
       });
     }
+
     districtMapping = StateDistrictMapping.getDsitricts();
-    if (_auth.currentUser != null) {
-      phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
-    }
+
     FirebaseAnalytics().logEvent(name: 'Help_Request_Form', parameters: null);
   }
 

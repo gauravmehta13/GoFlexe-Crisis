@@ -142,7 +142,7 @@ class _InAppRegisterState extends State<InAppRegister> {
                 children: [
                   Spacer(),
                   Text(
-                    "You Need to Login First",
+                    "Please enter Your phone number",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -668,7 +668,7 @@ class _InAppRegisterState extends State<InAppRegister> {
           });
       print(response);
       Map<String, dynamic> map = json.decode(response.toString());
-      displayTimedSnackBar("Registration Successful", context, 2);
+      displayTimedSnackBar(map["resp"]["allPrices"], context, 2);
       setState(() {
         vaccineRegistrationCompleted = true;
       });

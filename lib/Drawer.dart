@@ -12,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'Fade Route.dart';
 import 'Screens/Covid Stats/Stats TabBar.dart';
 import 'Screens/Self Asses/Self Assesment.dart';
@@ -48,8 +47,11 @@ class _MyDrawerState extends State<MyDrawer> {
                 width: double.maxFinite,
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(color: Color(0xFF3f51b5)),
-                child: _auth?.currentUser?.phoneNumber != null
-                    ? Text((_auth?.currentUser?.phoneNumber ?? ""),
+                child: _auth?.currentUser != null
+                    ? Text(
+                        (_auth?.currentUser?.phoneNumber ??
+                            _auth?.currentUser?.email ??
+                            "GoFlexe Crisis"),
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,

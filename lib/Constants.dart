@@ -1,11 +1,28 @@
 import 'dart:convert';
 
+import 'package:crisis/Auth/Redirect%20Login.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/scheduler.dart';
 
+import 'Fade Route.dart';
 import 'Widgets/Rating Dialog.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+checkLogin(page, context) {
+  if (_auth.currentUser == null) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushReplacement(
+        context,
+        FadeRoute(page: Login(page)),
+      );
+    });
+  }
+}
 
 sendFeedback(rating, comment, ctx) async {
   var dio = Dio();

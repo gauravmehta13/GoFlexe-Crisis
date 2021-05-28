@@ -49,11 +49,13 @@ class _LoginState extends State<Login> {
   }
 
   checkAuthentification() async {
-    _auth.authStateChanges().listen((user) {
-      if (user != null) {
-        print(user);
-        Navigator.push(
+    final subscription = _auth.authStateChanges().listen((null));
+    subscription.onData((data) {
+      if (data != null) {
+        print(data);
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => widget.page));
+        subscription.cancel();
       }
     });
   }

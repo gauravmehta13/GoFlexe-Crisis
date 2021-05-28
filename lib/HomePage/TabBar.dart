@@ -27,6 +27,7 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
 
   @override
   void initState() {
+    checkLogin(GoFlexeTabBar(), context);
     _tabController =
         TabController(length: 4, vsync: this, initialIndex: widget.index ?? 0);
     super.initState();

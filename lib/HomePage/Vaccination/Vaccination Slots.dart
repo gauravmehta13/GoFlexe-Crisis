@@ -101,20 +101,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
             "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${widget.pin}&date=${now.day.toString()}-${now.month.toString()}-${now.year.toString()}");
         print(resp.data);
         var tempData = resp.data["sessions"];
-        // for (var i = 0; i < tempData.length; i++) {
-        //   int x = 0;
-
-        //   for (var j = 0; j < tempData[i]["sessions"].length; j++) {
-        //     setState(() {
-        //       x = x + tempData[i]["sessions"][j]["available_capacity"];
-        //     });
-        //   }
-        //   setState(() {
-        //     tempData[i]["slots"] = x;
-        //     totalSlots = totalSlots + x;
-        //   });
-        //}
-        print(totalSlots);
+        checkTotalSlots(tempData);
 
         tempData.sort((b, a) => a["available_capacity"]
             .toString()
@@ -130,20 +117,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
         print(url);
         print(resp.data);
         var tempData = resp.data["sessions"];
-        // for (var i = 0; i < tempData.length; i++) {
-        //   int x = 0;
-
-        //   for (var j = 0; j < tempData[i]["sessions"].length; j++) {
-        //     setState(() {
-        //       x = x + tempData[i]["sessions"][j]["available_capacity"];
-        //     });
-        //   }
-        //   setState(() {
-        //     tempData[i]["available_capacity"] = x;
-        //     totalSlots = totalSlots + x;
-        //   });
-        // }
-        print(totalSlots);
+        checkTotalSlots(tempData);
 
         tempData.sort((b, a) => a["available_capacity"]
             .toString()
@@ -165,6 +139,20 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
     }
   }
 
+  checkTotalSlots(data) {
+    int x = 0;
+    totalSlots = 0;
+    for (var i = 0; i < data.length; i++) {
+      setState(() {
+        x = x + data[i]["available_capacity"];
+      });
+    }
+    setState(() {
+      totalSlots = totalSlots + x;
+    });
+    print(totalSlots);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,7 +162,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
               )
             : Container(
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
-                child: filteredData.length == 0
+                child: totalSlots == 0
                     ? SizedBox(
                         height: 50,
                         width: double.infinity,
@@ -184,7 +172,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () async {
-                            if (_auth.currentUser == null) {
+                            if (_auth.currentUser.phoneNumber == null) {
                               Navigator.push(
                                 context,
                                 FadeRoute(
@@ -386,6 +374,8 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                                           .contains("45"))
                                                   .toList();
                                             }
+                                            setState(() {});
+                                            checkTotalSlots(filteredData);
                                             print(place[index].title);
                                           });
                                         },
