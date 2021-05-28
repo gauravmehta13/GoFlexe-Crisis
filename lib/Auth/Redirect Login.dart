@@ -24,13 +24,10 @@ class _LoginState extends State<Login> {
   StreamSubscription<User> subscription;
   TextEditingController phoneController = new TextEditingController();
   TextEditingController otpController = new TextEditingController();
-  final _formKeyOTP = GlobalKey<FormState>();
 ////////////////////////////////////////////////////////////////////////
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final googleSignIn = GoogleSignIn();
   bool phone = false;
