@@ -459,69 +459,67 @@ class _LoginState extends State<Login> {
 
   verifyOTP() async {
     clearCaptcha();
-    if (_formKeyOTP.currentState.validate()) {
-      // If the form is valid, we want to show a loading Snackbar
-      // If the form is valid, we want to do firebase signup...
-      setState(() {
-        isResend = false;
-        isLoading = true;
+    // If the form is valid, we want to show a loading Snackbar
+    // If the form is valid, we want to do firebase signup...
+    setState(() {
+      isResend = false;
+      isLoading = true;
+    });
+    print(kIsWeb);
+    if (kIsWeb == true) {
+      print("web");
+      UserCredential userCredential =
+          await confirmationResult.confirm(otpController.text)
+              // ignore: missing_return
+              .then((user) {
+        if (user != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => widget.page),
+          );
+          setState(() {
+            isLoading = false;
+            isResend = false;
+          });
+        }
+        setState(() {
+          isLoading = false;
+          isResend = false;
+        });
       });
-      print(kIsWeb);
-      if (kIsWeb == true) {
-        print("web");
-        UserCredential userCredential =
-            await confirmationResult.confirm(otpController.text)
-                // ignore: missing_return
-                .then((user) {
-          if (user != null) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) => widget.page),
-            );
-            setState(() {
-              isLoading = false;
-              isResend = false;
-            });
-          }
+    }
+    if (kIsWeb == false) {
+      try {
+        await _auth
+            .signInWithCredential(PhoneAuthProvider.credential(
+                verificationId: verificationCode,
+                smsCode: otpController.text.toString()))
+            .then((user) async => {
+                  if (user != null)
+                    {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => widget.page),
+                      ),
+                      setState(() {
+                        isLoading = false;
+                        isResend = false;
+                      }),
+                    }
+                })
+            .catchError((error) {
+          displaySnackBar(error, context);
           setState(() {
             isLoading = false;
             isResend = false;
           });
         });
-      }
-      if (kIsWeb == false) {
-        try {
-          await _auth
-              .signInWithCredential(PhoneAuthProvider.credential(
-                  verificationId: verificationCode,
-                  smsCode: otpController.text.toString()))
-              .then((user) async => {
-                    if (user != null)
-                      {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => widget.page),
-                        ),
-                        setState(() {
-                          isLoading = false;
-                          isResend = false;
-                        }),
-                      }
-                  })
-              .catchError((error) {
-            displaySnackBar(error, context);
-            setState(() {
-              isLoading = false;
-              isResend = false;
-            });
-          });
-        } catch (e) {
-          displaySnackBar(e, context);
-          setState(() {
-            isLoading = false;
-          });
-        }
+      } catch (e) {
+        displaySnackBar(e, context);
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
