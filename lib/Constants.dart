@@ -12,9 +12,10 @@ import 'Fade Route.dart';
 import 'Widgets/Rating Dialog.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+bool skipLogin = false;
 
 checkLogin(page, context) {
-  if (_auth.currentUser == null) {
+  if (_auth.currentUser == null && !skipLogin) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
         context,

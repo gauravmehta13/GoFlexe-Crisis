@@ -172,7 +172,7 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () async {
-                            if (_auth.currentUser.phoneNumber == null) {
+                            if (_auth?.currentUser?.phoneNumber == null) {
                               Navigator.push(
                                 context,
                                 FadeRoute(

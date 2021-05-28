@@ -34,22 +34,8 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
   bool panIndia = false;
   void initState() {
     super.initState();
-    if (_auth.currentUser != null) {
-      if (_auth.currentUser.phoneNumber == null) {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacement(
-            context,
-            FadeRoute(
-                page: InAppRegister(
-              screenName: "Volunteer",
-            )),
-          );
-        });
-      }
-      if (_auth.currentUser.phoneNumber != null) {
-        phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
-      }
-    } else {
+
+    if (_auth?.currentUser?.phoneNumber == null) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
@@ -59,6 +45,9 @@ class _VolunteerJoinState extends State<VolunteerJoin> {
           )),
         );
       });
+    }
+    if (_auth?.currentUser?.phoneNumber != null) {
+      phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
     }
 
     districtMapping = StateDistrictMapping.getDsitricts();

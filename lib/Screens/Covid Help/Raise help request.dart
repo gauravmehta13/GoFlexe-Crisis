@@ -34,31 +34,20 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
 
   void initState() {
     super.initState();
-    if (_auth.currentUser != null) {
-      if (_auth.currentUser.phoneNumber == null) {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacement(
-            context,
-            FadeRoute(
-                page: InAppRegister(
-              screenName: "Help",
-            )),
-          );
-        });
-      }
-      if (_auth.currentUser.phoneNumber != null) {
-        phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
-      }
-    } else {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacement(
-          context,
-          FadeRoute(
-              page: InAppRegister(
-            screenName: "Help",
-          )),
-        );
-      });
+    // if (_auth?.currentUser?.phoneNumber == null) {
+    //   SchedulerBinding.instance.addPostFrameCallback((_) {
+    //     Navigator.pushReplacement(
+    //       context,
+    //       FadeRoute(
+    //           page: InAppRegister(
+    //         screenName: "Help",
+    //       )),
+    //     );
+    //   });
+    // }
+    checkLogin(RaiseHelpRequest(), context);
+    if (_auth?.currentUser?.phoneNumber != null) {
+      phoneController.text = _auth.currentUser.phoneNumber.substring(3, 13);
     }
 
     districtMapping = StateDistrictMapping.getDsitricts();
@@ -208,7 +197,6 @@ class _RaiseHelpRequestState extends State<RaiseHelpRequest> {
                 ),
                 box20,
                 new TextFormField(
-                  enabled: _auth.currentUser != null ? false : true,
                   style: TextStyle(color: Colors.grey),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   textInputAction: TextInputAction.next,

@@ -21,6 +21,7 @@ class _LoginState extends State<Login> {
   var isRegister = true;
   var isOTPScreen = false;
   var verificationCode = '';
+  StreamSubscription<User> subscription;
   TextEditingController phoneController = new TextEditingController();
   TextEditingController otpController = new TextEditingController();
   final _formKeyOTP = GlobalKey<FormState>();
@@ -49,7 +50,7 @@ class _LoginState extends State<Login> {
   }
 
   checkAuthentification() async {
-    final subscription = _auth.authStateChanges().listen((null));
+    subscription = _auth.authStateChanges().listen((null));
     subscription.onData((data) {
       if (data != null) {
         print(data);
@@ -139,15 +140,19 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Align(
-                alignment: Alignment(-1.1, 0),
+                alignment: Alignment.topRight,
                 child: MaterialButton(
                   onPressed: () {
+                    setState(() {
+                      skipLogin = true;
+                    });
+                    subscription.cancel();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (_) => widget.page),
                     );
                   },
                   child: Text(
-                    'Sign Up Later',
+                    'Skip',
                     style: TextStyle(
                       color: Color(0xFF2821B5),
                     ),
@@ -160,16 +165,17 @@ class _LoginState extends State<Login> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xFF2821B5),
-                    fontSize: 50,
+                    fontSize: 40,
                     fontWeight: FontWeight.w900),
               ),
               SizedBox(
                 height: 20,
               ),
               Text(
-                'Learn and Develop your skills with Live Projects\nand get Certified',
+                'Please Login to continue',
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  fontSize: 20,
                   color: Colors.grey,
                 ),
               ),
@@ -354,7 +360,7 @@ class _LoginState extends State<Login> {
                 height: 20,
               ),
               Text(
-                "By creating an account, you accept Devsera's Terms of\nservice and Privaciy ",
+                "By logging in, you accept GoFlexe's Terms of\nservice and Privacy ",
                 textAlign: TextAlign.center,
               ),
               Spacer()
