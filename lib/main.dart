@@ -1,3 +1,4 @@
+import 'package:crisis/Auth/Redirect%20Login.dart';
 import 'package:crisis/Constants.dart';
 import 'package:crisis/HomePage/HomePage.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
               buttonTheme: ButtonThemeData(
                 buttonColor: primaryColor,
               )),
-          home: HomePage()),
+          home: Login(HomePage())),
     );
   }
 }
