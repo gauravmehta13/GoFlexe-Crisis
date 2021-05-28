@@ -94,7 +94,6 @@ class _GoFlexeTabBarState extends State<GoFlexeTabBar>
             )
           ],
         ),
-        drawer: MyDrawer(),
         body: Column(
           children: [
             Container(

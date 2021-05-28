@@ -434,7 +434,7 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    FadeRoute(page: FAQ()),
+                                    FadeRoute(page: NGO()),
                                   );
                                 },
                                 child: Column(

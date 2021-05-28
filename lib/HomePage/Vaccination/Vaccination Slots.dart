@@ -78,6 +78,22 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
     }
   }
 
+  unsubscribeFromNotification() async {
+    final response = await dio.post(
+        'https://t2v0d33au7.execute-api.ap-south-1.amazonaws.com/Staging01/price-calculator',
+        data: {
+          "tenantSet_id": "CRISIS01",
+          "useCase": "deregister",
+          "tenantUsecase": "pop",
+          "phone": _auth.currentUser.phoneNumber.substring(3, 13),
+          "pincode": widget.pin,
+          "district": widget.districtId
+        });
+    print(response);
+    displayTimedSnackBar(
+        "Successfully Unsubscribed From Notifications", context, 2);
+  }
+
   getSlot() async {
     try {
       if (widget.district == false) {
@@ -209,6 +225,24 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
         appBar: AppBar(
           title:
               Text(widget.district == true ? widget.distrctName : widget.pin),
+          actions: [
+            InkWell(
+              onTap: () {
+                unsubscribeFromNotification();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  "Unsubscribe\nFrom Notifications",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
         body: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
@@ -246,40 +280,6 @@ class _VaccinationSlotsState extends State<VaccinationSlots> {
                                       color: Colors.grey[700], fontSize: 18),
                                 ),
                                 box30,
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color(0xFFf9a825), // background
-                                          onPrimary: Colors.white, // foreground
-                                        ),
-                                        onPressed: () async {
-                                          if (_auth.currentUser == null) {
-                                            Navigator.push(
-                                              context,
-                                              FadeRoute(
-                                                  page: InAppRegister(
-                                                screenName: "Vaccination",
-                                                district: widget.distrctName,
-                                                districtCode: widget.districtId,
-                                                pincode: widget.pin,
-                                              )),
-                                            );
-                                          } else {
-                                            submitVaccinationRequest();
-                                          }
-                                        },
-                                        child: Text(
-                                          "Notify me when slots are available",
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                      )),
-                                ),
                               ],
                             ),
                           )
