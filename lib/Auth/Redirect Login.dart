@@ -58,19 +58,17 @@ class _LoginState extends State<Login> {
     });
   }
 
-  Future<UserCredential> signInWithFacebook() async {
-    if (kIsWeb) {
-      // Create a new provider
-      FacebookAuthProvider facebookProvider = FacebookAuthProvider();
-      facebookProvider.addScope('email');
-      facebookProvider.setCustomParameters({
-        'display': 'popup',
-      });
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithPopup(facebookProvider);
-      // Or use signInWithRedirect
-      // return await FirebaseAuth.instance.signInWithRedirect(facebookProvider);
-    }
+  Future<UserCredential> signInWithFacebookWeb() async {
+    // Create a new provider
+    FacebookAuthProvider facebookProvider = FacebookAuthProvider();
+    facebookProvider.addScope('email');
+    facebookProvider.setCustomParameters({
+      'display': 'popup',
+    });
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithPopup(facebookProvider);
+    // Or use signInWithRedirect
+    // return await FirebaseAuth.instance.signInWithRedirect(facebookProvider);
   }
 
   bool isLoading = false;
@@ -321,8 +319,9 @@ class _LoginState extends State<Login> {
                       child: MaterialButton(
                           height: 45,
                           onPressed: () {
-                            displaySnackBar("Coming Soon", context);
-                            // signInWithFacebook();
+                            if (kIsWeb) {
+                              signInWithFacebookWeb();
+                            }
                           },
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
