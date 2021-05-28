@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
               buttonTheme: ButtonThemeData(
                 buttonColor: primaryColor,
               )),
-          home: Login(HomePage())),
+          home: HomePage()),
     );
   }
 }

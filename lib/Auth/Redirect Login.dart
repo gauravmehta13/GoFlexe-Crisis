@@ -297,9 +297,12 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       googleLogin();
                     },
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Color(0xff3b5998))),
+                        side: BorderSide(
+                          color: Color(0xff3b5998),
+                        )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -321,7 +324,8 @@ class _LoginState extends State<Login> {
                       child: MaterialButton(
                           height: 45,
                           onPressed: () {
-                            signInWithFacebook();
+                            displaySnackBar("Coming Soon", context);
+                            // signInWithFacebook();
                           },
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
